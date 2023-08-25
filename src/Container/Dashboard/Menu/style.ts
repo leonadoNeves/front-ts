@@ -4,7 +4,6 @@ export const ContainerSideBar = styled.div`
   .sideBar {
     padding: 0;
     background-color: red;
-    background-color: ${({theme}) => };
 
     .sideBar__userData {
       display: flex;
