@@ -15,10 +15,10 @@ import { GlobalStyles } from './style/globalStyle';
 // };
 
 // const bCrumbArr: any = [
-//   {
-//     href: '',
-//     title: <HomeOutlined />,
-//   },
+// {
+//   href: '',
+//   title: <HomeOutlined />,
+// },
 //   {
 //     href: '',
 //     title: (
