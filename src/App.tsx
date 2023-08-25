@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import ContainerPage from './Container/Dashboard';
-import { GlobalStyles } from './style/globalStyle';
 import { defaultTheme } from './style/theme';
 import { ThemeProvider } from 'styled-components';
+import Router from './routes';
+import { GlobalStyles } from './style/globalStyle';
 // import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
 // const ComponentTeste2 = () => {
@@ -35,8 +36,8 @@ import { ThemeProvider } from 'styled-components';
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      {/* <ContainerPage children={<ComponentTeste2 />} bCrumbArr={bCrumbArr} /> */}
       <GlobalStyles />
+      <Router />
     </ThemeProvider>
   );
 }
