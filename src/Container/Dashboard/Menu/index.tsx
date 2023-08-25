@@ -13,26 +13,36 @@ const SideBarPage = ({ collapsed, items }: iSideBar) => {
   const { Sider } = Layout;
 
   return (
-    <ContainerSideBar>
-      <Sider width={200} collapsible collapsed={collapsed} className="sideBar">
-        <ContainerLogout>
-          <button>
-            <CiLogout className="icon" />
-          </button>
-        </ContainerLogout>
-        <ContainerUserData>
+    <ContainerSideBar isSideBarOpen={collapsed}>
+      <Sider
+        width={200}
+        collapsible
+        collapsed={collapsed}
+        className="sideBar"
+        trigger={null}
+      >
+        {!collapsed && (
+          <ContainerLogout>
+            <button>
+              <CiLogout className="icon" />
+            </button>
+          </ContainerLogout>
+        )}
+        <ContainerUserData isSideBarOpen={collapsed}>
           <div className="container">
             <div className="container__imageContainer">
               <img src={userPhoto} alt="Foto do usuário" />
             </div>
-            <span className="container__userName">NOME DO USUÁRIO</span>
-            <span className="container__roleName">Cargo</span>
+            {!collapsed && (
+              <>
+                <span className="container__userName">NOME DO USUÁRIO</span>
+                <span className="container__roleName">Cargo</span>
+              </>
+            )}
           </div>
         </ContainerUserData>
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
           items={items}
           className="sideBar__menu"
