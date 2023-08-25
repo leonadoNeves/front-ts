@@ -1,10 +1,15 @@
 import Logo from '@/assets/images/PRIOLogo.png';
+import { Button } from '@/components/Button';
 import { Alert, Form, Input } from 'antd';
 import { useState } from 'react';
-import { Container, FormStyled, Image } from './styles';
+import { useLocation } from 'react-router-dom';
+import { Container, FormStyled, Image, Title } from './styles';
 
 export function SignInForm() {
   const [alert, setAlert] = useState(false);
+
+  const { pathname } = useLocation();
+  const instanceName = pathname.split('/')[2];
 
   const onKeyDown = (keyEvent: any) => {
     if (keyEvent.getModifierState('CapsLock')) {
@@ -14,10 +19,14 @@ export function SignInForm() {
     }
   };
 
+  const handleSignIn = () => {};
+
   return (
     <Container>
       <FormStyled>
         <Image src={Logo} />
+
+        <Title>SGDP - {instanceName}</Title>
 
         <Form.Item
           name="userName"
@@ -53,9 +62,11 @@ export function SignInForm() {
             message="Caps Lock ativado!"
             type="warning"
             showIcon
-            style={{ width: '100%' }}
+            style={{ width: '100%', marginBottom: '20px' }}
           />
         )}
+
+        <Button title="Entrar" onClick={handleSignIn} icon="SignIn" fullWidth />
       </FormStyled>
     </Container>
   );

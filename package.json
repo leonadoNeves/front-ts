@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.0.10",
     "antd": "^5.8.4",
+    "axios": "^1.4.0",
     "eslint-config-standard-with-typescript": "^38.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
