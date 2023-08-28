@@ -5,6 +5,7 @@ import { storageGetInstance } from '@/storage/storageInstance';
 import { Link } from 'react-router-dom';
 import ContainerPageCluster from './styles';
 import { tableColumnList } from './tableColumns';
+import bCrumb from './bCrumbs/listPageCrumb';
 
 const instanceName = storageGetInstance();
 
@@ -66,22 +67,36 @@ export function ClusterPage() {
   //   }, [])
 
   const PageContent = (
-    <ContainerPageCluster>
-      <div className="containerBtn">
-        <Link to={`cadCluster`}>
-          {instanceName != 'Botafogo' && <Button type="primary" icon="Plus" />}
-        </Link>
-      </div>
-
-      <TableModel tableColumns={tableColumnList} data={[]} />
-      {/* <CustomTable
-          tableColumns={tableColumns}
-          data={tableData}
-          tableSize={1000}
-          loading={loadingTable}
-        /> */}
-    </ContainerPageCluster>
+    <>
+      <ContainerPageCluster>
+        <div className="containerBtn">
+          <Link to={`cadCluster`}>
+            {instanceName != 'Botafogo' && (
+              <Button
+                type="primary"
+                icon="Plus"
+                toolTipMessage="Cadastrar Cluster"
+              />
+            )}
+          </Link>
+        </div>
+        <div className="containerTable">
+          <TableModel
+            tableColumns={tableColumnList}
+            data={[
+              {
+                key: 1,
+                isActive: true,
+                name: 'Bravo',
+                description: 'Descrição',
+              },
+            ]}
+            isPagination={true}
+          />
+        </div>
+      </ContainerPageCluster>
+    </>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={[]} />;
+  return <ContainerPage children={PageContent} bCrumbArr={bCrumb} />;
 }

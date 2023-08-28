@@ -5,7 +5,7 @@ import { Content } from 'antd/es/layout/layout';
 import { useState } from 'react';
 
 interface ICadInstalationPage {
-  instalationId: string;
+  instalationId?: string;
 }
 
 export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
