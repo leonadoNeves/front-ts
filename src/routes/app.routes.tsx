@@ -1,3 +1,4 @@
+import BasicRegisters from '@/pages/BasicRegisters';
 import { Error404 } from '@/pages/Error404';
 import HomePage from '@/pages/Home';
 import { Route, Routes } from 'react-router-dom';
@@ -6,6 +7,14 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/dashboard/:instance" element={<HomePage />} />
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos"
+        element={<BasicRegisters />}
+      />
+      {/* <Route
+        path="/dashboard/:instance/cadastrosBasicos/cluster"
+        element={<ClusterGrid />}
+      /> */}
       <Route path="*" element={<Error404 />} />
     </Routes>
   );

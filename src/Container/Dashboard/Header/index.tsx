@@ -13,7 +13,7 @@ export const HeaderPage = ({ setMenuCollaps, isCollaps }: iHeaderPage) => {
   const { Header } = Layout;
 
   return (
-    <HeaderPageContainer>
+    <HeaderPageContainer isSideBarOpen={isCollaps}>
       <Header className="headerPage">
         <div className="headerPage__containerlogo">
           <img src={Logo} alt="logo da PRIO" />
