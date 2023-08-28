@@ -1,7 +1,7 @@
 import '@/style/antd.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Router from './routes';
+import { Router } from './routes';
 import { GlobalStyles } from './style/globalStyle';
 
 function App() {

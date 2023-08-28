@@ -130,6 +130,7 @@ export const ContainerLogout = styled.div`
   justify-content: flex-end;
   align-items: center;
   height: 50px;
+  padding: 10px;
 
   button {
     border-radius: 50%;

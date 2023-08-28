@@ -1,5 +1,6 @@
 import userPhoto from '@/assets/images/UserPhoto.png';
 import { useAuth } from '@/hooks/useAuth';
+import useMedia from '@/hooks/useMedia';
 import { Layout, Menu } from 'antd';
 import { FaPowerOff } from 'react-icons/fa';
 import { ContainerLogout, ContainerSideBar, ContainerUserData } from './style';
@@ -10,13 +11,15 @@ interface iSideBar {
 }
 
 export const SideBarPage = ({ collapsed, items }: iSideBar) => {
+  const mobile = useMedia('(max-width: 768px)');
+
   const { user, signOut } = useAuth();
   const { Sider } = Layout;
 
   return (
     <ContainerSideBar isSideBarOpen={!collapsed}>
       <Sider
-        width={250}
+        width={mobile ? '100vw' : 250}
         collapsible
         collapsed={collapsed}
         className="sideBar"

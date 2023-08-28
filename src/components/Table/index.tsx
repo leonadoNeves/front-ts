@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react';
-import EditableRow from './tableEditCell/editeCell';
+import { useRef, useState } from 'react';
+import { iTableModel } from './interface/interface';
 import columnsSearch from './search/columnData';
 import { StyledTable } from './style';
-import EditableCell from './tableEditCell/editeCell';
-import { iTableModel } from './interface/interface';
+import {
+  default as EditableCell,
+  default as EditableRow,
+} from './tableEditCell/editeCell';
 
 const TableModel = ({
   tableColumns,

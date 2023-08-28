@@ -1,44 +1,46 @@
-import React, { useRef, useState } from "react";
-import {Table} from "antd";
+import { Table } from 'antd';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import columnsSearch from "./TableModel/search/columnData";
-import TableModel from "./TableModel/Table";
+import TableModel from './TableModel/Table';
 
 const StyledTable = styled(Table)`
   .ant-pagination-item-active {
-    border-color: #0d7c84
+    border-color: #0d7c84;
   }
 
   .ant-pagination-item-active a {
-    color: #0d7c84
+    color: #0d7c84;
   }
+`;
 
-`
-
-const SuperTable = ({ 
-  tableColumns, 
-  data, 
-  tableSize, 
+const SuperTable = ({
+  tableColumns,
+  data,
+  tableSize,
   loading,
-  expandableRows, 
+  expandableRows,
   rowExpandableName,
   isPagination,
   isGas,
-  isOil
+  isOil,
 }) => {
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-  const [dataTable, setDataTable] = useState(data)
+  const [dataTable, setDataTable] = useState(data);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        'selectedRows: ',
+        selectedRows,
+      );
     },
-    getCheckboxProps: (record) => ({
-      disabled: record["type"] === 'Disabled User',
+    getCheckboxProps: record => ({
+      disabled: record['type'] === 'Disabled User',
       // Column configuration not to be checked
-      name: record["type"],
+      name: record['type'],
     }),
   };
 
@@ -47,22 +49,21 @@ const SuperTable = ({
   // rowNoExpandable => valor da chave que vc colocou no "nameLine", isso faz apenas as linhas especificadas expandirem.
 
   return (
-    <TableModel 
-      tableColumns={tableColumns} 
-      data={data} 
+    <TableModel
+      tableColumns={tableColumns}
+      data={data}
       tableSize={tableSize}
       // rowNoExpandable={["Nome Teste 1", "Nome Teste 2"]}
       // // rowOnlyExpandable={["Nome Teste 1"]}
       // nameLine={"type"}
       rowSelection={rowSelection}
-      loading={loading} 
+      loading={loading}
       expandableRows={() => {
-
         return (
-          <TableModel 
-            tableColumns={tableColumns} 
-            data={data} 
-            tableSize={tableSize} 
+          <TableModel
+            tableColumns={tableColumns}
+            data={data}
+            tableSize={tableSize}
             loading={loading}
             isPagination={isPagination}
             // rowNoExpandable={["Nome Teste 1"]}
@@ -71,34 +72,32 @@ const SuperTable = ({
             isEditable={true}
             expandableRows={() => {
               return (
-                <TableModel 
-                  tableColumns={tableColumns} 
-                  data={data} 
-                  tableSize={tableSize} 
+                <TableModel
+                  tableColumns={tableColumns}
+                  data={data}
+                  tableSize={tableSize}
                   loading={loading}
                   isPagination={isPagination}
                   isEditable={true}
-                  dataTable={dataTable} 
+                  dataTable={dataTable}
                   setDataTable={setDataTable}
                   isOil
                 />
-              )
+              );
             }}
             isGas={isGas}
-            dataTable={dataTable} 
+            dataTable={dataTable}
             setDataTable={setDataTable}
             isOil
           />
-        )
-
-      }} 
+        );
+      }}
       isPagination={isPagination}
       isEditable={true}
-      dataTable={dataTable} 
+      dataTable={dataTable}
       setDataTable={setDataTable}
-    /> 
-  )
-
+    />
+  );
 };
 
-export default SuperTable
+export default SuperTable;

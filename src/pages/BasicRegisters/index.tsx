@@ -1,5 +1,5 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { ibCrumb } from '@/interface/bCrumb.interface';
+import { IBCrumb } from '@/interface/bCrumb.interface';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { HomeOutlined } from '@ant-design/icons';
 import { BasicRegisterScreen } from './screen';
@@ -7,7 +7,7 @@ import { BasicRegisterScreen } from './screen';
 const BasicRegisters = () => {
   const instance = storageGetInstance();
 
-  const bCrumb: ibCrumb[] = [
+  const bCrumb: IBCrumb[] = [
     {
       href: `/dashboard/${instance}`,
       title: (

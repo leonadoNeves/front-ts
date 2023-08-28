@@ -1,7 +1,8 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HomeOutlined } from '@ant-design/icons';
+import { HomeScreen } from './screen';
 
-const HomePage = () => {
+export const HomePage = () => {
   const bCrumb = [
     {
       href: '',
@@ -14,7 +15,5 @@ const HomePage = () => {
     },
   ];
 
-  return <ContainerPage children={<>Homepage</>} bCrumbArr={bCrumb} />;
+  return <ContainerPage children={<HomeScreen />} bCrumbArr={bCrumb} />;
 };
-
-export default HomePage;

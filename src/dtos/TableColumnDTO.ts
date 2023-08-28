@@ -1,6 +1,6 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
-interface iTableCloumn {
+export interface ITableColumnDTO {
   editable?: any;
   key: string | number;
   title: string | React.ReactNode;
@@ -13,7 +13,5 @@ interface iTableCloumn {
     showTitle: boolean;
   };
   sorter?: { compare?: (a: any, b: any) => 1 | -1 | 0 };
-  render?: (text: any, record: any) => React.ReactNode;
+  render?: (text: any, record: any) => ReactNode;
 }
-
-export default iTableCloumn;

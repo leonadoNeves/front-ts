@@ -90,8 +90,7 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
               margin: 0,
               background: colorBgContainer,
               overflow: 'hidden',
-              overflowY: 'scroll',
-              backgroundColor: '#F1F3F6',
+              overflowY: 'auto',
             }}
           >
             {children}

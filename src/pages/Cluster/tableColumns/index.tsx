@@ -1,14 +1,14 @@
-import iTableCloumn from '@/interface/tableColumn.interface';
+import { Button } from '@/components/Button';
+import { ITableColumnDTO } from '@/interface/tableColumn.interface';
 import { storageGetInstance } from '@/storage/storageInstance';
-import { v4 as uuid } from 'uuid';
 import formatUpper from '@/utils/formatUpperCase';
 import { Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/Button';
+import { v4 as uuid } from 'uuid';
 
 const instanceName = storageGetInstance();
 
-export const tableColumnList: iTableCloumn[] = [
+export const tableColumnList: ITableColumnDTO[] = [
   {
     key: uuid(),
     title: 'Status',

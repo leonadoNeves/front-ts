@@ -3,7 +3,7 @@ import { LandingPage } from '@/pages/LandingPage';
 import { SignIn } from '@/pages/SignIn';
 import { Route, Routes } from 'react-router-dom';
 
-export default function AuthRoutes() {
+export function AuthRoutes() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />

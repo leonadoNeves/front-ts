@@ -1,9 +1,8 @@
+import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import React from 'react';
-// import getColumnSearchProps from './getColumnSearchProps.js';
-import iTableCloumn from '@/interface/tableColumn.interface.js';
 
 const columnsSearch = (
-  tableColumns: iTableCloumn[],
+  tableColumns: ITableColumnDTO[],
   setSearchText: React.Dispatch<React.SetStateAction<string>>,
   searchText: string,
   searchedColumn: string,

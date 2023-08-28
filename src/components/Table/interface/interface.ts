@@ -1,8 +1,8 @@
-import iTableCloumn from '@/interface/tableColumn.interface';
+import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import React from 'react';
 
 export interface iTableModel {
-  tableColumns: iTableCloumn[];
+  tableColumns: ITableColumnDTO[];
   data: any[];
   tableSize?: string | number;
   loading?: boolean;

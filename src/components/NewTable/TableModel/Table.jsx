@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import EditableRow from '../../expansiveEditable/context';
 import columnsSearch from './search/columnData';
 import { StyledTable } from './style';
@@ -32,9 +32,9 @@ const TableModel = ({
     },
   };
 
-  const handleSave = (row) => {
+  const handleSave = row => {
     const newData = [...editableData];
-    const index = newData.findIndex((item) => row.key === item.key);
+    const index = newData.findIndex(item => row.key === item.key);
     const item = newData[index];
 
     newData.splice(index, 1, {
@@ -45,14 +45,14 @@ const TableModel = ({
     setEditableData(newData);
   };
 
-  const columnsEditable = tableColumns.map((col) => {
+  const columnsEditable = tableColumns.map(col => {
     if (!col.editable) {
       return col;
     }
 
     return {
       ...col,
-      onCell: (record) => ({
+      onCell: record => ({
         record,
         editable: col.editable,
         dataIndex: col.dataIndex,
@@ -87,20 +87,20 @@ const TableModel = ({
   // rowNoExpandable => valor da chave que vc colocou no "nameLine", isso faz apenas as linhas especificadas expandirem.
 
   // exemplo da função para utilizar o check na tabela.
-//   const rowSelection = {
-//     onChange: (selectedRowKeys, selectedRows) => {
-//       console.log(
-//         `selectedRowKeys: ${selectedRowKeys}`,
-//         'selectedRows: ',
-//         selectedRows,
-//       );
-//     },
-//     getCheckboxProps: (record) => ({
-//       disabled: record['type'] === 'Disabled User',
-//       // Column configuration not to be checked
-//       name: record['type'],
-//     }),
-//   };
+  //   const rowSelection = {
+  //     onChange: (selectedRowKeys, selectedRows) => {
+  //       console.log(
+  //         `selectedRowKeys: ${selectedRowKeys}`,
+  //         'selectedRows: ',
+  //         selectedRows,
+  //       );
+  //     },
+  //     getCheckboxProps: (record) => ({
+  //       disabled: record['type'] === 'Disabled User',
+  //       // Column configuration not to be checked
+  //       name: record['type'],
+  //     }),
+  //   };
 
   return (
     <>
@@ -136,7 +136,7 @@ const TableModel = ({
         }
         expandable={{
           expandedRowRender: expandableRows,
-          rowExpandable: (record) => {
+          rowExpandable: record => {
             if (rowOnlyExpandable) {
               if (nameLine) {
                 const isNameRow = rowOnlyExpandable.includes(record[nameLine]);

@@ -1,32 +1,37 @@
-import React from 'react';
-import { createContext, useState } from 'react';
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useState,
+} from 'react';
 import { v4 as uuid } from 'uuid';
 
 interface iChildren {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-interface idataGas {
+interface IDataGas {
   key: string;
   description: string;
   value: number | string;
 }
 
-interface iTableTypes {
+interface ITableTypes {
   typeInputEditable: string;
-  setTypeInputEditable: React.Dispatch<React.SetStateAction<string>>;
-  setDataSourceGas: React.Dispatch<React.SetStateAction<idataGas[]>>;
-  dataSourceGasBackup: idataGas[];
-  dataSourceGas: idataGas[];
-  setDataSourceGasBackup: React.Dispatch<React.SetStateAction<idataGas[]>>;
+  setTypeInputEditable: Dispatch<SetStateAction<string>>;
+  setDataSourceGas: Dispatch<SetStateAction<IDataGas[]>>;
+  dataSourceGasBackup: IDataGas[];
+  dataSourceGas: IDataGas[];
+  setDataSourceGasBackup: Dispatch<SetStateAction<IDataGas[]>>;
 }
 
-export const TableTypeObjContext = createContext({} as iTableTypes);
+export const TableTypeContext = createContext({} as ITableTypes);
 
-const TableTypes = ({ children }: iChildren) => {
+export const TableTypeProvider = ({ children }: iChildren) => {
   const [typeInputEditable, setTypeInputEditable] = useState<string>('');
 
-  const [dataSourceGas, setDataSourceGas] = useState<idataGas[]>([
+  const [dataSourceGas, setDataSourceGas] = useState<IDataGas[]>([
     {
       key: uuid(),
       description: 'Volume de Queima por Limitação Operacional',
@@ -64,7 +69,7 @@ const TableTypes = ({ children }: iChildren) => {
     },
   ]);
 
-  const [dataSourceGasBackup, setDataSourceGasBackup] = useState<idataGas[]>([
+  const [dataSourceGasBackup, setDataSourceGasBackup] = useState<IDataGas[]>([
     {
       key: uuid(),
       description: 'Volume de Queima por Limitação Operacional',
@@ -103,7 +108,7 @@ const TableTypes = ({ children }: iChildren) => {
   ]);
 
   return (
-    <TableTypeObjContext.Provider
+    <TableTypeContext.Provider
       value={{
         typeInputEditable,
         setTypeInputEditable,
@@ -114,8 +119,6 @@ const TableTypes = ({ children }: iChildren) => {
       }}
     >
       {children}
-    </TableTypeObjContext.Provider>
+    </TableTypeContext.Provider>
   );
 };
-
-export default TableTypes;

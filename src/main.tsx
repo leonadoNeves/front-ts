@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
+import { TableTypeProvider } from './contexts/tableContext.tsx';
 import { defaultTheme } from './style/theme.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={defaultTheme}>
         <AuthProvider>
           <InstanceProvider>
-            <App />
+            <TableTypeProvider>
+              <App />
+            </TableTypeProvider>
           </InstanceProvider>
         </AuthProvider>
       </ThemeProvider>

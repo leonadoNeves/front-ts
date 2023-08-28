@@ -1,9 +1,9 @@
 import { useAuth } from '@/hooks/useAuth';
 import { storageGetToken } from '@/storage/storageToken';
-import AppRoutes from './app.routes';
-import AuthRoutes from './auth.routes';
+import { AppRoutes } from './app.routes';
+import { AuthRoutes } from './auth.routes';
 
-export default function Router() {
+export function Router() {
   const { user } = useAuth();
   const token = storageGetToken();
 
