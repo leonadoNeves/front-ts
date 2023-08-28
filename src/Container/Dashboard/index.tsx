@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -5,8 +7,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, theme } from 'antd';
-import React, { useState } from 'react';
-import { HeaderPage } from './Header';
+import HeaderPage from './Header';
 import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
 
@@ -43,7 +44,7 @@ const items2: MenuProps['items'] = [
   };
 });
 
-export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
+const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
   const {
@@ -82,3 +83,5 @@ export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
     </Layout>
   );
 };
+
+export default ContainerPage;
