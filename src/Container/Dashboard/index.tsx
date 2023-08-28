@@ -1,50 +1,40 @@
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import { useAuth } from '@/hooks/useAuth';
+import { getIconSideBar } from '@/utils/getIconSideBar';
 import { Breadcrumb, Layout, theme } from 'antd';
-import React, { useState } from 'react';
+import { ReactNode, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HeaderPage } from './Header';
 import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
 
-interface iPageContainer {
-  children: React.ReactNode;
+interface IPageContainer {
+  children: ReactNode;
   bCrumbArr: any;
 }
 
 const { Content } = Layout;
 
-const items2: MenuProps['items'] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
+export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
+  const [collapsed, setCollapsed] = useState(false);
 
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-        className: 'optionSelect',
-        style: {
-          color: 'black',
-        },
-      };
-    }),
-  };
-});
-
-export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
-  const [collapsed, setCollapsed] = useState<boolean>(true);
+  const itemsSideBar = user?.userPermissions?.map(elem => {
+    return {
+      key: `${elem.menuOrder}`,
+      icon: getIconSideBar(elem.menuIcon),
+      label: `${elem.menuName}`,
+      onClick: () => navigate(`${elem.menuRoute}`),
+      children: elem.children?.map(child => {
+        return {
+          key: `${child.menuOrder}`,
+          label: `${child.menuName}`,
+          onClick: () => navigate(`${child.menuRoute}`),
+        };
+      }),
+    };
+  });
 
   const {
     token: { colorBgContainer },
@@ -60,7 +50,7 @@ export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
       <HeaderPage setMenuCollaps={setCollapsed} isCollaps={collapsed} />
 
       <Layout>
-        <SideBarPage items={items2} collapsed={collapsed} />
+        <SideBarPage items={itemsSideBar} collapsed={collapsed} />
 
         <Layout>
           <BrandCrumbContainer>

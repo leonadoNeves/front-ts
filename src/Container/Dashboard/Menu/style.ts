@@ -6,6 +6,8 @@ interface SidebarProps {
 
 export const ContainerSideBar = styled.div<SidebarProps>`
   overflow: auto;
+  position: fixed;
+  height: 100vh;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -65,71 +67,59 @@ export const ContainerSideBar = styled.div<SidebarProps>`
 `;
 
 export const ContainerUserData = styled.div<SidebarProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .container__imageContainer {
+      margin-top: 0px;
+    }
+
+    .container__userName {
+      color: ${({ theme }) => theme['gray-100']};
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    .container__roleName {
+      color: ${({ theme }) => theme['gray-400']};
+      font-size: 0.9rem;
+    }
+  }
+
   ${({ isSideBarOpen }) => {
     switch (isSideBarOpen) {
       case true:
         return css`
-          display: flex;
-          align-items: center;
-          justify-content: center;
           height: 75px;
-          background-color: #004645;
+          background-color: ${({ theme }) => theme['green-200']};
 
-          .container {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            .container__imageContainer {
-              margin-top: 0px;
-              img {
-                width: 45px;
-              }
-            }
+          .container__imageContainer img {
+            width: 45px;
+          }
 
-            .container__userName {
-              color: ${({ theme }) => theme['gray-100']};
-              font-weight: 500;
-              margin-top: 5px;
-            }
-
-            .container__roleName {
-              color: ${({ theme }) => theme['gray-400']};
-              font-size: 0.9rem;
-            }
+          .container__userName {
+            margin-top: 1rem;
           }
         `;
 
       default:
         return css`
-          display: flex;
-          align-items: center;
-          justify-content: center;
           height: 130px;
           background: linear-gradient(to bottom, #004645 40%, #0d7c84 40%);
 
-          .container {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: center;
-            .container__imageContainer {
-              margin-top: 0px;
-              img {
-                width: 90px;
-              }
-            }
+          .container__imageContainer img {
+            width: 90px;
+          }
 
-            .container__userName {
-              color: ${({ theme }) => theme['gray-100']};
-              font-weight: 500;
-              margin-top: 5px;
-            }
-
-            .container__roleName {
-              color: ${({ theme }) => theme['gray-400']};
-              font-size: 0.9rem;
-            }
+          .container__userName {
+            margin-top: 5px;
           }
         `;
     }
@@ -145,16 +135,18 @@ export const ContainerLogout = styled.div`
 
   button {
     border-radius: 50%;
-    background-color: black;
+    background-color: ${({ theme }) => theme['green-300']};
     border: none;
-    margin: 10px 20px 0px 0px;
+    margin: 10px;
     padding: 7px;
     width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+
     .icon {
-      color: ${({ theme }) => theme['gray-100']};
+      color: ${({ theme }) => theme['red-100']};
       font-size: 1rem;
       font-weight: 600;
     }

@@ -9,5 +9,6 @@ export const defaultTheme = {
   'gray-500': '#D7D5D5',
   'gray-600': '#8D8686',
   'gray-700': '#222222',
+  'red-100': '#EC6B5C',
   radius: '8px',
 };

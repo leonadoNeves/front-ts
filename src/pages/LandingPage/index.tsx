@@ -51,6 +51,7 @@ export function LandingPage() {
     <Container>
       {instances.map(instance => (
         <Card
+          key={instance.name}
           imageUrl={instance.imageUrl}
           title={instance.name}
           href={instance.href}

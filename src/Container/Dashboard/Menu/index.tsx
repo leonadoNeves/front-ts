@@ -1,6 +1,7 @@
 import userPhoto from '@/assets/images/UserPhoto.png';
+import { useAuth } from '@/hooks/useAuth';
 import { Layout, Menu } from 'antd';
-import { CiLogout } from 'react-icons/ci';
+import { FaPowerOff } from 'react-icons/fa';
 import { ContainerLogout, ContainerSideBar, ContainerUserData } from './style';
 
 interface iSideBar {
@@ -9,12 +10,13 @@ interface iSideBar {
 }
 
 export const SideBarPage = ({ collapsed, items }: iSideBar) => {
+  const { user, signOut } = useAuth();
   const { Sider } = Layout;
 
   return (
     <ContainerSideBar isSideBarOpen={!collapsed}>
       <Sider
-        width={200}
+        width={250}
         collapsible
         collapsed={collapsed}
         className="sideBar"
@@ -22,8 +24,8 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
       >
         {!collapsed && (
           <ContainerLogout>
-            <button>
-              <CiLogout className="icon" />
+            <button onClick={signOut}>
+              <FaPowerOff className="icon" />
             </button>
           </ContainerLogout>
         )}
@@ -35,8 +37,8 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
             </div>
             {!collapsed && (
               <>
-                <span className="container__userName">NOME DO USUÁRIO</span>
-                <span className="container__roleName">Cargo</span>
+                <span className="container__userName">{user?.name}</span>
+                <span className="container__roleName">{user?.group?.name}</span>
               </>
             )}
           </div>
@@ -44,8 +46,8 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
 
         <Menu
           mode="inline"
-          style={{ height: '100%', borderRight: 0 }}
           items={items}
+          style={{ height: '100%', borderRight: 0 }}
           className="sideBar__menu"
         />
       </Sider>

@@ -17,7 +17,7 @@ export const HeaderPageContainer = styled.header<SidebarProps>`
     }
 
     .headerPage__containerIconMenu {
-      margin-left: 30px;
+      margin-left: 90px;
       display: flex;
       align-items: center;
 
@@ -43,6 +43,10 @@ export const HeaderPageContainer = styled.header<SidebarProps>`
         return css`
           .headerPage {
             padding-left: 12px;
+
+            .headerPage__containerIconMenu {
+              margin-left: 30px;
+            }
 
             .headerPage__containerlogo img {
               width: 60px;

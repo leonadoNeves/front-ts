@@ -1,0 +1,13 @@
+.ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: #c2f2bd !important;
+  background-color: transparent !important;
+}
+
+.ant-menu-item:hover {
+  color: #fff !important;
+}
+
+.ant-menu-item-selected {
+  color: #c2f2bd !important;
+  background-color: transparent !important;
+}
