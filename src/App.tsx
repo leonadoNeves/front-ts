@@ -6,8 +6,8 @@ import { GlobalStyles } from './style/globalStyle';
 function App() {
   return (
     <>
-      <Router />
       <GlobalStyles />
+      <Router />
 
       <ToastContainer
         position="top-right"
