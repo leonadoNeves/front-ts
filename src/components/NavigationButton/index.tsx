@@ -1,3 +1,4 @@
+import { storageGetInstance } from '@/storage/storageInstance';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { ButtonContainer } from './style';
@@ -15,8 +16,10 @@ export const NavigationButton = ({
   label,
   icon,
 }: iNavigationButton) => {
+  const instance = storageGetInstance();
+
   return (
-    <Link to={`/${menuItem}/${href}`}>
+    <Link to={`/dashboard/${instance}/${menuItem}/${href}`}>
       <ButtonContainer>
         <Button className="buttonNavigation">
           {icon && (

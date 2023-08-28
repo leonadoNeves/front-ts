@@ -11,3 +11,11 @@
   color: #c2f2bd !important;
   background-color: transparent !important;
 }
+
+.ant-tabs-tab-btn {
+  color: #0d7c84 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #0d7c84 !important;
+}

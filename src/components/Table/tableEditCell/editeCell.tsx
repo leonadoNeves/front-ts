@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { TableTypeContext } from '@/contexts/TableContext';
 import { Form, Input, InputNumber } from 'antd';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { EditableContext } from '../context';
-import { useContext, useRef, useState } from 'react';
-import { TableTypeObjContext } from '@/contexts/tableContext';
 import { ieditableCellProps } from '../interface/interface';
 
 const EditableCell = ({
@@ -18,7 +17,7 @@ const EditableCell = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<any | null>(null);
   const form = useContext(EditableContext);
-  const { typeInputEditable } = useContext(TableTypeObjContext);
+  const { typeInputEditable } = useContext(TableTypeContext);
 
   useEffect(() => {
     if (editing) {

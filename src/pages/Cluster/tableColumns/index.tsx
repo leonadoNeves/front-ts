@@ -1,5 +1,5 @@
 import { Button } from '@/components/Button';
-import { ITableColumnDTO } from '@/interface/tableColumn.interface';
+import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import formatUpper from '@/utils/formatUpperCase';
 import { Space } from 'antd';

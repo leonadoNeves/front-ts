@@ -10,7 +10,7 @@ interface IButtonStyled {
 
 export const ButtonStyled = styled(Button)<IButtonStyled>`
   border-radius: 4px !important;
-  padding: 6px 20px !important;
+  padding: 6px !important;
   height: 40px !important;
   display: flex !important;
   align-items: center !important;

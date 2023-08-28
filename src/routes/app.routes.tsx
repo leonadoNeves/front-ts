@@ -1,37 +1,43 @@
 import BasicRegisters from '@/pages/BasicRegisters';
+import { ClusterPage } from '@/pages/Cluster';
 import { Error404 } from '@/pages/Error404';
 import { HomePage } from '@/pages/Home';
+import { InstalationPage } from '@/pages/Instalation';
+import { CadInstalacaoPage } from '@/pages/Instalation/formPage';
 import { Route, Routes } from 'react-router-dom';
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/dashboard/:instance" element={<HomePage />} />
+
       <Route
         path="/dashboard/:instance/cadastrosBasicos"
         element={<BasicRegisters />}
       />
-      {/* <Route
+
+      <Route
         path="/dashboard/:instance/cadastrosBasicos/cluster"
-        element={<ClusterGrid />}
-      /> */}
+        element={<ClusterPage />}
+      />
+
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/instalacoes"
+        element={<InstalationPage />}
+      />
+
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/cadInstalacao"
+        element={<CadInstalacaoPage />}
+      />
+
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
 }
 
-//       <Route path="blank_page" element={<Component />} />
-
-/* <Route path="/" element={<LandingPage />} />
-    <Route path="/signIn/:instance" element={<SignIn />} />
-    <Route path="/dashboard/:instance" element={<Home />} />
-    <Route path="/dashboard/:instance/cadastrosBasicos" element={<CadastrosBasicos />} />
-
-    <Route path="/dashboard/:instance/cadastrosBasicos/cluster" element={<ClusterGrid />} />
+/*
     <Route path="/dashboard/:instance/cadastrosBasicos/cluster/cadCluster/:id?" element={<ClusterForm />} />
-
-    <Route path="/dashboard/:instance/cadastrosBasicos/instalacoes" element={<InstalacaoGrid />} />
-    <Route path="/dashboard/:instance/cadastrosBasicos/instalacoes/cadInstalacao/:id?" element={<InstalacaoForm />} />
 
     <Route path="/dashboard/:instance/cadastrosBasicos/campos" element={<FieldGrid />} />
     <Route path="/dashboard/:instance/cadastrosBasicos/cadCampo/:id?" element={<FieldForm />} />
