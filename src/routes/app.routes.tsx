@@ -2,6 +2,8 @@ import BasicRegisters from '@/pages/BasicRegisters';
 import { Error404 } from '@/pages/Error404';
 import HomePage from '@/pages/Home';
 import { Route, Routes } from 'react-router-dom';
+import Router from '.';
+import ClusterGrid from '@/pages/Cluster/listPage';
 
 export default function AppRoutes() {
   return (

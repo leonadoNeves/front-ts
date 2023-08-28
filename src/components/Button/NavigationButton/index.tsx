@@ -17,14 +17,14 @@ import { ButtonContainer } from './style';
 // `;
 
 interface iNavigationButton {
-  menuItem?: string;
-  label?: string;
-  icon?: string;
+  href: string;
+  label: string;
+  icon: string;
 }
 
-const NavigationButton = ({ menuItem, label, icon }: iNavigationButton) => {
+const NavigationButton = ({ href, label, icon }: iNavigationButton) => {
   return (
-    <Link to={`${menuItem}/${label}`}>
+    <Link to={href}>
       <ButtonContainer>
         <Button className="buttonNavigation">
           {icon && (
