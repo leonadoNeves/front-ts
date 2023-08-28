@@ -1,19 +1,19 @@
-import Logo from '@/assets/images/PRIOLogo.png';
+import React from 'react';
 import { Layout } from 'antd';
-import { Dispatch, SetStateAction } from 'react';
-import { RiMenuLine } from 'react-icons/ri';
 import HeaderPageContainer from './style';
+import Logo from '@/assets/images/PRIOLogo.png';
+import { RiMenuLine } from 'react-icons/ri';
 
 interface iHeaderPage {
-  setMenuCollaps: Dispatch<SetStateAction<boolean>>;
+  setMenuCollaps: React.Dispatch<React.SetStateAction<boolean>>;
   isCollaps: boolean;
 }
 
-export const HeaderPage = ({ setMenuCollaps, isCollaps }: iHeaderPage) => {
+const HeaderPage = ({ setMenuCollaps, isCollaps }: iHeaderPage) => {
   const { Header } = Layout;
 
   return (
-    <HeaderPageContainer>
+    <HeaderPageContainer isSideBarOpen={isCollaps}>
       <Header
         className={'headerPage'}
         style={{ display: 'flex', alignItems: 'center' }}
@@ -33,3 +33,5 @@ export const HeaderPage = ({ setMenuCollaps, isCollaps }: iHeaderPage) => {
     </HeaderPageContainer>
   );
 };
+
+export default HeaderPage;
