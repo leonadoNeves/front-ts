@@ -9,14 +9,17 @@ import ZoneImg from '@/assets/images/Registers/zone.svg';
 import WellImg from '@/assets/images/Registers/oil-can.svg';
 import { Col, Row } from 'antd';
 import NavigationButton from '@/components/Button/NavigationButton';
+import { storageGetInstance } from '@/storage/storageInstance';
 
 const BasicRegisterScreen = () => {
+  const instance = storageGetInstance();
+
   return (
     <Row gutter={[24, 24]}>
       <Col>
         <NavigationButton
           icon={ClusterImg}
-          menuItem="cadastrosBasicos"
+          href={`/dashboard/${instance}/cadastrosBasicos/cluster`}
           label="Cluster"
         />
       </Col>
@@ -24,7 +27,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={InstalationImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Instalações"
         />
       </Col>
@@ -32,7 +35,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={WellImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Campos"
         />
       </Col>
@@ -40,7 +43,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={ZoneImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Zonas"
         />
       </Col>
@@ -48,7 +51,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={ReservatorioImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Reservatórios"
         />
       </Col>
@@ -56,7 +59,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={PocoImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Poços"
         />
       </Col>
@@ -64,7 +67,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={CompletationImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Completações"
         />
       </Col>
@@ -72,7 +75,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={MedidorImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Pontos de Medicao"
         />
       </Col>
@@ -80,7 +83,7 @@ const BasicRegisterScreen = () => {
       <Col>
         <NavigationButton
           icon={MedicaoImg}
-          menuItem="cadastrosBasicos"
+          href="cadastrosBasicos"
           label="Equipamentos De Medicao"
         />
       </Col>
