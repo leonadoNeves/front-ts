@@ -86,20 +86,19 @@ export const tableColumnList: ITableColumnDTO[] = [
     title: '',
     dataIndex: '',
     fixed: 'right',
-    width: '48px',
+    width: '58px',
+    align: 'center',
     render: (_text, record) => {
       return (
-        <Space style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '32px' }}>
-            <Link to={`cadCluster/${record.id}`}>
-              {instanceName !== 'Botafogo' ? (
-                <Button type="primary" icon="Pencil" />
-              ) : (
-                <Button type="primary" icon="ClipboardText" />
-              )}
-            </Link>
-          </div>
-        </Space>
+        <div style={{ width: '30px' }}>
+          <Link to={`cadCluster/${record.id}`}>
+            {instanceName !== 'Botafogo' ? (
+              <Button type="primary" icon="Pencil" />
+            ) : (
+              <Button type="primary" icon="ClipboardText" />
+            )}
+          </Link>
+        </div>
       );
     },
   },

@@ -19,8 +19,7 @@ export const ButtonStyled = styled(Button)<IButtonStyled>`
   transition: opacity 0.1s ease-in-out !important;
   width: max-content !important;
   cursor: pointer;
-  width: max-content !important;
-  min-width: 40px !important;
+  min-width: 30px !important;
 
   ${({ fullWidth }) =>
     fullWidth &&

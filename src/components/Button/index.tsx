@@ -1,11 +1,14 @@
 import getIcon from '@/utils/getIcon';
-import { ButtonProps } from 'antd';
+import { ButtonProps, Tooltip } from 'antd';
 import { ButtonStyled, VariantType } from './styles';
+import { TooltipPlacement } from 'antd/es/tooltip';
 
 interface IButton extends ButtonProps {
   variant?: VariantType;
   fullWidth?: boolean;
   icon?: string;
+  toolTipMessage?: string;
+  toolTipPosition?: TooltipPlacement | undefined;
 }
 
 export function Button({
@@ -16,21 +19,29 @@ export function Button({
   onClick,
   disabled = false,
   fullWidth = false,
+  toolTipMessage,
+  toolTipPosition,
   ...rest
 }: IButton) {
   const Icon = getIcon(icon ? icon : '');
 
   return (
-    <ButtonStyled
-      htmlType={htmlType}
-      variant={variant}
-      onClick={onClick}
-      disabled={disabled}
-      fullWidth={fullWidth}
-      {...rest}
+    <Tooltip
+      title={toolTipMessage}
+      placement={toolTipPosition ? toolTipPosition : 'topLeft'}
+      showArrow={toolTipMessage ? true : false}
     >
-      {icon && <Icon size={16} />}
-      {title && title}
-    </ButtonStyled>
+      <ButtonStyled
+        htmlType={htmlType}
+        variant={variant}
+        onClick={onClick}
+        disabled={disabled}
+        fullWidth={fullWidth}
+        {...rest}
+      >
+        {icon && <Icon size={16} />}
+        {title && title}
+      </ButtonStyled>
+    </Tooltip>
   );
 }

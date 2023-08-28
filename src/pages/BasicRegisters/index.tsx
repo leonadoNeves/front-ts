@@ -1,8 +1,8 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { IBCrumb } from '@/interface/bCrumb.interface';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { HomeOutlined } from '@ant-design/icons';
 import { BasicRegisterScreen } from './screen';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 
 const BasicRegisters = () => {
   const instance = storageGetInstance();
@@ -21,7 +21,7 @@ const BasicRegisters = () => {
       href: '',
       title: (
         <>
-          <span>Cadastro Básico</span>
+          <span style={{ color: 'black' }}>Cadastro Básico</span>
         </>
       ),
     },
