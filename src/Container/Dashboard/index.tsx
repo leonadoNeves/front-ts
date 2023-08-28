@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -7,8 +5,9 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, theme } from 'antd';
-import HeaderPage from './Header';
-import SideBarPage from './Menu';
+import React, { useState } from 'react';
+import { HeaderPage } from './Header';
+import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
 
 interface iPageContainer {
@@ -44,7 +43,7 @@ const items2: MenuProps['items'] = [
   };
 });
 
-const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
+export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
   const {
@@ -83,5 +82,3 @@ const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
     </Layout>
   );
 };
-
-export default ContainerPage;

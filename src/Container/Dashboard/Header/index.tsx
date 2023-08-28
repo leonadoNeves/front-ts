@@ -1,34 +1,35 @@
-import React from "react"
-import { Layout } from "antd";
-import HeaderPageContainer from "./style";
-import Logo from "@/assets/PRIOLogo.png"
-import {RiMenuLine} from "react-icons/ri"
+import Logo from '@/assets/images/PRIOLogo.png';
+import { Layout } from 'antd';
+import { Dispatch, SetStateAction } from 'react';
+import { RiMenuLine } from 'react-icons/ri';
+import HeaderPageContainer from './style';
 
 interface iHeaderPage {
-    setMenuCollaps: React.Dispatch<React.SetStateAction<boolean>>,
-    isCollaps: boolean
+  setMenuCollaps: Dispatch<SetStateAction<boolean>>;
+  isCollaps: boolean;
 }
 
-const HeaderPage = ({setMenuCollaps, isCollaps}: iHeaderPage) => {
+export const HeaderPage = ({ setMenuCollaps, isCollaps }: iHeaderPage) => {
+  const { Header } = Layout;
 
-    const { Header } = Layout;
-
-    return (
-        <HeaderPageContainer>
-            <Header className={'headerPage'}style={{ display: 'flex', alignItems: 'center' }}>
-                <div className="headerPage__containerlogo">
-                    <img src={Logo} alt="logo da PRIO" />
-                </div>
-                <div 
-                    className="headerPage__containerIconMenu"
-                    onClick={() => {setMenuCollaps(!isCollaps)}}
-                >
-                    <RiMenuLine className={"containerIconMenu__icon"}/>
-                </div>
-            </Header>
-        </HeaderPageContainer>
-    )
-
-}
-
-export default HeaderPage
+  return (
+    <HeaderPageContainer>
+      <Header
+        className={'headerPage'}
+        style={{ display: 'flex', alignItems: 'center' }}
+      >
+        <div className="headerPage__containerlogo">
+          <img src={Logo} alt="logo da PRIO" />
+        </div>
+        <div
+          className="headerPage__containerIconMenu"
+          onClick={() => {
+            setMenuCollaps(!isCollaps);
+          }}
+        >
+          <RiMenuLine className={'containerIconMenu__icon'} />
+        </div>
+      </Header>
+    </HeaderPageContainer>
+  );
+};

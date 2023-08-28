@@ -1,4 +1,4 @@
-import ContainerPage from '@/Container/Dashboard';
+import { ContainerPage } from '@/Container/Dashboard';
 import { HomeOutlined } from '@ant-design/icons';
 
 const HomePage = () => {

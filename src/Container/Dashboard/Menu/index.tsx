@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ContainerSideBar, ContainerLogout, ContainerUserData } from './style';
+import userPhoto from '@/assets/images/UserPhoto.png';
 import { Layout, Menu } from 'antd';
-import userPhoto from '@/assets/UserPhoto.png';
 import { CiLogout } from 'react-icons/ci';
+import { ContainerLogout, ContainerSideBar, ContainerUserData } from './style';
 
 interface iSideBar {
   collapsed?: boolean;
   items?: any;
 }
 
-const SideBarPage = ({ collapsed, items }: iSideBar) => {
+export const SideBarPage = ({ collapsed, items }: iSideBar) => {
   const { Sider } = Layout;
 
   return (
@@ -51,5 +50,3 @@ const SideBarPage = ({ collapsed, items }: iSideBar) => {
     </ContainerSideBar>
   );
 };
-
-export default SideBarPage;
