@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'id_token';
-const USER_KEY = 'user';
+const TOKEN_KEY = '@prio:token';
+const INSTANCE_KEY = '@prio:instance';
 
-export { TOKEN_KEY, USER_KEY };
+export { INSTANCE_KEY, TOKEN_KEY };

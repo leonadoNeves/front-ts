@@ -1,12 +1,15 @@
-import { LandingPage } from '@/pages/LandingPage';
-import { SignIn } from '@/pages/SignIn';
-import { Route, Routes } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { storageGetToken } from '@/storage/storageToken';
+import AppRoutes from './app.routes';
+import AuthRoutes from './auth.routes';
 
 export default function Router() {
-  return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/signIn/:instance" element={<SignIn />} />
-    </Routes>
-  );
+  const { user } = useAuth();
+  const token = storageGetToken();
+
+  if (user && token) {
+    return <AppRoutes />;
+  }
+
+  return <AuthRoutes />;
 }

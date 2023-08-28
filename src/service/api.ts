@@ -2,7 +2,7 @@ import { storageGetToken, storageRemoveToken } from '@/storage/storageToken';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_REACT_APP_API2_URL,
   timeout: 50000,
 });
 

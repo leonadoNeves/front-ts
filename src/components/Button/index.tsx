@@ -4,7 +4,6 @@ import { ButtonStyled, VariantType } from './styles';
 
 interface IButton extends ButtonProps {
   variant?: VariantType;
-  onClick: () => void;
   fullWidth?: boolean;
   icon?: string;
 }

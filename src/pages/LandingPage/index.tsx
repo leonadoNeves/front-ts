@@ -3,6 +3,7 @@ import arpoador from '@/assets/images/LandingPage/arpoador.png';
 import botafogo from '@/assets/images/LandingPage/botafogo.jpg';
 import fradeValente from '@/assets/images/LandingPage/frade-valente.png';
 import polvoBravo from '@/assets/images/LandingPage/polvo-bravo.png';
+import { storageSetInstance } from '@/storage/storageInstance';
 import { Card } from './components/Card';
 import { Container } from './styles';
 
@@ -41,6 +42,11 @@ const instances = [
 ];
 
 export function LandingPage() {
+  const handleInstance = (href: string) => {
+    const instance = href.split('/')[1];
+    storageSetInstance(instance);
+  };
+
   return (
     <Container>
       {instances.map(instance => (
@@ -48,6 +54,7 @@ export function LandingPage() {
           imageUrl={instance.imageUrl}
           title={instance.name}
           href={instance.href}
+          onClick={() => handleInstance(instance.href)}
         />
       ))}
     </Container>

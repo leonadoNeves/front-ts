@@ -1,12 +1,17 @@
 import Logo from '@/assets/images/PRIOLogo.png';
 import { Button } from '@/components/Button';
+import { useAuth } from '@/hooks/useAuth';
 import { Alert, Form, Input } from 'antd';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, FormStyled, Image, Title } from './styles';
 
 export function SignInForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+
+  const [form] = Form.useForm();
+  const { signIn } = useAuth();
 
   const { pathname } = useLocation();
   const instanceName = pathname.split('/')[2];
@@ -19,17 +24,31 @@ export function SignInForm() {
     }
   };
 
-  const handleSignIn = () => {};
+  const handleSignIn = async ({ username, password }: any) => {
+    try {
+      setIsLoading(true);
+      await signIn({ username, password });
+    } catch (error) {
+      return error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Container>
-      <FormStyled>
+      <FormStyled
+        name="login"
+        form={form}
+        onFinish={handleSignIn}
+        scrollToFirstError
+      >
         <Image src={Logo} />
 
         <Title>SGDP - {instanceName}</Title>
 
         <Form.Item
-          name="userName"
+          name="username"
           rules={[
             {
               required: true,
@@ -66,7 +85,15 @@ export function SignInForm() {
           />
         )}
 
-        <Button title="Entrar" onClick={handleSignIn} icon="SignIn" fullWidth />
+        <Form.Item style={{ width: '100%', marginTop: 2 }}>
+          <Button
+            title={isLoading ? '' : 'Entrar'}
+            htmlType="submit"
+            icon={isLoading ? '' : 'SignIn'}
+            fullWidth
+            loading={isLoading}
+          />
+        </Form.Item>
       </FormStyled>
     </Container>
   );
