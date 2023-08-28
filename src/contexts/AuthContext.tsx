@@ -3,6 +3,7 @@ import { api } from '@/service/api';
 import {
   storageGetInstance,
   storageRemoveInstance,
+  storageRemoveInstanceSelected,
 } from '@/storage/storageInstance';
 import {
   storageGetToken,
@@ -77,6 +78,7 @@ function AuthProvider({ children }: PropsAuthProvider) {
   const signOut = async () => {
     await storageRemoveToken();
     await storageRemoveInstance();
+    await storageRemoveInstanceSelected();
 
     setUser({} as UserDTO);
     navigate('/');

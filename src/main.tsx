@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { defaultTheme } from './style/theme.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -11,7 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
         <AuthProvider>
-          <App />
+          <InstanceProvider>
+            <App />
+          </InstanceProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

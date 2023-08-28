@@ -1,4 +1,4 @@
-import { INSTANCE_KEY } from './storageConfig';
+import { INSTANCE_KEY, SELECTED_INSTANCE_KEY } from './storageConfig';
 
 const storageGetInstance = () => localStorage.getItem(INSTANCE_KEY);
 
@@ -9,4 +9,21 @@ const storageRemoveInstance = async () => {
   localStorage.removeItem(INSTANCE_KEY);
 };
 
-export { storageGetInstance, storageRemoveInstance, storageSetInstance };
+const storageGetInstanceSelected = () =>
+  localStorage.getItem(SELECTED_INSTANCE_KEY);
+
+const storageSetInstanceSelected = (instance: string) =>
+  localStorage.setItem(SELECTED_INSTANCE_KEY, instance);
+
+const storageRemoveInstanceSelected = async () => {
+  localStorage.removeItem(SELECTED_INSTANCE_KEY);
+};
+
+export {
+  storageGetInstance,
+  storageGetInstanceSelected,
+  storageRemoveInstance,
+  storageRemoveInstanceSelected,
+  storageSetInstance,
+  storageSetInstanceSelected,
+};

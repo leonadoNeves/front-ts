@@ -10,5 +10,7 @@ export const defaultTheme = {
   'gray-600': '#8D8686',
   'gray-700': '#222222',
   'red-100': '#EC6B5C',
+  online: '#4BE03C',
+  offline: '#FF2727',
   radius: '8px',
 };
