@@ -38,12 +38,15 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
       key: `${elem.menuOrder}`,
       icon: getIconSideBar(elem.menuIcon),
       label: `${elem.menuName}`,
-      onClick: () => navigate(`${elem.menuRoute}`),
+      onClick: () =>
+        elem.children
+          ? ''
+          : navigate(`/dashboard/${instance}${elem.menuRoute}`),
       children: elem.children?.map(child => {
         return {
           key: `${child.menuOrder}`,
           label: `${child.menuName}`,
-          onClick: () => navigate(`${child.menuRoute}`),
+          onClick: () => navigate(`/dashboard/${instance}${child.menuRoute}`),
         };
       }),
     };
