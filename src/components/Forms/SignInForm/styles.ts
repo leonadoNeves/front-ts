@@ -17,7 +17,7 @@ export const FormStyled = styled(Form)`
   margin: 20px;
   max-width: 500px;
   width: 100%;
-  padding: 60px;
+  padding: 40px;
   border-radius: ${({ theme }) => theme.radius};
   display: flex;
   flex-direction: column;
@@ -27,5 +27,11 @@ export const FormStyled = styled(Form)`
 
 export const Image = styled.img`
   max-width: 100%;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
+`;
+
+export const Title = styled.h2`
+  margin-bottom: 40px;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme['gray-700']};
 `;

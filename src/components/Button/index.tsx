@@ -1,22 +1,25 @@
+import getIcon from '@/utils/getIcon';
 import { ButtonProps } from 'antd';
 import { ButtonStyled, VariantType } from './styles';
 
 interface IButton extends ButtonProps {
   variant?: VariantType;
   onClick: () => void;
-  text?: string;
+  fullWidth?: boolean;
+  icon?: string;
 }
 
 export function Button({
   htmlType = 'button',
-  text,
+  title,
   icon,
   variant = 'contained',
   onClick,
   disabled = false,
+  fullWidth = false,
   ...rest
 }: IButton) {
-  // const Icon = getIcon(icon);
+  const Icon = getIcon(icon ? icon : '');
 
   return (
     <ButtonStyled
@@ -24,7 +27,11 @@ export function Button({
       variant={variant}
       onClick={onClick}
       disabled={disabled}
+      fullWidth={fullWidth}
       {...rest}
-    ></ButtonStyled>
+    >
+      {icon && <Icon size={16} />}
+      {title && title}
+    </ButtonStyled>
   );
 }
