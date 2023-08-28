@@ -5,94 +5,59 @@ interface SidebarProps {
 }
 
 export const ContainerSideBar = styled.div<SidebarProps>`
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme['green-100']};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme['green-200']};
+    border-radius: 20px;
+    border: 3px solid ${({ theme }) => theme['green-100']};
+  }
+
+  .sideBar {
+    height: 100%;
+    background-color: ${({ theme }) => theme['green-100']};
+  }
+
+  .sideBar__menu {
+    background-color: ${({ theme }) => theme['green-100']};
+    color: ${({ theme }) => theme['gray-100']};
+
+    ul {
+      background-color: ${({ theme }) => theme['green-200']} !important;
+
+      li {
+        padding-left: 20px !important;
+        background-color: transparent;
+
+        span {
+          color: ${({ theme }) => theme['gray-100']};
+        }
+      }
+    }
+  }
+
   ${({ isSideBarOpen }) => {
     switch (isSideBarOpen) {
       case true:
         return css`
-          .sideBar {
-            padding: 0;
-            background-color: ${({ theme }) => theme['green-200']};
-            height: 90.4%;
-
-            .sideBar__userData {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 200px;
-              background: linear-gradient(to bottom, #004645 60%, #0d7c84 40%);
-            }
-
-            .sideBar__menu {
-              background-color: ${({ theme }) => theme['green-100']};
-              padding-top: 10px;
-
-              span {
-                color: ${({ theme }) => theme['gray-100']};
-              }
-
-              i {
-                color: ${({ theme }) => theme['gray-100']};
-              }
-
-              ul {
-                background-color: ${({ theme }) =>
-                  theme['green-200']} !important;
-
-                li {
-                  padding-left: 20px !important;
-                  background-color: transparent;
-
-                  span {
-                    color: ${({ theme }) => theme['gray-100']};
-                  }
-                }
-              }
-            }
+          .sideBar__menu {
+            margin-top: 2rem;
+            padding-top: 10px;
           }
         `;
 
       default:
         return css`
-          .sideBar {
-            padding: 0;
-            background-color: ${({ theme }) => theme['green-200']};
-            height: 77%;
-
-            .sideBar__userData {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              height: 200px;
-              background: linear-gradient(to bottom, #004645 60%, #0d7c84 40%);
-            }
-
-            .sideBar__menu {
-              background-color: ${({ theme }) => theme['green-100']};
-              padding-top: 20px;
-              color: red;
-
-              span {
-                color: ${({ theme }) => theme['gray-100']};
-              }
-
-              i {
-                color: ${({ theme }) => theme['gray-100']};
-              }
-
-              ul {
-                background-color: ${({ theme }) =>
-                  theme['green-200']} !important;
-
-                li {
-                  padding-left: 20px !important;
-                  background-color: transparent;
-
-                  span {
-                    color: ${({ theme }) => theme['gray-100']};
-                  }
-                }
-              }
-            }
+          .sideBar__menu {
+            padding-top: 20px;
           }
         `;
     }

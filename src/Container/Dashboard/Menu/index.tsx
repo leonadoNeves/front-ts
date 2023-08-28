@@ -12,7 +12,7 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
   const { Sider } = Layout;
 
   return (
-    <ContainerSideBar isSideBarOpen={collapsed}>
+    <ContainerSideBar isSideBarOpen={!collapsed}>
       <Sider
         width={200}
         collapsible
@@ -27,6 +27,7 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
             </button>
           </ContainerLogout>
         )}
+
         <ContainerUserData isSideBarOpen={collapsed}>
           <div className="container">
             <div className="container__imageContainer">
@@ -40,6 +41,7 @@ export const SideBarPage = ({ collapsed, items }: iSideBar) => {
             )}
           </div>
         </ContainerUserData>
+
         <Menu
           mode="inline"
           style={{ height: '100%', borderRight: 0 }}

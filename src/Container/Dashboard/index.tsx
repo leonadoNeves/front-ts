@@ -53,10 +53,12 @@ export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
   return (
     <Layout
       style={{
+        overflow: 'hidden',
         height: '100vh',
       }}
     >
       <HeaderPage setMenuCollaps={setCollapsed} isCollaps={collapsed} />
+
       <Layout>
         <SideBarPage items={items2} collapsed={collapsed} />
 
@@ -69,10 +71,8 @@ export const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: 280,
               background: colorBgContainer,
-              overflow: 'hidden',
-              overflowY: 'scroll',
+              overflowY: 'auto',
             }}
           >
             {children}

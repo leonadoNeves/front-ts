@@ -12,7 +12,7 @@ const HomePage = () => {
     ),
   };
 
-  return <ContainerPage children={<></>} bCrumbArr={bCrumb} />;
+  return <ContainerPage children={<>teste</>} bCrumbArr={bCrumb} />;
 };
 
 export default HomePage;
