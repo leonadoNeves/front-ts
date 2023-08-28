@@ -6,8 +6,6 @@ interface SidebarProps {
 
 export const ContainerSideBar = styled.div<SidebarProps>`
   overflow: auto;
-  position: fixed;
-  height: 100vh;
 
   &::-webkit-scrollbar {
     width: 10px;
