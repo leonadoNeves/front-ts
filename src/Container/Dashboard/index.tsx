@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -5,20 +7,16 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, theme } from 'antd';
-import React, { useState } from 'react';
 import HeaderPage from './Header';
 import SideBarPage from './Menu';
+import { BrandCrumbContainer } from './style';
 
-interface iChildren {
+interface iPageContainer {
   children: React.ReactNode;
+  bCrumbArr: any;
 }
 
-const { Header, Content, Sider } = Layout;
-
-const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-  key,
-  label: `nav ${key}`,
-}));
+const { Content } = Layout;
 
 const items2: MenuProps['items'] = [
   UserOutlined,
@@ -37,17 +35,17 @@ const items2: MenuProps['items'] = [
       return {
         key: subKey,
         label: `option${subKey}`,
-        //   children: {
-        //     icon: React.createElement(icon),
-        //     label: "Leo",
-        //   }
+        className: 'optionSelect',
+        style: {
+          color: 'black',
+        },
       };
     }),
   };
 });
 
-const ContainerPage = ({ children }: iChildren) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+const ContainerPage = ({ children, bCrumbArr }: iPageContainer) => {
+  const [collapsed, setCollapsed] = useState<boolean>(true);
 
   const {
     token: { colorBgContainer },
@@ -61,34 +59,21 @@ const ContainerPage = ({ children }: iChildren) => {
     >
       <HeaderPage setMenuCollaps={setCollapsed} isCollaps={collapsed} />
       <Layout>
-        <SideBarPage items={items2} />
+        <SideBarPage items={items2} collapsed={collapsed} />
 
-        {/* <Sider
-                width={200}
-                style={{ background: colorBgContainer }}
-                collapsible
-                collapsed={collapsed}
-            >
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
-                items={items2}
-              />
-            </Sider> */}
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+        <Layout>
+          <BrandCrumbContainer>
+            <Breadcrumb separator=">" items={bCrumbArr} />
+          </BrandCrumbContainer>
+
           <Content
             style={{
               padding: 24,
               margin: 0,
               minHeight: 280,
               background: colorBgContainer,
+              overflow: 'hidden',
+              overflowY: 'scroll',
             }}
           >
             {children}
