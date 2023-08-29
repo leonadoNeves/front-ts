@@ -4,10 +4,13 @@ import TableModel from '@/components/Table';
 import { useInstance } from '@/hooks/useInstance';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container } from './styles';
+import { bCrumbView } from './bCumbs';
+import { ContainerButton } from './styles';
+import { tableColumns } from './tableColumns';
 
 export const InstalationPage = () => {
   const navigate = useNavigate();
+
   const instance = storageGetInstance();
   const { isBotafogoInstance } = useInstance();
 
@@ -16,18 +19,18 @@ export const InstalationPage = () => {
   };
 
   const PageContent = (
-    <Container>
-      <div className="containerBtn">
+    <>
+      <ContainerButton>
         <Link to={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}>
           {!isBotafogoInstance && (
             <Button type="primary" icon="Plus" onClick={handleRegisterPage} />
           )}
         </Link>
-      </div>
+      </ContainerButton>
 
-      <TableModel tableColumns={[]} data={[]} />
-    </Container>
+      <TableModel tableColumns={tableColumns} data={[]} />
+    </>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={[]} />;
+  return <ContainerPage children={PageContent} bCrumbArr={bCrumbView} />;
 };

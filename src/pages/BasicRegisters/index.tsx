@@ -1,5 +1,5 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { IBCrumb } from '@/interface/bCrumb.interface';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { HomeOutlined } from '@ant-design/icons';
 import { BasicRegisterScreen } from './screen';
