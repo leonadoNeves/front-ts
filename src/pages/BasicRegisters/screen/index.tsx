@@ -4,7 +4,7 @@ import WellImg from '@/assets/images/Registers/oil-can.svg';
 import MedicaoImg from '@/assets/images/Registers/oil-valve.svg';
 import ClusterImg from '@/assets/images/Registers/plataform.svg';
 import ReservatorioImg from '@/assets/images/Registers/reservatorio.svg';
-import InstalationImg from '@/assets/images/Registers/ship.svg';
+import InstallationImg from '@/assets/images/Registers/ship.svg';
 import PocoImg from '@/assets/images/Registers/well.svg';
 import ZoneImg from '@/assets/images/Registers/zone.svg';
 import { NavigationButton } from '@/components/NavigationButton';
@@ -24,7 +24,7 @@ export const BasicRegisterScreen = () => {
 
       <Col>
         <NavigationButton
-          icon={InstalationImg}
+          icon={InstallationImg}
           menuItem="cadastrosBasicos"
           label="Instalações"
           href="instalacoes"

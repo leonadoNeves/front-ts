@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import { InstallationProvider } from './contexts/InstallationContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
 import { TableTypeProvider } from './contexts/TableContext.tsx';
@@ -16,9 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <AuthProvider>
           <PermissionsProvider>
             <InstanceProvider>
-              <TableTypeProvider>
-                <App />
-              </TableTypeProvider>
+              <InstallationProvider>
+                <TableTypeProvider>
+                  <App />
+                </TableTypeProvider>
+              </InstallationProvider>
             </InstanceProvider>
           </PermissionsProvider>
         </AuthProvider>

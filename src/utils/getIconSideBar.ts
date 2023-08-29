@@ -4,9 +4,11 @@ import {
   FileAddOutlined,
   SettingOutlined,
   SnippetsOutlined,
+  SwapRightOutlined,
   UserOutlined,
   WarningOutlined,
 } from '@ant-design/icons';
+
 import { createElement } from 'react';
 
 export function getIconSideBar(name: string) {
@@ -25,5 +27,7 @@ export function getIconSideBar(name: string) {
       return createElement(FileAddOutlined);
     case 'Files':
       return createElement(AuditOutlined);
+    case 'Point':
+      return createElement(SwapRightOutlined);
   }
 }

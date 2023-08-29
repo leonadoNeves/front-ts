@@ -52,6 +52,7 @@ export const ContainerPage = ({
         return {
           key: `${child.menuOrder}`,
           label: `${child.menuName}`,
+          icon: getIconSideBar('Point'),
           onClick: () => navigate(`/dashboard/${instance}${child.menuRoute}`),
         };
       }),

@@ -9,7 +9,7 @@ export const HomePage = () => {
       title: (
         <>
           <HomeOutlined />
-          <span style={{ color: 'black' }}>Home</span>
+          <span>Home</span>
         </>
       ),
     },

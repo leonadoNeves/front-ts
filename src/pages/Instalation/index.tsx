@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { bCrumbView } from './bCumbs';
 import { tableColumns } from './tableColumns';
 
-export const InstalationPage = () => {
+export const InstallationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const instance = storageGetInstance();
