@@ -1,6 +1,7 @@
 import { ClusterDTO, CreateClusterDTO } from '@/dtos/ClusterDTO';
 import { api } from '@/service/api';
 import React, { createContext, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 interface PropsClusterContext {
   GetCluster(): void;
@@ -27,8 +28,16 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
   const GetCluster = async () => {
     try {
       setIsLoading(true);
-      const res = await api.get('/clusters');
-      setClusterList(res.data);
+      const { data } = await api.get('/clusters');
+
+      const objKey = data.map((obj: ClusterDTO) => {
+        return {
+          ...obj,
+          key: uuid(),
+        };
+      });
+
+      setClusterList(objKey);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -38,7 +47,16 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
   };
 
   const GetClusterById = async (clusterId: string) => {
-    console.log(clusterId);
+    try {
+      setIsLoading(true);
+      const { data } = await api.get(`/clusters/${clusterId}`);
+      setClusterSelected(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const CreateCluster = async (clusterData: CreateClusterDTO) => {

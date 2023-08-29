@@ -1,30 +1,26 @@
 import { Drawer } from '@/components/Drawer';
-import { Loading } from '@/components/Loading';
 import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/service/api';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { getIconSideBar } from '@/utils/getIconSideBar';
 import { Info } from '@phosphor-icons/react';
-import { Breadcrumb, Layout, Spin, theme } from 'antd';
+import { Breadcrumb, Layout, theme } from 'antd';
 import { ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderPage } from './Header';
 import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 
 interface IPageContainer {
   children: ReactNode;
-  bCrumbArr: any;
+  bCrumbArr: IBCrumb[];
   isLoading: boolean;
 }
 
 const { Content, Footer } = Layout;
 
-export const ContainerPage = ({
-  children,
-  bCrumbArr,
-  isLoading,
-}: IPageContainer) => {
+export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
   const [collapsed, setCollapsed] = useState(false);
   const [appVersion, setAppVersion] = useState('');
   const [dbStatus, setDbStatus] = useState(false);
@@ -87,7 +83,7 @@ export const ContainerPage = ({
 
         <Layout>
           <BrandCrumbContainer
-            style={{ margin: '0px', backgroundColor: 'white' }}
+            style={{ backgroundColor: '#F5F5F5', margin: '0px' }}
           >
             <div style={{ marginLeft: '20px' }}>
               <Breadcrumb separator=">" items={bCrumbArr} />
@@ -98,20 +94,12 @@ export const ContainerPage = ({
             style={{
               padding: 24,
               margin: 0,
-              background: '#F5F5F5',
+              background: colorBgContainer,
               overflow: 'hidden',
               overflowY: 'auto',
             }}
           >
-            <Spin
-              tip="Carregando..."
-              size="large"
-              indicator={<Loading />}
-              spinning={isLoading}
-              style={{ marginTop: '10rem' }}
-            >
-              {children}
-            </Spin>
+            {children}
           </Content>
 
           <Footer
@@ -121,7 +109,6 @@ export const ContainerPage = ({
               justifyContent: 'center',
               fontSize: '17px',
               fontWeight: '500',
-              background: 'white',
             }}
           >
             <Info

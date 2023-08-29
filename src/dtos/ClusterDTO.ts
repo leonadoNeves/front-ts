@@ -1,6 +1,7 @@
 import { UserDTO } from './UserDTO';
 
 export interface ClusterDTO {
+  key?: string;
   id: string;
   name: string;
   createdAt: string;
