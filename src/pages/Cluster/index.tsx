@@ -2,16 +2,19 @@ import { ContainerPage } from '@/Container/Dashboard';
 import { Button } from '@/components/Button';
 import TableModel from '@/components/Table';
 import { storageGetInstance } from '@/storage/storageInstance';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import bCrumb from './bCrumbs/listPageCrumb';
 import ContainerPageCluster from './styles';
 import { tableColumnList } from './tableColumns';
-import bCrumb from './bCrumbs/listPageCrumb';
 
 const instanceName = storageGetInstance();
 
 // const { Content } = Layout;
 
 export function ClusterPage() {
+  const [isLoading, setIsLoading] = useState(false);
+
   //   const [tableData, setTableData] = useState([])
   //   const [loadingTable, setLoadingTable] = useState(true)
   //   const history = useHistory();
@@ -98,5 +101,11 @@ export function ClusterPage() {
     </>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={bCrumb} />;
+  return (
+    <ContainerPage
+      children={PageContent}
+      bCrumbArr={bCrumb}
+      isLoading={isLoading}
+    />
+  );
 }

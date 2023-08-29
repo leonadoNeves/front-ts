@@ -1,8 +1,9 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { Loading } from '@/components/Loading';
-import { Layout, Spin, Tabs } from 'antd';
+import { usePermissions } from '@/hooks/usePermissions';
+import { Layout, Tabs } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { bCrumbRegister } from './bCumbs';
 import { FormRegister } from './components/FormRegister';
 
@@ -13,12 +14,15 @@ interface ICadInstalationPage {
 export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const location = useLocation();
+  const { checkPermissions } = usePermissions();
+
   const tabs = [
     {
       key: '1',
       label: 'DADOS GERAIS',
       children: (
-        <Content>
+        <Content style={{ width: '100%' }}>
           <FormRegister />
         </Content>
       ),
@@ -32,23 +36,25 @@ export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
   ];
 
   const PageContent = (
-    <Spin
-      tip="Carregando..."
-      size="large"
-      indicator={<Loading />}
-      spinning={isLoading}
-      style={{ marginTop: '10rem' }}
+    <Layout
+      style={{
+        display: 'flex',
+        background: 'transparent',
+      }}
     >
-      <Layout
-        style={{
-          display: 'flex',
-          background: 'transparent',
-        }}
-      >
-        <Tabs defaultActiveKey="1" items={tabs} />
-      </Layout>
-    </Spin>
+      <Tabs defaultActiveKey="1" items={tabs} />
+    </Layout>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={bCrumbRegister} />;
+  useEffect(() => {
+    checkPermissions(location);
+  }, [location]);
+
+  return (
+    <ContainerPage
+      children={PageContent}
+      bCrumbArr={bCrumbRegister}
+      isLoading={isLoading}
+    />
+  );
 };

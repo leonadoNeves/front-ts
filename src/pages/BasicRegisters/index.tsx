@@ -2,9 +2,12 @@ import { ContainerPage } from '@/Container/Dashboard';
 import { IBCrumb } from '@/dtos/BCrumbDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { HomeOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 import { BasicRegisterScreen } from './screen';
 
 const BasicRegisters = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const instance = storageGetInstance();
 
   const bCrumb: IBCrumb[] = [
@@ -28,7 +31,11 @@ const BasicRegisters = () => {
   ];
 
   return (
-    <ContainerPage children={<BasicRegisterScreen />} bCrumbArr={bCrumb} />
+    <ContainerPage
+      children={<BasicRegisterScreen />}
+      bCrumbArr={bCrumb}
+      isLoading={isLoading}
+    />
   );
 };
 

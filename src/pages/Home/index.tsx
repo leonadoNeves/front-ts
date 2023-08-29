@@ -15,5 +15,11 @@ export const HomePage = () => {
     },
   ];
 
-  return <ContainerPage children={<HomeScreen />} bCrumbArr={bCrumb} />;
+  return (
+    <ContainerPage
+      children={<HomeScreen />}
+      bCrumbArr={bCrumb}
+      isLoading={false}
+    />
+  );
 };
