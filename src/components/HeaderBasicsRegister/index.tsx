@@ -5,10 +5,9 @@ import { ContainerButton } from './styles';
 
 interface IHeader {
   href: string;
-  onClick: () => void;
 }
 
-export const HeaderBasicsRegister = ({ href, onClick }: IHeader) => {
+export const HeaderBasicsRegister = ({ href }: IHeader) => {
   const { isBotafogoInstance } = useInstance();
 
   return (
@@ -18,7 +17,6 @@ export const HeaderBasicsRegister = ({ href, onClick }: IHeader) => {
           <Button
             type="primary"
             icon="Plus"
-            onClick={onClick}
             toolTipMessage="Cadastrar Instalação"
             toolTipPosition="topLeft"
           />

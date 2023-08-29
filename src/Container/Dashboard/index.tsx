@@ -80,7 +80,9 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
         <SideBarPage items={itemsSideBar} collapsed={collapsed} />
 
         <Layout>
-          <BrandCrumbContainer style={{ margin: '0px' }}>
+          <BrandCrumbContainer
+            style={{ margin: '0px', backgroundColor: 'white' }}
+          >
             <div style={{ marginLeft: '20px' }}>
               <Breadcrumb separator=">" items={bCrumbArr} />
             </div>
@@ -90,7 +92,7 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
             style={{
               padding: 24,
               margin: 0,
-              background: colorBgContainer,
+              background: '#F5F5F5',
               overflow: 'hidden',
               overflowY: 'auto',
             }}
@@ -105,6 +107,7 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
               justifyContent: 'center',
               fontSize: '17px',
               fontWeight: '500',
+              background: 'white',
             }}
           >
             <Info

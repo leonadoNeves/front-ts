@@ -1,19 +1,13 @@
 import { styled } from 'styled-components';
 
-const ContainerPageCluster = styled.div`
+export const ContainerPageCluster = styled.div`
   border-radius: 5px;
-
-  .containerBtn {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    margin-bottom: 15px;
-  }
-
-  .containerTable {
-    margin-bottom: 20px;
-  }
+  background-color: white;
+  padding: 30px 40px;
+  max-width: 1500px;
+  margin: 30px auto;
 `;
 
-export default ContainerPageCluster;
+export const ContainerTable = styled.div`
+  margin-bottom: 20px;
+`;

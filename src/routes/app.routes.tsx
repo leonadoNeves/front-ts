@@ -22,6 +22,11 @@ export function AppRoutes() {
       />
 
       <Route
+        path="/dashboard/:instance/cadastrosBasicos/cluster/cadCluster/:id?"
+        element={<h2>Teste</h2>}
+      />
+
+      <Route
         path="/dashboard/:instance/cadastrosBasicos/instalacoes"
         element={<InstalationPage />}
       />
