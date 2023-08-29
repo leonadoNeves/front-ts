@@ -59,3 +59,33 @@ export const bCrumbRegister: IBCrumb[] = [
     ),
   },
 ];
+
+export const bCrumbUpdate: IBCrumb[] = [
+  {
+    href: `/dashboard/${instance}`,
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos`,
+    title: (
+      <>
+        <span>Cadastros Básicos</span>
+      </>
+    ),
+  },
+  {
+    href: ``,
+    title: (
+      <>
+        <span style={{ color: 'black' }}>
+          {instance === 'Botafogo' ? 'Visualizar' : 'Visualizar/Editar'}
+        </span>
+      </>
+    ),
+  },
+];

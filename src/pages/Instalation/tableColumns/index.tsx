@@ -30,7 +30,7 @@ export const tableColumns: ITableColumnDTO[] = [
               width: '15px',
               height: '15px',
               borderRadius: '10px',
-              backgroundColor: 'green',
+              backgroundColor: '#4BE03C',
             }}
           />
         </div>
@@ -41,7 +41,7 @@ export const tableColumns: ITableColumnDTO[] = [
               width: '15px',
               height: '15px',
               borderRadius: '10px',
-              backgroundColor: 'red',
+              backgroundColor: '#FF2727',
             }}
           />
         </div>
@@ -50,7 +50,7 @@ export const tableColumns: ITableColumnDTO[] = [
   },
   {
     title: 'Cluster Associado',
-    dataIndex: 'cluster',
+    dataIndex: ['cluster', 'name'],
     search: true,
     key: uuid(),
     ellipsis: {
@@ -150,11 +150,24 @@ export const tableColumns: ITableColumnDTO[] = [
     render: (_text, record) => {
       return (
         <div style={{ width: '30px' }}>
-          <Link to={`cadCluster/${record?.id}`}>
+          <Link
+            to={`/dashboard/${instanceName}/cadastrosBasicos/cadInstalacao/${record?.id}`}
+            state={{ selectedInstallation: record }}
+          >
             {instanceName !== 'Botafogo' ? (
-              <Button type="primary" icon="Pencil" />
+              <Button
+                type="primary"
+                icon="Pencil"
+                toolTipMessage="Editar Instalação"
+                toolTipPosition="topLeft"
+              />
             ) : (
-              <Button type="primary" icon="ClipboardText" />
+              <Button
+                type="primary"
+                icon="ClipboardText"
+                toolTipMessage="Visualizar Instalação"
+                toolTipPosition="topLeft"
+              />
             )}
           </Link>
         </div>
