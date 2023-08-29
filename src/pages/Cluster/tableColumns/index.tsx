@@ -92,9 +92,19 @@ export const tableColumnList: ITableColumnDTO[] = [
         <div style={{ width: '30px' }}>
           <Link to={`cadCluster/${record.id}`}>
             {instanceName !== 'Botafogo' ? (
-              <Button type="primary" icon="Pencil" />
+              <Button
+                type="primary"
+                icon="Pencil"
+                toolTipMessage="Editar Cluster"
+                toolTipPosition="topLeft"
+              />
             ) : (
-              <Button type="primary" icon="ClipboardText" />
+              <Button
+                type="primary"
+                icon="ClipboardText"
+                toolTipMessage="Visualizar Cluster"
+                toolTipPosition="topLeft"
+              />
             )}
           </Link>
         </div>

@@ -5,9 +5,10 @@ import { ContainerButton } from './styles';
 
 interface IHeader {
   href: string;
+  title?: string;
 }
 
-export const HeaderBasicsRegister = ({ href }: IHeader) => {
+export const HeaderBasicsRegister = ({ href, title }: IHeader) => {
   const { isBotafogoInstance } = useInstance();
 
   return (
@@ -17,7 +18,7 @@ export const HeaderBasicsRegister = ({ href }: IHeader) => {
           <Button
             type="primary"
             icon="Plus"
-            toolTipMessage="Cadastrar Instalação"
+            title={title}
             toolTipPosition="topLeft"
           />
         )}

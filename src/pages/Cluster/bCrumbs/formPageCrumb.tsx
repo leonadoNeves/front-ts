@@ -18,7 +18,7 @@ const bCrumbCreate: IBCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },
@@ -54,7 +54,7 @@ const bCrumbUpdate: IBCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },
@@ -70,7 +70,9 @@ const bCrumbUpdate: IBCrumb[] = [
     href: ``,
     title: (
       <>
-        <span style={{ color: 'black' }}>Editar</span>
+        <span style={{ color: 'black' }}>
+          {instance === 'Botafogo' ? 'Visualizar' : 'Visualizar/Editar'}
+        </span>
       </>
     ),
   },

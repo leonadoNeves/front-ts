@@ -18,7 +18,7 @@ export const bCrumbView: IBCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },
@@ -46,7 +46,7 @@ export const bCrumbRegister: IBCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },

@@ -10,8 +10,13 @@ export interface ClusterDTO {
   user: UserDTO;
 }
 
+export interface UpdateClusterDTO {
+  name: string;
+  description: string;
+}
+
 export interface CreateClusterDTO {
   name: string;
-  isActive: true;
-  description: string;
+  isActive: boolean;
+  description: string | null;
 }

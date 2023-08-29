@@ -1,7 +1,7 @@
-import { clusterContext } from '@/contexts/ClusterContext';
+import { ClusterContext } from '@/contexts/ClusterContext';
 import { useContext } from 'react';
 
 export function useCluster() {
-  const context = useContext(clusterContext);
+  const context = useContext(ClusterContext);
   return context;
 }

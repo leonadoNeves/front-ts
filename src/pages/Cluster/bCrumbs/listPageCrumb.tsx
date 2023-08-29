@@ -18,7 +18,7 @@ const bCrumb: IBCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },

@@ -7,8 +7,12 @@ import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const FormRegister = () => {
-  const [fields, setFields] = useState<FieldsDTO[]>([]);
+interface IFormRegister {
+  InstallationId?: string;
+  fields: FieldsDTO[];
+}
+
+export const FormRegister = ({ InstallationId, fields }: IFormRegister) => {
   const [status, setStatus] = useState(true);
   const [installationData, setInstallationData] = useState({} as any);
   const [clusters, setClusters] = useState<any[]>([]);

@@ -1,45 +1,45 @@
-import { v4 as uuid } from 'uuid';
 import { ContainerPage } from '@/Container/Dashboard';
-import TableModel from '@/components/Table';
-import { storageGetInstance } from '@/storage/storageInstance';
-import { ContainerPageCluster, ContainerTable } from './styles';
-import { tableColumnList } from './tableColumns';
-import bCrumb from './bCrumbs/listPageCrumb';
-import { useState, useEffect } from 'react';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
+import TableModel from '@/components/Table';
 import { useCluster } from '@/hooks/useCluster';
+import { storageGetInstance } from '@/storage/storageInstance';
+import { useEffect, useState } from 'react';
+import bCrumb from './bCrumbs/listPageCrumb';
+import { ContainerTable } from './styles';
+import { tableColumnList } from './tableColumns';
 
 const instanceName = storageGetInstance();
 
 export function ClusterPage() {
-  const { GetCluster, clusterList } = useCluster();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getAllCluster, clusterList } = useCluster();
 
   useEffect(() => {
-    const abortEarly = new AbortController();
-
-    GetCluster();
-
-    return () => {
-      abortEarly.abort();
-    };
+    try {
+      setIsLoading(true);
+      getAllCluster();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const PageContent = (
     <>
-      <ContainerPageCluster>
-        <HeaderBasicsRegister
-          href={`/dashboard/${instanceName}/cadastrosBasicos/cluster/cadCluster`}
-        />
+      <HeaderBasicsRegister
+        href={`/dashboard/${instanceName}/cadastrosBasicos/cluster/cadCluster`}
+        title="Cadastrar Cluster"
+      />
 
-        <ContainerTable>
-          <TableModel
-            tableColumns={tableColumnList}
-            data={clusterList}
-            isPagination={true}
-          />
-        </ContainerTable>
-      </ContainerPageCluster>
+      <ContainerTable>
+        <TableModel
+          tableColumns={tableColumnList}
+          data={clusterList}
+          isPagination
+        />
+      </ContainerTable>
     </>
   );
 

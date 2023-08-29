@@ -1,16 +1,16 @@
 import { Drawer } from '@/components/Drawer';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/service/api';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { getIconSideBar } from '@/utils/getIconSideBar';
 import { Info } from '@phosphor-icons/react';
-import { Breadcrumb, Layout, theme } from 'antd';
+import { Breadcrumb, Layout, Spin, theme } from 'antd';
 import { ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderPage } from './Header';
 import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
-import { IBCrumb } from '@/dtos/BCrumbDTO';
 
 interface IPageContainer {
   children: ReactNode;
@@ -20,7 +20,11 @@ interface IPageContainer {
 
 const { Content, Footer } = Layout;
 
-export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
+export const ContainerPage = ({
+  children,
+  bCrumbArr,
+  isLoading,
+}: IPageContainer) => {
   const [collapsed, setCollapsed] = useState(false);
   const [appVersion, setAppVersion] = useState('');
   const [dbStatus, setDbStatus] = useState(false);
@@ -48,6 +52,7 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
         return {
           key: `${child.menuOrder}`,
           label: `${child.menuName}`,
+          icon: getIconSideBar('Point'),
           onClick: () => navigate(`/dashboard/${instance}${child.menuRoute}`),
         };
       }),
@@ -99,7 +104,7 @@ export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
               overflowY: 'auto',
             }}
           >
-            {children}
+            <Spin spinning={isLoading}>{children}</Spin>
           </Content>
 
           <Footer
