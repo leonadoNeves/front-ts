@@ -1,5 +1,5 @@
 import { Drawer } from '@/components/Drawer';
-import { Loading } from '@/components/Loading';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/service/api';
 import { storageGetInstance } from '@/storage/storageInstance';
@@ -14,7 +14,7 @@ import { BrandCrumbContainer } from './style';
 
 interface IPageContainer {
   children: ReactNode;
-  bCrumbArr: any;
+  bCrumbArr: IBCrumb[];
   isLoading: boolean;
 }
 
@@ -87,7 +87,9 @@ export const ContainerPage = ({
         <SideBarPage items={itemsSideBar} collapsed={collapsed} />
 
         <Layout>
-          <BrandCrumbContainer style={{ margin: '0px' }}>
+          <BrandCrumbContainer
+            style={{ backgroundColor: '#F5F5F5', margin: '0px' }}
+          >
             <div style={{ marginLeft: '20px' }}>
               <Breadcrumb separator=">" items={bCrumbArr} />
             </div>
@@ -102,15 +104,7 @@ export const ContainerPage = ({
               overflowY: 'auto',
             }}
           >
-            <Spin
-              tip="Carregando..."
-              size="large"
-              indicator={<Loading />}
-              spinning={isLoading}
-              style={{ marginTop: '10rem' }}
-            >
-              {children}
-            </Spin>
+            <Spin spinning={isLoading}>{children}</Spin>
           </Content>
 
           <Footer

@@ -1,5 +1,6 @@
 import BasicRegisters from '@/pages/BasicRegisters';
 import { ClusterPage } from '@/pages/Cluster';
+import FormCluster from '@/pages/Cluster/formPage';
 import { Error404 } from '@/pages/Error404';
 import { HomePage } from '@/pages/Home';
 import { InstallationPage } from '@/pages/Instalation';
@@ -19,6 +20,11 @@ export function AppRoutes() {
       <Route
         path="/dashboard/:instance/cadastrosBasicos/cluster"
         element={<ClusterPage />}
+      />
+
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/cluster/cadCluster/:id?"
+        element={<FormCluster />}
       />
 
       <Route

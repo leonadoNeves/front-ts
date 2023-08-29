@@ -99,7 +99,12 @@ export const tableColumnList: ITableColumnDTO[] = [
                 toolTipPosition="topLeft"
               />
             ) : (
-              <Button type="primary" icon="ClipboardText" />
+              <Button
+                type="primary"
+                icon="ClipboardText"
+                toolTipMessage="Visualizar Cluster"
+                toolTipPosition="topLeft"
+              />
             )}
           </Link>
         </div>

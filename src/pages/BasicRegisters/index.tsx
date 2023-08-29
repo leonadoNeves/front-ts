@@ -24,7 +24,7 @@ const BasicRegisters = () => {
       href: '',
       title: (
         <>
-          <span style={{ color: 'black' }}>Cadastro Básico</span>
+          <span style={{ color: 'black' }}>Cadastros Básicos</span>
         </>
       ),
     },

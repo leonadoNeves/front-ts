@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { iTableModel } from './interface/interface';
 import EditableRow from './context';
+import { iTableModel } from './interface/interface';
 import columnsSearch from './search/columnData';
 import { StyledTable } from './style';
 import { default as EditableCell } from './tableEditCell/editeCell';

@@ -1,10 +1,10 @@
-import { ibCrumb } from '@/interface/bCrumb.interface';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { HomeOutlined } from '@ant-design/icons';
 
 const instance = storageGetInstance();
 
-const bCrumb: ibCrumb[] = [
+const bCrumb: IBCrumb[] = [
   {
     href: `/dashboard/${instance}`,
     title: (
@@ -18,7 +18,7 @@ const bCrumb: ibCrumb[] = [
     href: `/dashboard/${instance}/cadastrosBasicos`,
     title: (
       <>
-        <span>Cadastro Básico</span>
+        <span>Cadastros Básicos</span>
       </>
     ),
   },

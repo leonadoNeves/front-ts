@@ -1,46 +1,45 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { Button } from '@/components/Button';
+import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { useInstance } from '@/hooks/useInstance';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCluster } from '@/hooks/useCluster';
+import { storageGetInstance } from '@/storage/storageInstance';
+import { useEffect, useState } from 'react';
 import bCrumb from './bCrumbs/listPageCrumb';
-import { ContainerButton } from './styles';
+import { ContainerTable } from './styles';
 import { tableColumnList } from './tableColumns';
 
-export function ClusterPage() {
-  const [isLoading, setIsLoading] = useState(false);
+const instanceName = storageGetInstance();
 
-  const { isBotafogoInstance } = useInstance();
+export function ClusterPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getAllCluster, clusterList } = useCluster();
+
+  useEffect(() => {
+    try {
+      setIsLoading(true);
+      getAllCluster();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const PageContent = (
     <>
-      <ContainerButton>
-        <Link to="cadCluster">
-          {!isBotafogoInstance && (
-            <Button
-              type="primary"
-              icon="Plus"
-              toolTipMessage="Cadastrar Cluster"
-            />
-          )}
-        </Link>
-      </ContainerButton>
+      <HeaderBasicsRegister
+        href={`/dashboard/${instanceName}/cadastrosBasicos/cluster/cadCluster`}
+        title="Cadastrar Cluster"
+      />
 
-      <div style={{ marginBottom: '20px' }}>
+      <ContainerTable>
         <TableModel
           tableColumns={tableColumnList}
-          data={[
-            {
-              key: 1,
-              isActive: true,
-              name: 'Bravo',
-              description: 'Descrição',
-            },
-          ]}
-          isPagination={true}
+          data={clusterList}
+          isPagination
         />
-      </div>
+      </ContainerTable>
     </>
   );
 
