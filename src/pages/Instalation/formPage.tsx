@@ -7,11 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { bCrumbRegister } from './bCumbs';
 import { FormRegister } from './components/FormRegister';
 
-interface ICadInstalationPage {
-  instalationId?: string;
-}
-
-export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
+export const CadInstalacaoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
@@ -28,7 +24,7 @@ export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
       ),
     },
     {
-      disabled: !instalationId,
+      disabled: true,
       key: '2',
       label: 'HISTÓRICO',
       children: <Content></Content>,

@@ -1,30 +1,26 @@
 import { Drawer } from '@/components/Drawer';
-import { Loading } from '@/components/Loading';
 import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/service/api';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { getIconSideBar } from '@/utils/getIconSideBar';
 import { Info } from '@phosphor-icons/react';
-import { Breadcrumb, Layout, Spin, theme } from 'antd';
+import { Breadcrumb, Layout, theme } from 'antd';
 import { ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderPage } from './Header';
 import { SideBarPage } from './Menu';
 import { BrandCrumbContainer } from './style';
+import { IBCrumb } from '@/dtos/BCrumbDTO';
 
 interface IPageContainer {
   children: ReactNode;
-  bCrumbArr: any;
+  bCrumbArr: IBCrumb[];
   isLoading: boolean;
 }
 
 const { Content, Footer } = Layout;
 
-export const ContainerPage = ({
-  children,
-  bCrumbArr,
-  isLoading,
-}: IPageContainer) => {
+export const ContainerPage = ({ children, bCrumbArr }: IPageContainer) => {
   const [collapsed, setCollapsed] = useState(false);
   const [appVersion, setAppVersion] = useState('');
   const [dbStatus, setDbStatus] = useState(false);
@@ -86,7 +82,9 @@ export const ContainerPage = ({
         <SideBarPage items={itemsSideBar} collapsed={collapsed} />
 
         <Layout>
-          <BrandCrumbContainer style={{ margin: '0px' }}>
+          <BrandCrumbContainer
+            style={{ backgroundColor: '#F5F5F5', margin: '0px' }}
+          >
             <div style={{ marginLeft: '20px' }}>
               <Breadcrumb separator=">" items={bCrumbArr} />
             </div>
@@ -101,15 +99,7 @@ export const ContainerPage = ({
               overflowY: 'auto',
             }}
           >
-            <Spin
-              tip="Carregando..."
-              size="large"
-              indicator={<Loading />}
-              spinning={isLoading}
-              style={{ marginTop: '10rem' }}
-            >
-              {children}
-            </Spin>
+            {children}
           </Content>
 
           <Footer

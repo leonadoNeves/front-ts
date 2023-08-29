@@ -8,6 +8,7 @@ import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
 import { TableTypeProvider } from './contexts/TableContext.tsx';
 import { defaultTheme } from './style/theme.ts';
+import { ClusterProvider } from './contexts/ClusterContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,9 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <AuthProvider>
           <PermissionsProvider>
             <InstanceProvider>
-              <TableTypeProvider>
-                <App />
-              </TableTypeProvider>
+              <ClusterProvider>
+                <TableTypeProvider>
+                  <App />
+                </TableTypeProvider>
+              </ClusterProvider>
             </InstanceProvider>
           </PermissionsProvider>
         </AuthProvider>

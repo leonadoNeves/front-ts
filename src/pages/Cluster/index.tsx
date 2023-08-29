@@ -1,102 +1,44 @@
+import { v4 as uuid } from 'uuid';
 import { ContainerPage } from '@/Container/Dashboard';
-import { Button } from '@/components/Button';
 import TableModel from '@/components/Table';
 import { storageGetInstance } from '@/storage/storageInstance';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import bCrumb from './bCrumbs/listPageCrumb';
-import ContainerPageCluster from './styles';
+import { ContainerPageCluster, ContainerTable } from './styles';
 import { tableColumnList } from './tableColumns';
+import bCrumb from './bCrumbs/listPageCrumb';
+import { useState, useEffect } from 'react';
+import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
+import { useCluster } from '@/hooks/useCluster';
 
 const instanceName = storageGetInstance();
 
-// const { Content } = Layout;
-
 export function ClusterPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { GetCluster, clusterList } = useCluster();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  //   const [tableData, setTableData] = useState([])
-  //   const [loadingTable, setLoadingTable] = useState(true)
-  //   const history = useHistory();
+  useEffect(() => {
+    const abortEarly = new AbortController();
 
-  //   let location = useLocation();
-  //   const instanceName = location.pathname.split("/")[2]
-  //   const isBotafogoInstance = instanceName === "Botafogo"
+    GetCluster();
 
-  //   const {selectedInstance, setSelectedInstance} = useContext(instanceContext)
-  //   const {postPermission, patchPermission, checkPermissions} = useContext(permissionsContext)
-
-  //   const formatUpperCase = (coluna) => {
-  //     if (coluna != null) {
-  //       return coluna.toUpperCase();
-  //     } else {
-  //       return "";
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     const abortEarly = new AbortController();
-
-  //     checkPermissions(location, history)
-
-  //     async function fetchAPIs() {
-
-  //       try {
-
-  //         setLoadingTable(true)
-
-  //         await api.get(isBotafogoInstance ? `clusters?instance=${selectedInstance}` : "clusters").then((response) => {
-  //           const { data } = response
-  //           const dataWithKey = data.map(d => {
-  //             return ({ ...d, key: d.id })
-  //           })
-
-  //           setTableData(dataWithKey)
-  //         })
-
-  //         setLoadingTable(false)
-
-  //       } catch (error) {
-  //         console.log(error)
-  //       }
-
-  //     }
-
-  //     fetchAPIs()
-
-  //     return () => {
-  //       abortEarly.abort()
-  //     }
-  //   }, [])
+    return () => {
+      abortEarly.abort();
+    };
+  }, []);
 
   const PageContent = (
     <>
       <ContainerPageCluster>
-        <div className="containerBtn">
-          <Link to={`cadCluster`}>
-            {instanceName != 'Botafogo' && (
-              <Button
-                type="primary"
-                icon="Plus"
-                toolTipMessage="Cadastrar Cluster"
-              />
-            )}
-          </Link>
-        </div>
-        <div className="containerTable">
+        <HeaderBasicsRegister
+          href={`/dashboard/${instanceName}/cadastrosBasicos/cluster/cadCluster`}
+        />
+
+        <ContainerTable>
           <TableModel
             tableColumns={tableColumnList}
-            data={[
-              {
-                key: 1,
-                isActive: true,
-                name: 'Bravo',
-                description: 'Descrição',
-              },
-            ]}
+            data={clusterList}
             isPagination={true}
           />
-        </div>
+        </ContainerTable>
       </ContainerPageCluster>
     </>
   );
