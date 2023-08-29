@@ -1,18 +1,15 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { Button } from '@/components/Button';
+import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { useInstance } from '@/hooks/useInstance';
 import { storageGetInstance } from '@/storage/storageInstance';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { bCrumbView } from './bCumbs';
-import { ContainerButton } from './styles';
 import { tableColumns } from './tableColumns';
 
 export const InstalationPage = () => {
   const navigate = useNavigate();
 
   const instance = storageGetInstance();
-  const { isBotafogoInstance } = useInstance();
 
   const handleRegisterPage = () => {
     navigate(`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`);
@@ -20,20 +17,10 @@ export const InstalationPage = () => {
 
   const PageContent = (
     <>
-      <ContainerButton>
-        <Link to={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}>
-          {!isBotafogoInstance && (
-            <Button
-              type="primary"
-              icon="Plus"
-              onClick={handleRegisterPage}
-              toolTipMessage="Cadastrar Instalação"
-              toolTipPosition="topLeft"
-            />
-          )}
-        </Link>
-      </ContainerButton>
-
+      <HeaderBasicsRegister
+        href={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}
+        onClick={handleRegisterPage}
+      />
       <TableModel tableColumns={tableColumns} data={[]} isPagination />
     </>
   );

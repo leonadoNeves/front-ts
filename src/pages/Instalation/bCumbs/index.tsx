@@ -31,3 +31,31 @@ export const bCrumbView: IBCrumb[] = [
     ),
   },
 ];
+
+export const bCrumbRegister: IBCrumb[] = [
+  {
+    href: `/dashboard/${instance}`,
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos`,
+    title: (
+      <>
+        <span>Cadastro Básico</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/cadInstalacao`,
+    title: (
+      <>
+        <span style={{ color: 'black' }}>Cadastrar Instalação</span>
+      </>
+    ),
+  },
+];

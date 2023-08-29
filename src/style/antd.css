@@ -19,3 +19,7 @@
 .ant-tabs-ink-bar {
   background: #0d7c84 !important;
 }
+
+.ant-tabs-tab-disabled .ant-tabs-tab-btn {
+  color: #b4b2b2 !important;
+}

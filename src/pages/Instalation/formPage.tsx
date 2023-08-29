@@ -3,6 +3,8 @@ import { Loading } from '@/components/Loading';
 import { Layout, Spin, Tabs } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useState } from 'react';
+import { bCrumbRegister } from './bCumbs';
+import { FormRegister } from './components/FormRegister';
 
 interface ICadInstalationPage {
   instalationId?: string;
@@ -15,7 +17,11 @@ export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
     {
       key: '1',
       label: 'DADOS GERAIS',
-      children: <Content></Content>,
+      children: (
+        <Content>
+          <FormRegister />
+        </Content>
+      ),
     },
     {
       disabled: !instalationId,
@@ -44,5 +50,5 @@ export const CadInstalacaoPage = ({ instalationId }: ICadInstalationPage) => {
     </Spin>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={[]} />;
+  return <ContainerPage children={PageContent} bCrumbArr={bCrumbRegister} />;
 };
