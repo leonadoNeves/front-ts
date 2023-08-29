@@ -1,6 +1,6 @@
 import { OperationDTO } from './OperationDTO';
 
-interface ChildrenDTO {
+export interface ChildrenDTO {
   hasChildren: boolean;
   hasParent: boolean;
   menuIcon: string;

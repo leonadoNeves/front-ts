@@ -2,10 +2,13 @@ import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
 import { storageGetInstance } from '@/storage/storageInstance';
+import { useState } from 'react';
 import { bCrumbView } from './bCumbs';
 import { tableColumns } from './tableColumns';
 
 export const InstalationPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const instance = storageGetInstance();
 
   const PageContent = (
@@ -17,5 +20,11 @@ export const InstalationPage = () => {
     </>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={bCrumbView} />;
+  return (
+    <ContainerPage
+      children={PageContent}
+      bCrumbArr={bCrumbView}
+      isLoading={isLoading}
+    />
+  );
 };

@@ -13,6 +13,7 @@ const instanceName = storageGetInstance();
 
 export function ClusterPage() {
   const { GetCluster, clusterList } = useCluster();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const abortEarly = new AbortController();
@@ -42,5 +43,11 @@ export function ClusterPage() {
     </>
   );
 
-  return <ContainerPage children={PageContent} bCrumbArr={bCrumb} />;
+  return (
+    <ContainerPage
+      children={PageContent}
+      bCrumbArr={bCrumb}
+      isLoading={isLoading}
+    />
+  );
 }

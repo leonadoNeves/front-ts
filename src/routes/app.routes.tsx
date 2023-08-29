@@ -32,7 +32,7 @@ export function AppRoutes() {
       />
 
       <Route
-        path="/dashboard/:instance/cadastrosBasicos/cadInstalacao"
+        path="/dashboard/:instance/cadastrosBasicos/cadInstalacao/:id?"
         element={<CadInstalacaoPage />}
       />
 
