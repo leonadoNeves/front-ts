@@ -2,9 +2,12 @@ import BasicRegisters from '@/pages/BasicRegisters';
 import { ClusterPage } from '@/pages/Cluster';
 import FormCluster from '@/pages/Cluster/formPage';
 import { Error404 } from '@/pages/Error404';
+import { FieldPage } from '@/pages/Field';
+import { CadFieldsPage } from '@/pages/Field/formPage';
 import { HomePage } from '@/pages/Home';
 import { InstallationPage } from '@/pages/Instalation';
 import { CadInstalacaoPage } from '@/pages/Instalation/formPage';
+
 import { Route, Routes } from 'react-router-dom';
 
 export function AppRoutes() {
@@ -37,15 +40,22 @@ export function AppRoutes() {
         element={<CadInstalacaoPage />}
       />
 
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/campos"
+        element={<FieldPage />}
+      />
+
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/cadCampo/:id?"
+        element={<CadFieldsPage />}
+      />
+
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
 }
 
 /*
-    <Route path="/dashboard/:instance/cadastrosBasicos/campos" element={<FieldGrid />} />
-    <Route path="/dashboard/:instance/cadastrosBasicos/cadCampo/:id?" element={<FieldForm />} />
-
     <Route path="/dashboard/:instance/cadastrosBasicos/zonas" element={<ZoneGrid />} />
     <Route path="/dashboard/:instance/cadastrosBasicos/cadZona/:id?" element={<ZoneForm />} />
 

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
 import { ClusterProvider } from './contexts/ClusterContext.tsx';
+import { FieldProvider } from './contexts/FieldContext.tsx';
 import { InstallationProvider } from './contexts/InstallationContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
@@ -20,9 +21,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <InstanceProvider>
               <ClusterProvider>
                 <InstallationProvider>
-                  <TableTypeProvider>
-                    <App />
-                  </TableTypeProvider>
+                  <FieldProvider>
+                    <TableTypeProvider>
+                      <App />
+                    </TableTypeProvider>
+                  </FieldProvider>
                 </InstallationProvider>
               </ClusterProvider>
             </InstanceProvider>
