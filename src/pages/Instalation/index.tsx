@@ -15,6 +15,7 @@ export const InstallationPage = () => {
     <>
       <HeaderBasicsRegister
         href={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}
+        title="Cadastrar Instalação"
       />
       <TableModel tableColumns={tableColumns} data={[]} isPagination />
     </>

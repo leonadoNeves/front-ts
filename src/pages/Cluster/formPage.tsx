@@ -1,6 +1,7 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { FieldsDTO } from '@/dtos/FieldsDTO';
 import { useCluster } from '@/hooks/useCluster';
+import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Layout, Tabs } from 'antd';
 import { Content } from 'antd/es/layout/layout';
@@ -17,6 +18,7 @@ const FormCluster = () => {
   const clusterId = useParams().id;
   const location = useLocation();
 
+  const { selectedInstance } = useInstance();
   const { checkPermissions } = usePermissions();
   const { getClusterById } = useCluster();
 
@@ -78,10 +80,22 @@ const FormCluster = () => {
   }, [location]);
 
   useEffect(() => {
-    if (clusterId) {
-      fetchAPI();
+    if (selectedInstance.toLowerCase() === 'consolidador') {
+      const cluster = location.state.selectedCluster;
+
+      setFields([
+        { name: ['name'], value: cluster?.name },
+        { name: ['isActive'], value: cluster?.isActive },
+        { name: ['description'], value: cluster?.description },
+      ]);
+
+      setStatus(cluster?.isActive);
+    } else {
+      if (clusterId) {
+        fetchAPI();
+      }
     }
-  }, [clusterId]);
+  }, [selectedInstance, clusterId]);
 
   return (
     <ContainerPage
