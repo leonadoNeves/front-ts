@@ -1,5 +1,5 @@
 import { TableTypeContext } from '@/contexts/TableContext';
-import { Form, Input, InputNumber } from 'antd';
+import { Form, Input, InputNumber, InputRef } from 'antd';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { EditableContext } from '../context';
 import { ieditableCellProps } from '../interface/interface';
@@ -15,13 +15,13 @@ const EditableCell = ({
   ...restProps
 }: ieditableCellProps) => {
   const [editing, setEditing] = useState(false);
-  const inputRef = useRef<any | null>(null);
+  const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext);
   const { typeInputEditable } = useContext(TableTypeContext);
 
   useEffect(() => {
     if (editing) {
-      inputRef.current.focus();
+      inputRef.current!.focus();
     }
   }, [editing]);
 
@@ -76,7 +76,7 @@ const EditableCell = ({
           ]}
         >
           <InputNumber
-            ref={inputRef}
+            // ref={inputRef}
             min={0}
             // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             // parser={(value) => value.replace(/\$\s?|(,*)/g, '')}

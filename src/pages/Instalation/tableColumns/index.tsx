@@ -1,8 +1,9 @@
+import { Button } from '@/components/Button';
 import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import formatUpperCase from '@/utils/formatUpperCase';
-import { Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 const instanceName = storageGetInstance();
 
@@ -10,7 +11,7 @@ export const tableColumns: ITableColumnDTO[] = [
   {
     title: 'Status',
     dataIndex: 'isActive',
-    key: 'status',
+    key: uuid(),
     align: 'center',
     width: '75px',
     ellipsis: {
@@ -51,7 +52,7 @@ export const tableColumns: ITableColumnDTO[] = [
     title: 'Cluster Associado',
     dataIndex: 'cluster',
     search: true,
-    key: 'cluster',
+    key: uuid(),
     ellipsis: {
       showTitle: false,
     },
@@ -69,7 +70,7 @@ export const tableColumns: ITableColumnDTO[] = [
     title: 'Nome da Instalação',
     dataIndex: 'name',
     search: true,
-    key: 'name',
+    key: uuid(),
     ellipsis: {
       showTitle: false,
     },
@@ -86,7 +87,7 @@ export const tableColumns: ITableColumnDTO[] = [
   {
     title: 'Código da UEP-ANP',
     dataIndex: 'uepCod',
-    key: 'uepCod',
+    key: uuid(),
     search: true,
     ellipsis: {
       showTitle: false,
@@ -104,7 +105,7 @@ export const tableColumns: ITableColumnDTO[] = [
   {
     title: 'Volume de Queima de Segurança de Gás (10³ m³)',
     dataIndex: 'gasSafetyBurnVolume',
-    key: 'gasSafetyBurnVolume',
+    key: uuid(),
     search: true,
     ellipsis: {
       showTitle: false,
@@ -122,7 +123,7 @@ export const tableColumns: ITableColumnDTO[] = [
   {
     title: 'Descrição',
     dataIndex: 'description',
-    key: 'description',
+    key: uuid(),
     search: true,
     ellipsis: {
       showTitle: false,
@@ -139,31 +140,25 @@ export const tableColumns: ITableColumnDTO[] = [
       },
     },
   },
-  // {
-  //   title: '',
-  //   dataIndex: '',
-  //   fixed: 'right',
-  //   width: '48px',
-  //   key: 'actions',
-  //   render: (_text, record) => {
-  //     return (
-  //       <Space style={{ display: 'flex', justifyContent: 'center' }}>
-  //         <div style={{ width: '32px' }}>
-  //           <Link to={`cadInstalacao/${record.id}`}>
-  //             {instanceName !== 'Botafogo' && patchPermission ? (
-  //               <EditButton type="primary" icon="Pencil" messageTip="Editar" />
-  //             ) : (
-  //               <EditButton
-  //                 type="primary"
-  //                 onlyRead={true}
-  //                 messageTip="Informações"
-  //                 icon="ClipboardText"
-  //               />
-  //             )}
-  //           </Link>
-  //         </div>
-  //       </Space>
-  //     );
-  //   },
-  // },
+  {
+    key: uuid(),
+    title: '',
+    dataIndex: '',
+    fixed: 'right',
+    width: '58px',
+    align: 'center',
+    render: (_text, record) => {
+      return (
+        <div style={{ width: '30px' }}>
+          <Link to={`cadCluster/${record?.id}`}>
+            {instanceName !== 'Botafogo' ? (
+              <Button type="primary" icon="Pencil" />
+            ) : (
+              <Button type="primary" icon="ClipboardText" />
+            )}
+          </Link>
+        </div>
+      );
+    },
+  },
 ];

@@ -2,7 +2,6 @@ import { Button } from '@/components/Button';
 import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import formatUpper from '@/utils/formatUpperCase';
-import { Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
@@ -86,20 +85,19 @@ export const tableColumnList: ITableColumnDTO[] = [
     title: '',
     dataIndex: '',
     fixed: 'right',
-    width: '48px',
+    width: '58px',
+    align: 'center',
     render: (_text, record) => {
       return (
-        <Space style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '32px' }}>
-            <Link to={`cadCluster/${record.id}`}>
-              {instanceName !== 'Botafogo' ? (
-                <Button type="primary" icon="Pencil" />
-              ) : (
-                <Button type="primary" icon="ClipboardText" />
-              )}
-            </Link>
-          </div>
-        </Space>
+        <div style={{ width: '30px' }}>
+          <Link to={`cadCluster/${record.id}`}>
+            {instanceName !== 'Botafogo' ? (
+              <Button type="primary" icon="Pencil" />
+            ) : (
+              <Button type="primary" icon="ClipboardText" />
+            )}
+          </Link>
+        </div>
       );
     },
   },

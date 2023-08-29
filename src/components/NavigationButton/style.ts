@@ -2,7 +2,8 @@ import { styled } from 'styled-components';
 
 export const ButtonContainer = styled.div`
   .buttonNavigation {
-    width: 200px;
+    width: 220px;
+    max-width: 100%;
     height: 130px;
     background: linear-gradient(#0a737b, #16838b);
     border-radius: 8px;

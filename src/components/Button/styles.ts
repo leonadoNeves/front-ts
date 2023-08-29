@@ -10,7 +10,7 @@ interface IButtonStyled {
 
 export const ButtonStyled = styled(Button)<IButtonStyled>`
   border-radius: 4px !important;
-  padding: 6px !important;
+  padding: 10px !important;
   height: 40px !important;
   display: flex !important;
   align-items: center !important;
@@ -19,8 +19,7 @@ export const ButtonStyled = styled(Button)<IButtonStyled>`
   transition: opacity 0.1s ease-in-out !important;
   width: max-content !important;
   cursor: pointer;
-  width: max-content !important;
-  min-width: 40px !important;
+  min-width: 30px !important;
 
   ${({ fullWidth }) =>
     fullWidth &&

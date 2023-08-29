@@ -23,12 +23,18 @@ export const InstalationPage = () => {
       <ContainerButton>
         <Link to={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}>
           {!isBotafogoInstance && (
-            <Button type="primary" icon="Plus" onClick={handleRegisterPage} />
+            <Button
+              type="primary"
+              icon="Plus"
+              onClick={handleRegisterPage}
+              toolTipMessage="Cadastrar Instalação"
+              toolTipPosition="topLeft"
+            />
           )}
         </Link>
       </ContainerButton>
 
-      <TableModel tableColumns={tableColumns} data={[]} />
+      <TableModel tableColumns={tableColumns} data={[]} isPagination />
     </>
   );
 

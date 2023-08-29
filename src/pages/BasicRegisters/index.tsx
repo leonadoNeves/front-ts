@@ -21,7 +21,7 @@ const BasicRegisters = () => {
       href: '',
       title: (
         <>
-          <span>Cadastro Básico</span>
+          <span style={{ color: 'black' }}>Cadastro Básico</span>
         </>
       ),
     },
