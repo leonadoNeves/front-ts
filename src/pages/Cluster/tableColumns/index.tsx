@@ -90,7 +90,10 @@ export const tableColumnList: ITableColumnDTO[] = [
     render: (_text, record) => {
       return (
         <div style={{ width: '30px' }}>
-          <Link to={`cadCluster/${record.id}`}>
+          <Link
+            to={`cadCluster/${record.id}`}
+            state={{ selectedCluster: record }}
+          >
             {instanceName !== 'Botafogo' ? (
               <Button
                 type="primary"

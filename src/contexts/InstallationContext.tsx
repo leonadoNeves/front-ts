@@ -1,10 +1,12 @@
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
-import { ReactNode, createContext } from 'react';
+import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 type PropsInstallationContext = {
+  getAllInstallations: () => Promise<void>;
   getInstallationById: (InstallationId: string) => Promise<any>;
+  installationsList: any;
 };
 
 type PropsInstallationProvider = {
@@ -16,15 +18,31 @@ const InstallationContext = createContext<PropsInstallationContext>(
 );
 
 const InstallationProvider = ({ children }: PropsInstallationProvider) => {
+  const [installationsList, setInstallationsList] = useState<any>([]);
+
   const { isBotafogoInstance, selectedInstance } = useInstance();
+
+  const getAllInstallations = async () => {
+    const url = isBotafogoInstance
+      ? `installations?instance=${selectedInstance}`
+      : `installations`;
+
+    try {
+      const { data } = await api.get(url);
+      setInstallationsList(data);
+    } catch (error: any) {
+      console.log(error);
+      toast.error('Erro ao buscar as instalações');
+    }
+  };
 
   const getInstallationById = async (InstallationId: string) => {
     try {
-      const { data } = await api.get(
-        isBotafogoInstance
-          ? `installations/${InstallationId}?instance=${selectedInstance}`
-          : `installations/${InstallationId}`,
-      );
+      const url = isBotafogoInstance
+        ? `installations/${InstallationId}?instance=${selectedInstance}`
+        : `installations/${InstallationId}`;
+
+      const { data } = await api.get(url);
 
       return data;
     } catch (error: any) {
@@ -34,7 +52,9 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
   };
 
   return (
-    <InstallationContext.Provider value={{ getInstallationById }}>
+    <InstallationContext.Provider
+      value={{ getInstallationById, getAllInstallations, installationsList }}
+    >
       {children}
     </InstallationContext.Provider>
   );

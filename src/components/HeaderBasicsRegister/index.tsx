@@ -15,12 +15,7 @@ export const HeaderBasicsRegister = ({ href, title }: IHeader) => {
     <ContainerButton>
       <Link to={href}>
         {!isBotafogoInstance && (
-          <Button
-            type="primary"
-            icon="Plus"
-            title={title}
-            toolTipPosition="topLeft"
-          />
+          <Button type="primary" icon="Plus" title={title} />
         )}
       </Link>
     </ContainerButton>

@@ -3,6 +3,7 @@ import {
   CreateClusterDTO,
   UpdateClusterDTO,
 } from '@/dtos/ClusterDTO';
+import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
 import { AxiosError } from 'axios';
 import React, { createContext, useState } from 'react';
@@ -33,9 +34,15 @@ const ClusterContext = createContext<PropsClusterContext>(
 const ClusterProvider = ({ children }: PropsInstanceProvider) => {
   const [clusterList, setClusterList] = useState<ClusterDTO[]>([]);
 
+  const { isBotafogoInstance, selectedInstance } = useInstance();
+
   const getAllCluster = async () => {
     try {
-      const { data } = await api.get('/clusters');
+      const url = isBotafogoInstance
+        ? `/clusters?instance=${selectedInstance}`
+        : '/clusters';
+
+      const { data } = await api.get(url);
 
       const objKey = data.map((obj: ClusterDTO) => {
         return {
@@ -53,7 +60,11 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
 
   const getClusterById = async (clusterId: string) => {
     try {
-      const { data } = await api.get(`/clusters/${clusterId}`);
+      const { data } = await api.get(
+        isBotafogoInstance
+          ? `/clusters/${clusterId}?instance=${selectedInstance}`
+          : `/clusters/${clusterId}`,
+      );
       return data;
     } catch (error) {
       console.log(error);
