@@ -1,6 +1,7 @@
 import {
   CreateReservoirDTO,
   ReservoirDTO,
+  UpdateReservoirDTO,
 } from '@/dtos/BasicRegistry/ReservoirDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
@@ -11,6 +12,13 @@ type PropsReservoirContext = {
   reservoirList: ReservoirDTO[];
   getAllReservoir: () => Promise<void>;
   createReservoir: (reservoirData: CreateReservoirDTO) => Promise<void>;
+  getReservoirById: (reservoirId: string) => Promise<ReservoirDTO>;
+  updateReservoir: (
+    reservoirId: string,
+    reservoirUpdatedData: UpdateReservoirDTO,
+  ) => Promise<void>;
+  disableReservoir: (reservoirId: string) => Promise<void>;
+  enableReservoir: (reservoirId: string) => Promise<void>;
 };
 
 type PropsReservoirProvider = {
@@ -40,6 +48,20 @@ const ReservoirProvider = ({ children }: PropsReservoirProvider) => {
     }
   };
 
+  const getReservoirById = async (reservoirId: string) => {
+    try {
+      const url = isBotafogoInstance
+        ? `reservoirs/${reservoirId}?instance=${selectedInstance}`
+        : `reservoirs/${reservoirId}`;
+
+      const { data } = await api.get(url);
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error('Erro ao buscar o reservatório');
+    }
+  };
+
   const createReservoir = async (reservoirData: CreateReservoirDTO) => {
     try {
       await api.post('/reservoirs', reservoirData);
@@ -49,9 +71,44 @@ const ReservoirProvider = ({ children }: PropsReservoirProvider) => {
     }
   };
 
+  const updateReservoir = async (
+    reservoirId: string,
+    reservoirUpdatedData: UpdateReservoirDTO,
+  ) => {
+    try {
+      await api.patch(`/reservoirs/${reservoirId}`, reservoirUpdatedData);
+    } catch (error: any) {
+      return error;
+    }
+  };
+
+  const disableReservoir = async (reservoirId: string) => {
+    try {
+      await api.delete(`/reservoirs/${reservoirId}`);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const enableReservoir = async (reservoirId: string) => {
+    try {
+      await api.patch(`/reservoirs/${reservoirId}/restore`);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <ReservoirContext.Provider
-      value={{ reservoirList, getAllReservoir, createReservoir }}
+      value={{
+        reservoirList,
+        getAllReservoir,
+        createReservoir,
+        getReservoirById,
+        updateReservoir,
+        disableReservoir,
+        enableReservoir,
+      }}
     >
       {children}
     </ReservoirContext.Provider>

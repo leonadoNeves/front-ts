@@ -20,8 +20,8 @@ type PropsInstallationContext = {
     installationId: string,
     installationUpdatedData: UpdateInstallationDTO,
   ) => Promise<void> | AxiosError;
-  disableInstallation: (installationId: string) => Promise<void>;
-  enableInstallation: (installationId: string) => Promise<void>;
+  disableInstallation: (installationId: string) => Promise<void> | AxiosError;
+  enableInstallation: (installationId: string) => Promise<void> | AxiosError;
 };
 
 type PropsInstallationProvider = {
@@ -76,6 +76,7 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
       toast.success('Instalação salva');
     } catch (error: any) {
       toast.error(error?.response?.data?.message);
+      return error;
     }
   };
 
@@ -97,7 +98,7 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
     try {
       await api.delete(`/installations/${installationId}`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -105,7 +106,7 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
     try {
       await api.patch(`/installations/${installationId}/restore`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 

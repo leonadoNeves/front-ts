@@ -7,7 +7,3 @@ export const ContainerButton = styled.div`
   align-items: flex-start;
   margin-bottom: 15px;
 `;
-
-export const ContainerTable = styled.div`
-  margin-bottom: 20px;
-`;

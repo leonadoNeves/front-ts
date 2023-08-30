@@ -1,11 +1,11 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
+import { ContainerTable } from '@/globals/ContainerTable';
 import { useReservoir } from '@/hooks/useReservoir';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
 import { bCrumbView } from './bCrumbs';
-import { ContainerTable } from './styles';
 import { tableColumns } from './tableColumns';
 
 export const ReservoirPage = () => {

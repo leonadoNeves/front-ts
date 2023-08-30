@@ -5,6 +5,7 @@ import {
 } from '@/dtos/BasicRegistry/FieldDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
+import { AxiosError } from 'axios';
 import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -16,9 +17,9 @@ type PropsFieldContext = {
   updateField: (
     fieldId: string,
     fieldUpdatedData: UpdateFieldDTO,
-  ) => Promise<void>;
-  disableField: (fieldId: string) => Promise<void>;
-  enableField: (fieldId: string) => Promise<void>;
+  ) => Promise<void> | AxiosError;
+  disableField: (fieldId: string) => Promise<void> | AxiosError;
+  enableField: (fieldId: string) => Promise<void> | AxiosError;
 };
 
 type PropsFieldProvider = {
@@ -84,7 +85,7 @@ const FieldProvider = ({ children }: PropsFieldProvider) => {
     try {
       await api.delete(`/fields/${fieldId}`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -92,7 +93,7 @@ const FieldProvider = ({ children }: PropsFieldProvider) => {
     try {
       await api.patch(`/fields/${fieldId}/restore`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 

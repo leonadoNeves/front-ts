@@ -1,6 +1,9 @@
 import { ContainerPage } from '@/Container/Dashboard';
+import TableModel from '@/components/Table';
+import { IHistoryData } from '@/contexts/HistoryContext';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useCluster } from '@/hooks/useCluster';
+import { useHistory } from '@/hooks/useHistory';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Layout, Tabs } from 'antd';
@@ -9,16 +12,15 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { bCrumbCreate, bCrumbUpdate } from './bCrumbs/formPageCrumb';
 import { FormRegister } from './components/FormRegister';
-import TableModel from '@/components/Table';
-import { useHistory } from '@/hooks/useHistory';
 import { historyTableColumns } from './tableColumns';
-import { IHistoryData } from '@/contexts/HistoryContext';
 
 const FormCluster = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState<FieldsFormDTO[]>([]);
   const [status, setStatus] = useState(true);
-  const [historyData, setHistoryData] = useState<IHistoryData[] | undefined>([])
+  const [historyData, setHistoryData] = useState<IHistoryData[] | undefined>(
+    [],
+  );
 
   const clusterId = useParams().id;
   const location = useLocation();
@@ -49,7 +51,11 @@ const FormCluster = () => {
       label: 'HISTÓRICO',
       children: (
         <Content>
-          <TableModel data={historyData ? historyData : []} tableColumns={historyTableColumns} isPagination={true} />
+          <TableModel
+            data={historyData ? historyData : []}
+            tableColumns={historyTableColumns}
+            isPagination={true}
+          />
         </Content>
       ),
     },
@@ -107,15 +113,16 @@ const FormCluster = () => {
     }
   }, [selectedInstance, clusterId]);
 
-  const fetchHistory = async ()=> {
-    const history = await getHistory({id: clusterId, url: 'clusters'})
-    
-    setHistoryData(history)
-  }
+  const fetchHistory = async () => {
+    const history = await getHistory({ id: clusterId, url: 'clusters' });
+    setHistoryData(history);
+  };
 
   useEffect(() => {
-    fetchHistory();
-  }, [])
+    if (clusterId) {
+      fetchHistory();
+    }
+  }, [clusterId]);
 
   return (
     <ContainerPage

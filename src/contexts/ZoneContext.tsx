@@ -5,6 +5,7 @@ import {
 } from '@/dtos/BasicRegistry/ZoneDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
+import { AxiosError } from 'axios';
 import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -13,9 +14,12 @@ type PropsZoneContext = {
   zoneList: ZoneDTO[];
   createZone: (dataZone: CreateZoneDTO) => Promise<void>;
   getZoneById: (zoneId: string) => Promise<ZoneDTO>;
-  updateZone: (zoneId: string, ZoneUpdatedData: UpdateZoneDTO) => Promise<void>;
-  disableZone: (zoneId: string) => Promise<void>;
-  enableZone: (zoneId: string) => Promise<void>;
+  updateZone: (
+    zoneId: string,
+    ZoneUpdatedData: UpdateZoneDTO,
+  ) => Promise<void> | AxiosError;
+  disableZone: (zoneId: string) => Promise<void> | AxiosError;
+  enableZone: (zoneId: string) => Promise<void> | AxiosError;
 };
 
 type PropsZoneProvider = {
@@ -78,7 +82,7 @@ const ZoneProvider = ({ children }: PropsZoneProvider) => {
     try {
       await api.delete(`/zones/${zoneId}`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -86,7 +90,7 @@ const ZoneProvider = ({ children }: PropsZoneProvider) => {
     try {
       await api.patch(`/zones/${zoneId}/restore`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 

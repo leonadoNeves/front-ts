@@ -19,3 +19,9 @@ export interface CreateReservoirDTO {
   zoneId: string;
   isActive: boolean;
 }
+
+export interface UpdateReservoirDTO {
+  name: string;
+  description: string;
+  zoneId: string;
+}

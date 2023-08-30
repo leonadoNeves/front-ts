@@ -10,6 +10,7 @@ import { storageGetInstance } from '@/storage/storageInstance';
 import { compareValues } from '@/utils/compareValues';
 import { Col, Form, Input, Radio, RadioChangeEvent, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -50,9 +51,9 @@ export const FormRegister = ({
 
   const [form] = Form.useForm();
 
-  const clusterActive = clusterList?.filter(
-    elem => elem.isActive || elem.id === installationData?.clusterId,
-  );
+  const clusterActive = status
+    ? clusterList?.filter(elem => elem.isActive)
+    : clusterList;
 
   const onStatusChange = async (e: RadioChangeEvent) => {
     const value = e.target.value;
@@ -79,6 +80,11 @@ export const FormRegister = ({
     }
   };
 
+  const handleSucess = () => {
+    toast.success('Instalação atualizada');
+    navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
+  };
+
   const handleUpdateInstallation = async () => {
     try {
       setLoadingSubmit(true);
@@ -88,33 +94,85 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValue.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableInstallation(InstallationId as string);
-        toast.success('Instalação atualizada');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
+        const response = await disableInstallation(InstallationId as string);
+
+        if (response instanceof AxiosError) {
+          throw response;
+        }
+
+        handleSucess();
       } else {
-        if (isActiveChanged) {
+        if (isActiveChanged && hasChanges) {
           if (!status) {
-            await disableInstallation(InstallationId as string);
+            const response = await disableInstallation(
+              InstallationId as string,
+            );
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
           } else {
-            await enableInstallation(InstallationId as string);
+            const response = await enableInstallation(InstallationId as string);
+            const responseUpdate = await updateInstallation(
+              InstallationId as string,
+              installationData,
+            );
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            if (responseUpdate instanceof AxiosError) {
+              throw responseUpdate;
+            }
+
+            handleSucess();
           }
         }
 
-        if (hasChanges) {
-          await updateInstallation(InstallationId as string, installationData);
+        if (isActiveChanged && !hasChanges) {
+          if (!status) {
+            const response = await disableInstallation(
+              InstallationId as string,
+            );
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          } else {
+            const response = await enableInstallation(InstallationId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          }
+        }
+
+        if (!isActiveChanged && hasChanges) {
+          const response = await updateInstallation(
+            InstallationId as string,
+            installationData,
+          );
+
+          if (response instanceof AxiosError) {
+            throw response;
+          }
+
+          handleSucess();
         }
 
         if (!hasChanges && !isActiveChanged) {
           toast.error('Altere ao menos um campo para salvar');
         }
-
-        if (hasChanges || isActiveChanged) {
-          toast.success('Instalação atualizada');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
-        }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoadingSubmit(false);
       setOpenModal(false);

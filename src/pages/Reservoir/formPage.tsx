@@ -1,7 +1,9 @@
 import { ContainerPage } from '@/Container/Dashboard';
+import { ReservoirDTO } from '@/dtos/BasicRegistry/ReservoirDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
+import { useReservoir } from '@/hooks/useReservoir';
 import { Layout, Tabs } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
@@ -19,6 +21,7 @@ export const CadReservoirPage = () => {
 
   const { selectedInstance } = useInstance();
   const { checkPermissions } = usePermissions();
+  const { getReservoirById } = useReservoir();
 
   const tabs = [
     {
@@ -55,9 +58,93 @@ export const CadReservoirPage = () => {
     </Layout>
   );
 
+  const fetchAPI = async () => {
+    if (reservoirId) {
+      try {
+        setIsLoading(true);
+
+        const response = await getReservoirById(reservoirId);
+
+        setFields([
+          {
+            name: ['clusterId'],
+            value: response?.zone.field.installation.cluster.id,
+          },
+          {
+            name: ['installationId'],
+            value: response?.zone.field.installation.id,
+          },
+          {
+            name: ['fieldId'],
+            value: response?.zone.field.id,
+          },
+          {
+            name: ['zoneId'],
+            value: response?.zone.id,
+          },
+          {
+            name: ['name'],
+            value: response?.name,
+          },
+          { name: ['isActive'], value: response?.isActive },
+          {
+            name: ['description'],
+            value: response?.description,
+          },
+        ]);
+
+        setStatus(response?.isActive);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   useEffect(() => {
     checkPermissions(location);
   }, [location]);
+
+  useEffect(() => {
+    if (selectedInstance.toLowerCase() === 'consolidador') {
+      const reservoir: ReservoirDTO = location.state.selectedReservoir;
+
+      setFields([
+        {
+          name: ['clusterId'],
+          value: reservoir?.zone.field.installation.cluster.id,
+        },
+        {
+          name: ['installationId'],
+          value: reservoir?.zone.field.installation.id,
+        },
+        {
+          name: ['fieldId'],
+          value: reservoir?.zone.field.id,
+        },
+        {
+          name: ['zoneId'],
+          value: reservoir?.zone.id,
+        },
+        {
+          name: ['name'],
+          value: reservoir?.name,
+        },
+        { name: ['isActive'], value: reservoir?.isActive },
+        {
+          name: ['description'],
+          value: reservoir?.description,
+        },
+      ]);
+
+      setStatus(reservoir?.isActive);
+    } else {
+      if (reservoirId) {
+        fetchAPI();
+      }
+    }
+  }, [selectedInstance, reservoirId]);
 
   return (
     <ContainerPage

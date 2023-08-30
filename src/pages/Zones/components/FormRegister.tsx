@@ -12,6 +12,7 @@ import { storageGetInstance } from '@/storage/storageInstance';
 import { compareValues } from '@/utils/compareValues';
 import { Col, Form, Input, Radio, RadioChangeEvent, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -51,7 +52,9 @@ export const FormRegister = ({
 
   const [form] = Form.useForm();
 
-  const clusterActive = clusterList?.filter(cluster => cluster.isActive);
+  const clusterActive = status
+    ? clusterList?.filter(cluster => cluster.isActive)
+    : clusterList;
 
   const onClusterChange = async (value: string) => {
     setClusterSelected(value);
@@ -61,19 +64,28 @@ export const FormRegister = ({
     ]);
   };
 
-  const installationsActive = installationsList?.filter(
-    installation =>
-      installation.isActive && installation.cluster.id === clusterSelected,
-  );
+  const installationsActive = status
+    ? installationsList?.filter(
+        installation =>
+          installation.isActive && installation.cluster.id === clusterSelected,
+      )
+    : installationsList?.filter(
+        installation => installation.cluster.id === clusterSelected,
+      );
 
   const onInstallationChange = async (value: string) => {
     setInstallationSelected(value);
     setFields([{ name: ['fieldId'], value: null }]);
   };
 
-  const fieldsActive = fieldsList?.filter(
-    field => field.isActive && field.installation.id === installationSelected,
-  );
+  const fieldsActive = status
+    ? fieldsList?.filter(
+        field =>
+          field.isActive && field.installation.id === installationSelected,
+      )
+    : fieldsList?.filter(
+        field => field.installation.id === installationSelected,
+      );
 
   const onStatusChange = async (e: RadioChangeEvent) => {
     const value = e.target.value;
@@ -100,6 +112,11 @@ export const FormRegister = ({
     }
   };
 
+  const handleSucess = () => {
+    toast.success('Zona atualizada');
+    navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
+  };
+
   const handleUpdateZone = async () => {
     try {
       setLoadingSubmit(true);
@@ -109,33 +126,75 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValue.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableZone(zoneId as string);
-        toast.success('Zona atualizada');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
+        const response = await disableZone(zoneId as string);
+
+        if (response instanceof AxiosError) {
+          throw response;
+        }
+
+        handleSucess();
       } else {
-        if (isActiveChanged) {
+        if (isActiveChanged && hasChanges) {
           if (!status) {
-            await disableZone(zoneId as string);
+            const response = await disableZone(zoneId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
           } else {
-            await enableZone(zoneId as string);
+            const response = await enableZone(zoneId as string);
+            const responseUpdate = await updateZone(zoneId as string, zoneData);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            if (responseUpdate instanceof AxiosError) {
+              throw responseUpdate;
+            }
+
+            handleSucess();
           }
         }
 
-        if (hasChanges) {
-          await updateZone(zoneId as string, zoneData);
+        if (isActiveChanged && !hasChanges) {
+          if (!status) {
+            const response = await disableZone(zoneId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          } else {
+            const response = await enableZone(zoneId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          }
+        }
+
+        if (!isActiveChanged && hasChanges) {
+          const response = await updateZone(zoneId as string, zoneData);
+
+          if (response instanceof AxiosError) {
+            throw response;
+          }
+
+          handleSucess();
         }
 
         if (!hasChanges && !isActiveChanged) {
           toast.error('Altere ao menos um campo para salvar');
         }
-
-        if (hasChanges || isActiveChanged) {
-          toast.success('Zona atualizada');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
-        }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoadingSubmit(false);
       setOpenModal(false);
