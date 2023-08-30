@@ -1,26 +1,27 @@
 import { ContainerPage } from '@/Container/Dashboard';
+import { FieldDTO } from '@/dtos/FieldsDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
-import { useInstallation } from '@/hooks/useInstallation';
+import { useField } from '@/hooks/useField';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
 import { Layout, Tabs } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { bCrumbRegister, bCrumbUpdate } from './bCumbs';
+import { bCrumbRegister, bCrumbUpdate } from './bCrumbs';
 import { FormRegister } from './components/FormRegister';
 
-export const CadInstalacaoPage = () => {
+export const CadFieldsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState<FieldsFormDTO[]>([]);
   const [status, setStatus] = useState(true);
 
   const location = useLocation();
-  const InstallationId = useParams().id;
+  const fieldId = useParams().id;
 
-  const { checkPermissions } = usePermissions();
   const { selectedInstance } = useInstance();
-  const { getInstallationById } = useInstallation();
+  const { checkPermissions } = usePermissions();
+  const { getFieldById } = useField();
 
   const tabs = [
     {
@@ -29,8 +30,9 @@ export const CadInstalacaoPage = () => {
       children: (
         <Content>
           <FormRegister
-            InstallationId={InstallationId}
+            fieldId={fieldId}
             fields={fields}
+            setFields={setFields}
             status={status}
             setStatus={setStatus}
           />
@@ -38,7 +40,7 @@ export const CadInstalacaoPage = () => {
       ),
     },
     {
-      disabled: !InstallationId,
+      disabled: !fieldId,
       key: '2',
       label: 'HISTÓRICO',
       children: <Content></Content>,
@@ -57,24 +59,22 @@ export const CadInstalacaoPage = () => {
   );
 
   const fetchAPI = async () => {
-    if (InstallationId) {
+    if (fieldId) {
       try {
         setIsLoading(true);
-        const response = await getInstallationById(InstallationId);
+        const response = await getFieldById(fieldId);
 
         setFields([
-          { name: ['clusterId'], value: response.cluster.id },
+          { name: ['clusterId'], value: response.installation.cluster.id },
           {
-            name: ['codInstallationAnp'],
-            value: response.codInstallationAnp,
+            name: ['installationId'],
+            value: response.installation.id,
           },
           { name: ['name'], value: response.name },
-          { name: ['uepCod'], value: response.uepCod },
-          { name: ['uepName'], value: response.uepName },
-          {
-            name: ['gasSafetyBurnVolume'],
-            value: response.gasSafetyBurnVolume,
-          },
+          { name: ['codField'], value: response.codField },
+          { name: ['state'], value: response.state },
+          { name: ['basin'], value: response.basin },
+          { name: ['location'], value: response.location },
           { name: ['isActive'], value: response.isActive },
           {
             name: ['description'],
@@ -97,40 +97,38 @@ export const CadInstalacaoPage = () => {
 
   useEffect(() => {
     if (selectedInstance.toLowerCase() === 'consolidador') {
-      const installation = location.state.selectedInstallation;
+      const field: FieldDTO = location.state.selectedField;
 
       setFields([
-        { name: ['clusterId'], value: installation.cluster.id },
+        { name: ['clusterId'], value: field.installation.cluster.id },
         {
-          name: ['codInstallationAnp'],
-          value: installation.codInstallationAnp,
+          name: ['installationId'],
+          value: field.installation.id,
         },
-        { name: ['name'], value: installation.name },
-        { name: ['uepCod'], value: installation.uepCod },
-        { name: ['uepName'], value: installation.uepName },
-        {
-          name: ['gasSafetyBurnVolume'],
-          value: installation.gasSafetyBurnVolume,
-        },
-        { name: ['isActive'], value: installation.isActive },
+        { name: ['name'], value: field.name },
+        { name: ['codField'], value: field.codField },
+        { name: ['state'], value: field.state },
+        { name: ['basin'], value: field.basin },
+        { name: ['location'], value: field.location },
+        { name: ['isActive'], value: field.isActive },
         {
           name: ['description'],
-          value: installation.description,
+          value: field.description,
         },
       ]);
 
-      setStatus(installation?.isActive);
+      setStatus(field?.isActive);
     } else {
-      if (InstallationId) {
+      if (fieldId) {
         fetchAPI();
       }
     }
-  }, [selectedInstance, InstallationId]);
+  }, [selectedInstance, fieldId]);
 
   return (
     <ContainerPage
       children={PageContent}
-      bCrumbArr={InstallationId ? bCrumbUpdate : bCrumbRegister}
+      bCrumbArr={fieldId ? bCrumbUpdate : bCrumbRegister}
       isLoading={isLoading}
     />
   );

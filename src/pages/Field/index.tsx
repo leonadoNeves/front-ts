@@ -1,37 +1,33 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { useInstallation } from '@/hooks/useInstallation';
+import { useField } from '@/hooks/useField';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
-import { bCrumbView } from './bCumbs';
+import { bCrumbView } from './bCrumbs';
 import { tableColumns } from './tableColumns';
 
-export const InstallationPage = () => {
+export const FieldPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const instance = storageGetInstance();
-  const { installationsList, getAllInstallations } = useInstallation();
+  const { getAllFields, fieldsList } = useField();
 
   const PageContent = (
     <>
       <HeaderBasicsRegister
-        href={`/dashboard/${instance}/cadastrosBasicos/cadInstalacao`}
-        title="Cadastrar Instalação"
+        href={`/dashboard/${instance}/cadastrosBasicos/cadCampo`}
+        title="Cadastrar Campo"
       />
 
-      <TableModel
-        tableColumns={tableColumns}
-        data={installationsList}
-        isPagination
-      />
+      <TableModel tableColumns={tableColumns} data={fieldsList} isPagination />
     </>
   );
 
   useEffect(() => {
     try {
       setIsLoading(true);
-      getAllInstallations();
+      getAllFields();
     } catch (error) {
       console.log(error);
     } finally {

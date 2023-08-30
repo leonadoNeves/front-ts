@@ -35,8 +35,8 @@ const InstanceProvider = ({ children }: PropsInstanceProvider) => {
 
   useEffect(() => {
     if (isBotafogoInstance) {
-      setSelectedInstance('Consolidador');
-      storageSetInstanceSelected('Consolidador');
+      setSelectedInstance('consolidador');
+      storageSetInstanceSelected('consolidador');
     }
   }, [isBotafogoInstance]);
 

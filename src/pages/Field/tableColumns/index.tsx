@@ -49,28 +49,50 @@ export const tableColumns: ITableColumnDTO[] = [
     },
   },
   {
-    title: 'Cluster Associado',
-    dataIndex: ['cluster', 'name'],
-    search: true,
     key: uuid(),
+    title: 'Cluster Associado',
+    dataIndex: ['installation', 'cluster', 'name'],
+    search: true,
     ellipsis: {
       showTitle: false,
     },
     sorter: {
       compare: (a, b) => {
-        return formatUpperCase(a.name) > formatUpperCase(b.name)
+        return formatUpperCase(a.installation.cluster.name) >
+          formatUpperCase(b.installation.cluster.name)
           ? 1
-          : formatUpperCase(b.name) > formatUpperCase(a.name)
+          : formatUpperCase(b.installation.cluster.name) >
+            formatUpperCase(a.installation.cluster.name)
           ? -1
           : 0;
       },
     },
   },
   {
-    title: 'Nome da Instalação',
+    key: uuid(),
+    title: 'Instalação Associada',
+    dataIndex: ['installation', 'name'],
+    search: true,
+    ellipsis: {
+      showTitle: false,
+    },
+    sorter: {
+      compare: (a, b) => {
+        return formatUpperCase(a.installation.name) >
+          formatUpperCase(b.installation.name)
+          ? 1
+          : formatUpperCase(b.installation.name) >
+            formatUpperCase(a.installation.name)
+          ? -1
+          : 0;
+      },
+    },
+  },
+  {
+    key: uuid(),
+    title: 'Nome do Campo',
     dataIndex: 'name',
     search: true,
-    key: uuid(),
     ellipsis: {
       showTitle: false,
     },
@@ -85,8 +107,8 @@ export const tableColumns: ITableColumnDTO[] = [
     },
   },
   {
-    title: 'Código da UEP-ANP',
-    dataIndex: 'uepCod',
+    title: 'Código do Campo - ANP',
+    dataIndex: 'codField',
     key: uuid(),
     search: true,
     ellipsis: {
@@ -94,27 +116,9 @@ export const tableColumns: ITableColumnDTO[] = [
     },
     sorter: {
       compare: (a, b) => {
-        return formatUpperCase(a.uepCod) > formatUpperCase(b.uepCod)
+        return formatUpperCase(a.codField) > formatUpperCase(b.codField)
           ? 1
-          : formatUpperCase(b.uepCod) > formatUpperCase(a.uepCod)
-          ? -1
-          : 0;
-      },
-    },
-  },
-  {
-    title: 'Volume de Queima de Segurança de Gás (10³ m³)',
-    dataIndex: 'gasSafetyBurnVolume',
-    key: uuid(),
-    search: true,
-    ellipsis: {
-      showTitle: false,
-    },
-    sorter: {
-      compare: (a, b) => {
-        return a.gasSafetyBurnVolume > b.gasSafetyBurnVolume
-          ? 1
-          : b.gasSafetyBurnVolume > a.gasSafetyBurnVolume
+          : formatUpperCase(b.codField) > formatUpperCase(a.codField)
           ? -1
           : 0;
       },
@@ -151,21 +155,21 @@ export const tableColumns: ITableColumnDTO[] = [
       return (
         <div style={{ width: '30px' }}>
           <Link
-            to={`/dashboard/${instanceName}/cadastrosBasicos/cadInstalacao/${record?.id}`}
-            state={{ selectedInstallation: record }}
+            to={`/dashboard/${instanceName}/cadastrosBasicos/cadCampo/${record?.id}`}
+            state={{ selectedField: record }}
           >
             {instanceName !== 'Botafogo' ? (
               <Button
                 type="primary"
                 icon="Pencil"
-                toolTipMessage="Editar Instalação"
+                toolTipMessage="Editar Campo"
                 toolTipPosition="topLeft"
               />
             ) : (
               <Button
                 type="primary"
                 icon="ClipboardText"
-                toolTipMessage="Visualizar Instalação"
+                toolTipMessage="Visualizar Campo"
                 toolTipPosition="topLeft"
               />
             )}

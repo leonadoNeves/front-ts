@@ -1,12 +1,27 @@
+import {
+  CreateInstallationDTO,
+  InstallationDTO,
+  UpdateInstallationDTO,
+} from '@/dtos/InstallationDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
+import { AxiosError } from 'axios';
 import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 type PropsInstallationContext = {
   getAllInstallations: () => Promise<void>;
   getInstallationById: (InstallationId: string) => Promise<any>;
-  installationsList: any;
+  installationsList: InstallationDTO[];
+  createInstallation: (
+    installationData: CreateInstallationDTO,
+  ) => Promise<void>;
+  updateInstallation: (
+    installationId: string,
+    installationUpdatedData: UpdateInstallationDTO,
+  ) => Promise<void> | AxiosError;
+  disableInstallation: (installationId: string) => Promise<void>;
+  enableInstallation: (installationId: string) => Promise<void>;
 };
 
 type PropsInstallationProvider = {
@@ -18,7 +33,9 @@ const InstallationContext = createContext<PropsInstallationContext>(
 );
 
 const InstallationProvider = ({ children }: PropsInstallationProvider) => {
-  const [installationsList, setInstallationsList] = useState<any>([]);
+  const [installationsList, setInstallationsList] = useState<InstallationDTO[]>(
+    [],
+  );
 
   const { isBotafogoInstance, selectedInstance } = useInstance();
 
@@ -51,9 +68,59 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
     }
   };
 
+  const createInstallation = async (
+    installationData: CreateInstallationDTO,
+  ) => {
+    try {
+      await api.post('/installations', installationData);
+      toast.success('Instalação salva');
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
+  const updateInstallation = async (
+    installationId: string,
+    installationUpdatedData: UpdateInstallationDTO,
+  ) => {
+    try {
+      await api.patch(
+        `/installations/${installationId}`,
+        installationUpdatedData,
+      );
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+      return error;
+    }
+  };
+
+  const disableInstallation = async (installationId: string) => {
+    try {
+      await api.delete(`/installations/${installationId}`);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const enableInstallation = async (installationId: string) => {
+    try {
+      await api.patch(`/installations/${installationId}/restore`);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <InstallationContext.Provider
-      value={{ getInstallationById, getAllInstallations, installationsList }}
+      value={{
+        getInstallationById,
+        getAllInstallations,
+        installationsList,
+        updateInstallation,
+        createInstallation,
+        disableInstallation,
+        enableInstallation,
+      }}
     >
       {children}
     </InstallationContext.Provider>

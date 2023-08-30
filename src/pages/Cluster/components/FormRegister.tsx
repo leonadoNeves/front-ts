@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { CreateClusterDTO } from '@/dtos/ClusterDTO';
-import { FieldsDTO } from '@/dtos/FieldsDTO';
+import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useCluster } from '@/hooks/useCluster';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 interface IFormRegister {
   clusterId?: string;
-  fields: FieldsDTO[];
+  fields: FieldsFormDTO[];
   status: boolean;
   setStatus: Dispatch<SetStateAction<boolean>>;
 }

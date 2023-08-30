@@ -28,7 +28,7 @@ export const tableColumnList: ITableColumnDTO[] = [
               width: '15px',
               height: '15px',
               borderRadius: '10px',
-              backgroundColor: 'green',
+              backgroundColor: '#4BE03C',
             }}
           />
         </div>
@@ -39,7 +39,7 @@ export const tableColumnList: ITableColumnDTO[] = [
               width: '15px',
               height: '15px',
               borderRadius: '10px',
-              backgroundColor: 'red',
+              backgroundColor: '#FF2727',
             }}
           />
         </div>

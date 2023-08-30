@@ -7,7 +7,7 @@ interface SidebarProps {
 export const HeaderPageContainer = styled.header<SidebarProps>`
   .headerPage {
     background-color: ${({ theme }) => theme['green-300']};
-    height: 85px;
+    height: 60px;
     display: flex;
     align-items: center;
 

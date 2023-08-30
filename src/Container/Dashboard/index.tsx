@@ -97,7 +97,7 @@ export const ContainerPage = ({
 
           <Content
             style={{
-              padding: 24,
+              padding: '16px 24px',
               margin: 0,
               background: colorBgContainer,
               overflow: 'hidden',
@@ -114,6 +114,7 @@ export const ContainerPage = ({
               justifyContent: 'center',
               fontSize: '17px',
               fontWeight: '500',
+              height: '70px',
             }}
           >
             <Info

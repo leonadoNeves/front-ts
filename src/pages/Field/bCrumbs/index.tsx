@@ -23,10 +23,10 @@ export const bCrumbView: IBCrumb[] = [
     ),
   },
   {
-    href: `/dashboard/${instance}/cadastrosBasicos/instalacoes`,
+    href: `/dashboard/${instance}/cadastrosBasicos/campos`,
     title: (
       <>
-        <span style={{ color: 'black' }}>Instalações</span>
+        <span style={{ color: 'black' }}>Campos</span>
       </>
     ),
   },
@@ -51,15 +51,15 @@ export const bCrumbRegister: IBCrumb[] = [
     ),
   },
   {
-    href: `/dashboard/${instance}/cadastrosBasicos/instalacoes`,
+    href: `/dashboard/${instance}/cadastrosBasicos/campos`,
     title: (
       <>
-        <span>Instalações</span>
+        <span>Campos</span>
       </>
     ),
   },
   {
-    href: `/dashboard/${instance}/cadastrosBasicos/cadInstalacao`,
+    href: `/dashboard/${instance}/cadastrosBasicos/cadCampo`,
     title: (
       <>
         <span style={{ color: 'black' }}>Cadastrar</span>
@@ -87,15 +87,15 @@ export const bCrumbUpdate: IBCrumb[] = [
     ),
   },
   {
-    href: `/dashboard/${instance}/cadastrosBasicos/instalacoes`,
+    href: `/dashboard/${instance}/cadastrosBasicos/campos`,
     title: (
       <>
-        <span>Instalações</span>
+        <span>Campos</span>
       </>
     ),
   },
   {
-    href: ``,
+    href: `/dashboard/${instance}/cadastrosBasicos/cadCampo`,
     title: (
       <>
         <span style={{ color: 'black' }}>

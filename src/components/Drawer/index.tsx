@@ -56,8 +56,8 @@ export function Drawer({
   ];
 
   const handleInstance = (instanceName: string) => {
-    setSelectedInstance(instanceName);
-    storageSetInstanceSelected(instanceName);
+    setSelectedInstance(instanceName.toLowerCase());
+    storageSetInstanceSelected(instanceName.toLowerCase());
     navigate(`/dashboard/${instance}`);
   };
 

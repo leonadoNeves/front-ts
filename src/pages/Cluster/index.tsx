@@ -15,17 +15,6 @@ export function ClusterPage() {
 
   const { getAllCluster, clusterList } = useCluster();
 
-  useEffect(() => {
-    try {
-      setIsLoading(true);
-      getAllCluster();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   const PageContent = (
     <>
       <HeaderBasicsRegister
@@ -42,6 +31,17 @@ export function ClusterPage() {
       </ContainerTable>
     </>
   );
+
+  useEffect(() => {
+    try {
+      setIsLoading(true);
+      getAllCluster();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <ContainerPage

@@ -1,5 +1,5 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { FieldsDTO } from '@/dtos/FieldsDTO';
+import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useCluster } from '@/hooks/useCluster';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -16,7 +16,7 @@ import { IHistoryData } from '@/contexts/HistoryContext';
 
 const FormCluster = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [fields, setFields] = useState<FieldsDTO[]>([]);
+  const [fields, setFields] = useState<FieldsFormDTO[]>([]);
   const [status, setStatus] = useState(true);
   const [historyData, setHistoryData] = useState<IHistoryData[] | undefined>([])
 

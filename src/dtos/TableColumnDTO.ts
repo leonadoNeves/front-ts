@@ -4,7 +4,7 @@ export interface ITableColumnDTO {
   editable?: any;
   key: string | number;
   title: string | React.ReactNode;
-  dataIndex: string;
+  dataIndex: string | string[];
   align?: string | number;
   width?: string | number;
   search?: boolean;

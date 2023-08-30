@@ -1,8 +1,10 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
+import { CreateFieldsDTO } from '@/dtos/FieldsDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
-import { CreateInstallationDTO } from '@/dtos/InstallationDTO';
+import { useAuxiliary } from '@/hooks/useAuxiliary';
 import { useCluster } from '@/hooks/useCluster';
+import { useField } from '@/hooks/useField';
 import { useInstallation } from '@/hooks/useInstallation';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -15,24 +17,25 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 interface IFormRegister {
-  InstallationId?: string;
+  fieldId?: string;
   fields: FieldsFormDTO[];
   status: boolean;
   setStatus: Dispatch<SetStateAction<boolean>>;
+  setFields: Dispatch<SetStateAction<FieldsFormDTO[]>>;
 }
 
 export const FormRegister = ({
-  InstallationId,
+  fieldId,
   fields,
   status,
   setStatus,
+  setFields,
 }: IFormRegister) => {
   const [openModal, setOpenModal] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [installationData, setInstallationData] = useState(
-    {} as CreateInstallationDTO,
-  );
-  const [initialValue, setInitialValue] = useState({} as CreateInstallationDTO);
+  const [fieldData, setFieldData] = useState({} as CreateFieldsDTO);
+  const [initialValue, setInitialValue] = useState({} as CreateFieldsDTO);
+  const [clusterSelected, setClusterSelected] = useState('');
 
   const { postPermission, patchPermission } = usePermissions();
 
@@ -41,17 +44,22 @@ export const FormRegister = ({
   const { isBotafogoInstance } = useInstance();
 
   const { clusterList, getAllCluster } = useCluster();
-  const {
-    createInstallation,
-    updateInstallation,
-    disableInstallation,
-    enableInstallation,
-  } = useInstallation();
+  const { getAllInstallations, installationsList } = useInstallation();
+  const { getAuxiliaryData, ufList, basinsList } = useAuxiliary();
+  const { createField, updateField, enableField, disableField } = useField();
 
   const [form] = Form.useForm();
 
-  const clusterActive = clusterList?.filter(
-    elem => elem.isActive || elem.id === installationData?.clusterId,
+  const clusterActive = clusterList?.filter(cluster => cluster.isActive);
+
+  const onClusterChange = async (value: any) => {
+    setClusterSelected(value);
+    setFields([{ name: ['fieldId'], value: null }]);
+  };
+
+  const installationsActive = installationsList?.filter(
+    installation =>
+      installation.isActive && installation.cluster.id === clusterSelected,
   );
 
   const onStatusChange = async (e: RadioChangeEvent) => {
@@ -60,17 +68,17 @@ export const FormRegister = ({
   };
 
   const handleSubmit = (values: any) => {
-    setInstallationData(values);
+    setFieldData(values);
     setOpenModal(true);
   };
 
-  const handleCreateInstallation = async () => {
+  const handleCreateField = async () => {
     try {
       setLoadingSubmit(true);
 
-      await createInstallation(installationData);
+      await createField(fieldData);
       form.resetFields();
-      navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
+      navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,7 +87,7 @@ export const FormRegister = ({
     }
   };
 
-  const handleUpdateInstallation = async () => {
+  const handleUpdateField = async () => {
     try {
       setLoadingSubmit(true);
 
@@ -88,20 +96,20 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValue.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableInstallation(InstallationId as string);
-        toast.success('Instalação atualizada');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
+        await disableField(fieldId as string);
+        toast.success('Campo atualizado');
+        navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
       } else {
         if (isActiveChanged) {
           if (!status) {
-            await disableInstallation(InstallationId as string);
+            await disableField(fieldId as string);
           } else {
-            await enableInstallation(InstallationId as string);
+            await enableField(fieldId as string);
           }
         }
 
         if (hasChanges) {
-          await updateInstallation(InstallationId as string, installationData);
+          await updateField(fieldId as string, fieldData);
         }
 
         if (!hasChanges && !isActiveChanged) {
@@ -109,8 +117,8 @@ export const FormRegister = ({
         }
 
         if (hasChanges || isActiveChanged) {
-          toast.success('Instalação atualizada');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/instalacoes`);
+          toast.success('Campo atualizado');
+          navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
         }
       }
     } catch (error) {
@@ -123,22 +131,50 @@ export const FormRegister = ({
 
   useEffect(() => {
     getAllCluster();
+    getAllInstallations();
   }, []);
 
   useEffect(() => {
+    if (!isBotafogoInstance) {
+      getAuxiliaryData();
+    }
+  }, [isBotafogoInstance]);
+
+  useEffect(() => {
     if (fields) {
+      console.log(fields);
+      setClusterSelected(fields[0]?.value);
+
       setInitialValue({
-        clusterId: fields[0]?.value,
-        codInstallationAnp: fields[1]?.value,
+        installationId: fields[1]?.value,
         name: fields[2]?.value,
-        uepCod: fields[3]?.value,
-        uepName: fields[4]?.value,
-        gasSafetyBurnVolume: fields[5]?.value,
-        isActive: fields[6]?.value,
-        description: fields[7]?.value,
+        codField: fields[3]?.value,
+        state: fields[4]?.value,
+        basin: fields[5]?.value,
+        location: fields[6]?.value,
+        isActive: fields[7]?.value,
+        description: fields[8]?.value,
       });
     }
   }, [fields]);
+
+  const verifyInstallationFieldDisabled = () => {
+    if (
+      isBotafogoInstance ||
+      !status ||
+      (!postPermission && !patchPermission)
+    ) {
+      return true;
+    }
+
+    if (fieldId) {
+      return false;
+    }
+
+    if (!clusterSelected) {
+      return true;
+    }
+  };
 
   return (
     <Form form={form} fields={fields} layout="vertical" onFinish={handleSubmit}>
@@ -157,9 +193,10 @@ export const FormRegister = ({
             <Select
               showSearch
               allowClear
+              onChange={onClusterChange}
               optionFilterProp="children"
               getPopupContainer={trigger => trigger.parentNode}
-              placeholder={isBotafogoInstance ? '' : 'Selecionar Cluster'}
+              placeholder={isBotafogoInstance ? '' : 'Selecione o Cluster'}
               disabled={
                 isBotafogoInstance ||
                 !status ||
@@ -177,8 +214,8 @@ export const FormRegister = ({
 
         <Col xs={24} lg={12}>
           <Form.Item
-            name="codInstallationAnp"
-            label="Código da Instalação"
+            name="installationId"
+            label="Instalação Associada"
             rules={[
               {
                 required: true,
@@ -186,27 +223,30 @@ export const FormRegister = ({
               },
             ]}
           >
-            <Input
-              maxLength={60}
-              placeholder={
-                isBotafogoInstance ? '' : 'Digite Código da Instalação'
-              }
-              disabled={
-                isBotafogoInstance ||
-                !status ||
-                (!postPermission && !patchPermission)
-              }
+            <Select
+              showSearch
+              allowClear
+              optionFilterProp="children"
+              getPopupContainer={trigger => trigger.parentNode}
+              placeholder={isBotafogoInstance ? '' : 'Selecione uma Instalação'}
+              disabled={verifyInstallationFieldDisabled()}
               style={{
                 color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
               }}
-            />
+            >
+              {installationsActive?.map(installation => (
+                <Select.Option key={installation.id} value={installation.id}>
+                  {installation.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
 
         <Col xs={24} lg={12}>
           <Form.Item
             name="name"
-            label="Nome da Instalação"
+            label="Nome do Campo"
             rules={[
               {
                 required: true,
@@ -216,9 +256,7 @@ export const FormRegister = ({
           >
             <Input
               maxLength={60}
-              placeholder={
-                isBotafogoInstance ? '' : 'Digite Nome da Instalação'
-              }
+              placeholder={isBotafogoInstance ? '' : 'Digite o nome do campo'}
               disabled={
                 isBotafogoInstance ||
                 !status ||
@@ -233,8 +271,8 @@ export const FormRegister = ({
 
         <Col xs={24} lg={12}>
           <Form.Item
-            name="uepCod"
-            label="Código da Unidade de Processamento"
+            name="codField"
+            label="Código do Campo - ANP"
             rules={[
               {
                 required: true,
@@ -244,13 +282,10 @@ export const FormRegister = ({
           >
             <Input
               maxLength={60}
-              placeholder={
-                isBotafogoInstance
-                  ? ''
-                  : 'Digite o Código da Unidade de Processamento'
-              }
+              placeholder={isBotafogoInstance ? '' : 'Digite o código do campo'}
               disabled={
                 isBotafogoInstance ||
+                !!fieldId ||
                 !status ||
                 (!postPermission && !patchPermission)
               }
@@ -262,23 +297,13 @@ export const FormRegister = ({
         </Col>
 
         <Col xs={24} lg={12}>
-          <Form.Item
-            name="uepName"
-            label="Nome da Unidade de Processamento"
-            rules={[
-              {
-                required: true,
-                message: 'Campo obrigatório!',
-              },
-            ]}
-          >
-            <Input
-              maxLength={60}
-              placeholder={
-                isBotafogoInstance
-                  ? ''
-                  : 'Digite Nome da Unidade de Processamento'
-              }
+          <Form.Item name="state" label="UF">
+            <Select
+              showSearch
+              allowClear
+              optionFilterProp="children"
+              getPopupContainer={trigger => trigger.parentNode}
+              placeholder={isBotafogoInstance ? '' : 'Selecione uma UF'}
               disabled={
                 isBotafogoInstance ||
                 !status ||
@@ -287,28 +312,52 @@ export const FormRegister = ({
               style={{
                 color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
               }}
-            />
+            >
+              {ufList?.map(uf => (
+                <Select.Option key={uf.id} value={uf.option}>
+                  {uf.option}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
 
         <Col xs={24} lg={12}>
-          <Form.Item
-            name="gasSafetyBurnVolume"
-            label="Volume de Queima de Segurança Mensal (10³ m³)"
-          >
-            <Input
-              maxLength={60}
-              placeholder={
-                isBotafogoInstance
-                  ? ''
-                  : 'Digite Volume de Queima de Segurança de Gás (10³ m³)'
-              }
+          <Form.Item name="basin" label="Bacia">
+            <Select
+              showSearch
+              allowClear
+              optionFilterProp="children"
+              getPopupContainer={trigger => trigger.parentNode}
+              placeholder={isBotafogoInstance ? '' : 'Selecione uma Bacia'}
               disabled={
                 isBotafogoInstance ||
                 !status ||
                 (!postPermission && !patchPermission)
               }
-              type="number"
+              style={{
+                color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
+              }}
+            >
+              {basinsList?.map(basin => (
+                <Select.Option key={basin.id} value={basin.option}>
+                  {basin.option}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} lg={12}>
+          <Form.Item name="location" label="Localização">
+            <Input
+              maxLength={60}
+              placeholder={isBotafogoInstance ? '' : 'Digite a localização'}
+              disabled={
+                isBotafogoInstance ||
+                !status ||
+                (!postPermission && !patchPermission)
+              }
               style={{
                 color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
               }}
@@ -339,7 +388,7 @@ export const FormRegister = ({
           <Form.Item name="description" label="Descrição">
             <TextArea
               placeholder="Digite a descrição"
-              rows={4}
+              rows={3}
               maxLength={120}
               disabled={
                 isBotafogoInstance ||
@@ -383,9 +432,7 @@ export const FormRegister = ({
       <ModalConfirm
         open={openModal}
         handleCancel={() => setOpenModal(!openModal)}
-        onSubmit={
-          InstallationId ? handleUpdateInstallation : handleCreateInstallation
-        }
+        onSubmit={fieldId ? handleUpdateField : handleCreateField}
         hasDeleteMessage={!status}
       />
     </Form>

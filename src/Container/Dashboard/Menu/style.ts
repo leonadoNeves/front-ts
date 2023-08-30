@@ -8,17 +8,7 @@ export const ContainerSideBar = styled.div<SidebarProps>`
   overflow: auto;
 
   &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme['green-100']};
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme['green-200']};
-    border-radius: 20px;
-    border: 3px solid ${({ theme }) => theme['green-100']};
+    width: 0;
   }
 
   .sideBar {

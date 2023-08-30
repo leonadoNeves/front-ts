@@ -4,7 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import { AuxiliaryProvider } from './contexts/AuxiliaryContext.tsx';
 import { ClusterProvider } from './contexts/ClusterContext.tsx';
+import { FieldProvider } from './contexts/FieldContext.tsx';
 import { InstallationProvider } from './contexts/InstallationContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
@@ -23,19 +25,23 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={defaultTheme}>
         <AuthProvider>
           <PermissionsProvider>
-            <UsersProvider>
-              <HistoryProvider>
-                <InstanceProvider>
-                  <ClusterProvider>
-                    <InstallationProvider>
+            <InstanceProvider>
+              <ClusterProvider>
+                <InstallationProvider>
+                  <FieldProvider>
+                    <AuxiliaryProvider>
                       <TableTypeProvider>
-                        <App />
+                        <UsersProvider>
+                          <HistoryProvider>
+                            <App />
+                          </HistoryProvider>
+                        </UsersProvider>
                       </TableTypeProvider>
-                    </InstallationProvider>
-                  </ClusterProvider>
-                </InstanceProvider>
-              </HistoryProvider>
-            </UsersProvider>
+                    </AuxiliaryProvider>
+                  </FieldProvider>
+                </InstallationProvider>
+              </ClusterProvider>
+            </InstanceProvider>
           </PermissionsProvider>
         </AuthProvider>
       </ThemeProvider>
