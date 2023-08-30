@@ -120,23 +120,23 @@ export const tableColumnList: ITableColumnDTO[] = [
 export const historyTableColumns: IHistoryTableColumnDTO[] = [
   {
     key: uuid(),
-    title: "Campo Alterado",
-    dataIndex: "changedField",
+    title: 'Campo Alterado',
+    dataIndex: 'changedField',
   },
   {
     key: uuid(),
-    title: "Valor Anterior",
-    dataIndex: "previousData",
+    title: 'Valor Anterior',
+    dataIndex: 'previousData',
   },
   {
     key: uuid(),
-    title: "Valor Inserido",
-    dataIndex: "changedValue",
+    title: 'Valor Inserido',
+    dataIndex: 'changedValue',
   },
   {
     key: uuid(),
-    title: "Usuário",
-    dataIndex: "updatedBy",
+    title: 'Usuário',
+    dataIndex: 'updatedBy',
     search: true,
     sorter: {
       compare: (a, b) => {
@@ -145,13 +145,13 @@ export const historyTableColumns: IHistoryTableColumnDTO[] = [
           : formatUpper(b.updatedBy) > formatUpper(a.updatedBy)
           ? -1
           : 0;
-      }
-    }
+      },
+    },
   },
   {
     key: uuid(),
-    title: "Data",
-    dataIndex: "createdAt",
+    title: 'Data',
+    dataIndex: 'createdAt',
     search: true,
     sorter: {
       compare: (a, b) => {
@@ -160,7 +160,7 @@ export const historyTableColumns: IHistoryTableColumnDTO[] = [
           : formatUpper(b.createdAt) > formatUpper(a.createdAt)
           ? -1
           : 0;
-      }
-    }
-  }
+      },
+    },
+  },
 ];

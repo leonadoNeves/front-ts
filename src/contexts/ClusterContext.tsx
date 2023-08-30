@@ -2,7 +2,7 @@ import {
   ClusterDTO,
   CreateClusterDTO,
   UpdateClusterDTO,
-} from '@/dtos/ClusterDTO';
+} from '@/dtos/BasicRegistry/ClusterDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
 import { AxiosError } from 'axios';

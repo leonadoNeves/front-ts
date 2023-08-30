@@ -1,15 +1,15 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
-import { ZoneDTO } from '@/dtos/ZoneDTO';
-import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
-import { useZone } from '@/hooks/useZone';
-import { Layout, Tabs } from 'antd';
-import { Content } from 'antd/es/layout/layout';
+import Layout, { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { bCrumbRegister, bCrumbUpdate } from './bCrumbs';
 import { FormRegister } from './components/FormRegister';
+import { useInstance } from '@/hooks/useInstance';
+import { useZone } from '@/hooks/useZone';
+import { Tabs } from 'antd';
+import { ZoneDTO } from '@/dtos/BasicRegistry/ZoneDTO';
 
 export const ZoneRegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);

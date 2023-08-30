@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
+import { CreateInstallationDTO } from '@/dtos/BasicRegistry/InstallationDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
-import { CreateInstallationDTO } from '@/dtos/InstallationDTO';
 import { useCluster } from '@/hooks/useCluster';
 import { useInstallation } from '@/hooks/useInstallation';
 import { useInstance } from '@/hooks/useInstance';

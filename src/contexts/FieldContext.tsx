@@ -1,4 +1,8 @@
-import { CreateFieldsDTO, FieldDTO, UpdateFieldDTO } from '@/dtos/FieldsDTO';
+import {
+  CreateFieldsDTO,
+  FieldDTO,
+  UpdateFieldDTO,
+} from '@/dtos/BasicRegistry/FieldDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
 import { ReactNode, createContext, useState } from 'react';

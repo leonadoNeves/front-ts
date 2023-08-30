@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
-import { CreateClusterDTO } from '@/dtos/ClusterDTO';
+import { CreateClusterDTO } from '@/dtos/BasicRegistry/ClusterDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useCluster } from '@/hooks/useCluster';
 import { useInstance } from '@/hooks/useInstance';

@@ -13,6 +13,7 @@ import HistoryProvider from './contexts/HistoryContext.tsx';
 import { InstallationProvider } from './contexts/InstallationContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
+import { ReservoirProvider } from './contexts/ReservoirContext.tsx';
 import { TableTypeProvider } from './contexts/TableContext.tsx';
 import UsersProvider from './contexts/UserContext.tsx';
 import { ZoneProvider } from './contexts/ZoneContext.tsx';
@@ -32,13 +33,15 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <FieldProvider>
                     <AuxiliaryProvider>
                       <ZoneProvider>
-                        <TableTypeProvider>
-                          <UsersProvider>
-                            <HistoryProvider>
-                              <App />
-                            </HistoryProvider>
-                          </UsersProvider>
-                        </TableTypeProvider>
+                        <ReservoirProvider>
+                          <TableTypeProvider>
+                            <UsersProvider>
+                              <HistoryProvider>
+                                <App />
+                              </HistoryProvider>
+                            </UsersProvider>
+                          </TableTypeProvider>
+                        </ReservoirProvider>
                       </ZoneProvider>
                     </AuxiliaryProvider>
                   </FieldProvider>

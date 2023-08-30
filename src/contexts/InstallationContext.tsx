@@ -2,7 +2,7 @@ import {
   CreateInstallationDTO,
   InstallationDTO,
   UpdateInstallationDTO,
-} from '@/dtos/InstallationDTO';
+} from '@/dtos/BasicRegistry/InstallationDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
 import { AxiosError } from 'axios';

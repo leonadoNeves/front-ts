@@ -1,5 +1,5 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { FieldDTO } from '@/dtos/FieldsDTO';
+import { FieldDTO } from '@/dtos/BasicRegistry/FieldDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useField } from '@/hooks/useField';
 import { useInstance } from '@/hooks/useInstance';

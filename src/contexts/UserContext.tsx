@@ -1,37 +1,37 @@
-import { ReactNode, createContext } from 'react';
 import { UserDTO } from '@/dtos/UserDTO';
 import { api } from '@/service/api';
+import { ReactNode, createContext } from 'react';
 
 interface IUserContext {
-  getUsers: () => Promise<UserDTO[]>
+  getUsers: () => Promise<UserDTO[]>;
 }
 
 type PropsUsersProvider = {
   children: ReactNode;
 };
 
-export const usersContext = createContext({} as IUserContext)
+export const UsersContext = createContext({} as IUserContext);
 
 const UsersProvider = ({ children }: PropsUsersProvider) => {
   const getUsers = async () => {
     try {
-      const { data } = await api.get(`/users`)
+      const { data } = await api.get(`/users`);
 
-      return data
-
-
+      return data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  
-  return (
-    <usersContext.Provider value={{
-      getUsers
-    }}>
-      {children}
-    </usersContext.Provider>
-  )
-}
+  };
 
-export default UsersProvider
+  return (
+    <UsersContext.Provider
+      value={{
+        getUsers,
+      }}
+    >
+      {children}
+    </UsersContext.Provider>
+  );
+};
+
+export default UsersProvider;

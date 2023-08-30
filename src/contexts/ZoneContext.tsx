@@ -1,4 +1,8 @@
-import { CreateZoneDTO, UpdateZoneDTO, ZoneDTO } from '@/dtos/ZoneDTO';
+import {
+  CreateZoneDTO,
+  UpdateZoneDTO,
+  ZoneDTO,
+} from '@/dtos/BasicRegistry/ZoneDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
 import { ReactNode, createContext, useState } from 'react';

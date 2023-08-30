@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
-import { CreateFieldsDTO } from '@/dtos/FieldsDTO';
+import { CreateFieldsDTO } from '@/dtos/BasicRegistry/FieldDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useAuxiliary } from '@/hooks/useAuxiliary';
 import { useCluster } from '@/hooks/useCluster';
@@ -52,7 +52,7 @@ export const FormRegister = ({
 
   const clusterActive = clusterList?.filter(cluster => cluster.isActive);
 
-  const onClusterChange = async (value: any) => {
+  const onClusterChange = async (value: string) => {
     setClusterSelected(value);
     setFields([{ name: ['installationId'], value: null }]);
   };
