@@ -12,6 +12,12 @@ import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
 import { TableTypeProvider } from './contexts/TableContext.tsx';
 import { defaultTheme } from './style/theme.ts';
+import UsersProvider from './contexts/UserContext.tsx';
+import HistoryProvider from './contexts/HistoryContext.tsx';
+import moment from "moment";
+import "moment/dist/locale/pt-br"
+
+moment.locale('pt-br')
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -25,7 +31,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <FieldProvider>
                     <AuxiliaryProvider>
                       <TableTypeProvider>
-                        <App />
+                        <UsersProvider>
+                          <HistoryProvider>
+                            <App />
+                          </HistoryProvider>
+                        </UsersProvider>
                       </TableTypeProvider>
                     </AuxiliaryProvider>
                   </FieldProvider>

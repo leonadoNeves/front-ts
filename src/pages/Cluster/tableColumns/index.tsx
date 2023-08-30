@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button';
+import { IHistoryTableColumnDTO } from '@/dtos/HistoryTableColumnDTO';
 import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import formatUpper from '@/utils/formatUpperCase';
@@ -114,4 +115,52 @@ export const tableColumnList: ITableColumnDTO[] = [
       );
     },
   },
+];
+
+export const historyTableColumns: IHistoryTableColumnDTO[] = [
+  {
+    key: uuid(),
+    title: "Campo Alterado",
+    dataIndex: "changedField",
+  },
+  {
+    key: uuid(),
+    title: "Valor Anterior",
+    dataIndex: "previousData",
+  },
+  {
+    key: uuid(),
+    title: "Valor Inserido",
+    dataIndex: "changedValue",
+  },
+  {
+    key: uuid(),
+    title: "Usuário",
+    dataIndex: "updatedBy",
+    search: true,
+    sorter: {
+      compare: (a, b) => {
+        return formatUpper(a.updatedBy) > formatUpper(b.updatedBy)
+          ? 1
+          : formatUpper(b.updatedBy) > formatUpper(a.updatedBy)
+          ? -1
+          : 0;
+      }
+    }
+  },
+  {
+    key: uuid(),
+    title: "Data",
+    dataIndex: "createdAt",
+    search: true,
+    sorter: {
+      compare: (a, b) => {
+        return formatUpper(a.createdAt) > formatUpper(b.createdAt)
+          ? 1
+          : formatUpper(b.createdAt) > formatUpper(a.createdAt)
+          ? -1
+          : 0;
+      }
+    }
+  }
 ];
