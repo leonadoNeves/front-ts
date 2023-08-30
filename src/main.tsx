@@ -11,6 +11,7 @@ import { InstallationProvider } from './contexts/InstallationContext.tsx';
 import { InstanceProvider } from './contexts/InstanceContext.tsx';
 import { PermissionsProvider } from './contexts/PermissionsContext.tsx';
 import { TableTypeProvider } from './contexts/TableContext.tsx';
+import { ZoneProvider } from './contexts/ZoneContext.tsx';
 import { defaultTheme } from './style/theme.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -24,9 +25,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <InstallationProvider>
                   <FieldProvider>
                     <AuxiliaryProvider>
-                      <TableTypeProvider>
-                        <App />
-                      </TableTypeProvider>
+                      <ZoneProvider>
+                        <TableTypeProvider>
+                          <App />
+                        </TableTypeProvider>
+                      </ZoneProvider>
                     </AuxiliaryProvider>
                   </FieldProvider>
                 </InstallationProvider>

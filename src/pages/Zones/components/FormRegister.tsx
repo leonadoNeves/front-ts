@@ -1,13 +1,13 @@
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
-import { CreateFieldsDTO } from '@/dtos/FieldsDTO';
 import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
-import { useAuxiliary } from '@/hooks/useAuxiliary';
+import { CreateZoneDTO } from '@/dtos/ZoneDTO';
 import { useCluster } from '@/hooks/useCluster';
 import { useField } from '@/hooks/useField';
 import { useInstallation } from '@/hooks/useInstallation';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
+import { useZone } from '@/hooks/useZone';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { compareValues } from '@/utils/compareValues';
 import { Col, Form, Input, Radio, RadioChangeEvent, Row, Select } from 'antd';
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 interface IFormRegister {
-  fieldId?: string;
+  zoneId?: string;
   fields: FieldsFormDTO[];
   status: boolean;
   setStatus: Dispatch<SetStateAction<boolean>>;
@@ -25,7 +25,7 @@ interface IFormRegister {
 }
 
 export const FormRegister = ({
-  fieldId,
+  zoneId,
   fields,
   status,
   setStatus,
@@ -33,9 +33,10 @@ export const FormRegister = ({
 }: IFormRegister) => {
   const [openModal, setOpenModal] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [fieldData, setFieldData] = useState({} as CreateFieldsDTO);
-  const [initialValue, setInitialValue] = useState({} as CreateFieldsDTO);
+  const [zoneData, setZoneData] = useState({} as CreateZoneDTO);
+  const [initialValue, setInitialValue] = useState({} as CreateZoneDTO);
   const [clusterSelected, setClusterSelected] = useState('');
+  const [installationSelected, setInstallationSelected] = useState('');
 
   const { postPermission, patchPermission } = usePermissions();
 
@@ -45,8 +46,8 @@ export const FormRegister = ({
 
   const { clusterList, getAllCluster } = useCluster();
   const { getAllInstallations, installationsList } = useInstallation();
-  const { getAuxiliaryData, ufList, basinsList } = useAuxiliary();
-  const { createField, updateField, enableField, disableField } = useField();
+  const { getAllFields, fieldsList } = useField();
+  const { createZone, disableZone, enableZone, updateZone } = useZone();
 
   const [form] = Form.useForm();
 
@@ -54,12 +55,24 @@ export const FormRegister = ({
 
   const onClusterChange = async (value: any) => {
     setClusterSelected(value);
-    setFields([{ name: ['installationId'], value: null }]);
+    setFields([
+      { name: ['installationId'], value: null },
+      { name: ['fieldId'], value: null },
+    ]);
   };
 
   const installationsActive = installationsList?.filter(
     installation =>
       installation.isActive && installation.cluster.id === clusterSelected,
+  );
+
+  const onInstallationChange = async (value: any) => {
+    setInstallationSelected(value);
+    setFields([{ name: ['fieldId'], value: null }]);
+  };
+
+  const fieldsActive = fieldsList?.filter(
+    field => field.isActive && field.installation.id === installationSelected,
   );
 
   const onStatusChange = async (e: RadioChangeEvent) => {
@@ -68,17 +81,17 @@ export const FormRegister = ({
   };
 
   const handleSubmit = (values: any) => {
-    setFieldData(values);
+    setZoneData(values);
     setOpenModal(true);
   };
 
-  const handleCreateField = async () => {
+  const handleCreateZone = async () => {
     try {
       setLoadingSubmit(true);
 
-      await createField(fieldData);
+      await createZone(zoneData);
       form.resetFields();
-      navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
+      navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -87,7 +100,7 @@ export const FormRegister = ({
     }
   };
 
-  const handleUpdateField = async () => {
+  const handleUpdateZone = async () => {
     try {
       setLoadingSubmit(true);
 
@@ -96,20 +109,20 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValue.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableField(fieldId as string);
-        toast.success('Campo atualizado');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
+        await disableZone(zoneId as string);
+        toast.success('Zona atualizada');
+        navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
       } else {
         if (isActiveChanged) {
           if (!status) {
-            await disableField(fieldId as string);
+            await disableZone(zoneId as string);
           } else {
-            await enableField(fieldId as string);
+            await enableZone(zoneId as string);
           }
         }
 
         if (hasChanges) {
-          await updateField(fieldId as string, fieldData);
+          await updateZone(zoneId as string, zoneData);
         }
 
         if (!hasChanges && !isActiveChanged) {
@@ -117,8 +130,8 @@ export const FormRegister = ({
         }
 
         if (hasChanges || isActiveChanged) {
-          toast.success('Campo atualizado');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/campos`);
+          toast.success('Zona atualizada');
+          navigate(`/dashboard/${instance}/cadastrosBasicos/zonas`);
         }
       }
     } catch (error) {
@@ -128,38 +141,6 @@ export const FormRegister = ({
       setOpenModal(false);
     }
   };
-
-  useEffect(() => {
-    getAllCluster();
-    getAllInstallations();
-  }, []);
-
-  useEffect(() => {
-    if (!isBotafogoInstance) {
-      getAuxiliaryData();
-    }
-  }, [isBotafogoInstance]);
-
-  useEffect(() => {
-    if (fields) {
-      setInitialValue({
-        installationId: fields[1]?.value,
-        name: fields[2]?.value,
-        codField: fields[3]?.value,
-        state: fields[4]?.value,
-        basin: fields[5]?.value,
-        location: fields[6]?.value,
-        isActive: fields[7]?.value,
-        description: fields[8]?.value,
-      });
-    }
-  }, [fields]);
-
-  useEffect(() => {
-    if (fields && !clusterSelected) {
-      setClusterSelected(fields[0]?.value);
-    }
-  }, [fields, clusterSelected]);
 
   const verifyInstallationFieldDisabled = () => {
     if (
@@ -171,10 +152,54 @@ export const FormRegister = ({
       return true;
     }
 
-    if (fieldId) {
+    if (zoneId) {
       return false;
     }
   };
+
+  const verifyFieldDisabled = () => {
+    if (
+      isBotafogoInstance ||
+      !status ||
+      (!postPermission && !patchPermission) ||
+      !installationSelected
+    ) {
+      return true;
+    }
+
+    if (zoneId) {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    getAllCluster();
+    getAllInstallations();
+    getAllFields();
+  }, []);
+
+  useEffect(() => {
+    if (fields) {
+      setInitialValue({
+        fieldId: fields[2]?.value,
+        codZone: fields[3]?.value,
+        isActive: fields[4]?.value,
+        description: fields[5]?.value,
+      });
+    }
+  }, [fields]);
+
+  useEffect(() => {
+    if (fields && !clusterSelected) {
+      setClusterSelected(fields[0]?.value);
+    }
+  }, [fields, clusterSelected]);
+
+  useEffect(() => {
+    if (fields && !installationSelected) {
+      setInstallationSelected(fields[1]?.value);
+    }
+  }, [fields, installationSelected]);
 
   return (
     <Form form={form} fields={fields} layout="vertical" onFinish={handleSubmit}>
@@ -226,6 +251,7 @@ export const FormRegister = ({
             <Select
               showSearch
               allowClear
+              onChange={onInstallationChange}
               optionFilterProp="children"
               getPopupContainer={trigger => trigger.parentNode}
               placeholder={isBotafogoInstance ? '' : 'Selecione uma Instalação'}
@@ -245,8 +271,8 @@ export const FormRegister = ({
 
         <Col xs={24} lg={12}>
           <Form.Item
-            name="name"
-            label="Nome do Campo"
+            name="fieldId"
+            label="Campo Associado"
             rules={[
               {
                 required: true,
@@ -254,25 +280,30 @@ export const FormRegister = ({
               },
             ]}
           >
-            <Input
-              maxLength={60}
-              placeholder={isBotafogoInstance ? '' : 'Digite o nome do campo'}
-              disabled={
-                isBotafogoInstance ||
-                !status ||
-                (!postPermission && !patchPermission)
-              }
+            <Select
+              showSearch
+              allowClear
+              optionFilterProp="children"
+              getPopupContainer={trigger => trigger.parentNode}
+              placeholder={isBotafogoInstance ? '' : 'Selecione um campo'}
+              disabled={verifyFieldDisabled()}
               style={{
                 color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
               }}
-            />
+            >
+              {fieldsActive?.map(field => (
+                <Select.Option key={field.id} value={field.id}>
+                  {field.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
 
         <Col xs={24} lg={12}>
           <Form.Item
-            name="codField"
-            label="Código do Campo - ANP"
+            name="codZone"
+            label="Código da Zona - ANP"
             rules={[
               {
                 required: true,
@@ -281,80 +312,10 @@ export const FormRegister = ({
             ]}
           >
             <Input
-              maxLength={60}
-              placeholder={isBotafogoInstance ? '' : 'Digite o código do campo'}
+              placeholder={isBotafogoInstance ? '' : 'Digite o código da zona'}
               disabled={
                 isBotafogoInstance ||
-                !!fieldId ||
-                !status ||
-                (!postPermission && !patchPermission)
-              }
-              style={{
-                color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
-              }}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} lg={12}>
-          <Form.Item name="state" label="UF">
-            <Select
-              showSearch
-              allowClear
-              optionFilterProp="children"
-              getPopupContainer={trigger => trigger.parentNode}
-              placeholder={isBotafogoInstance ? '' : 'Selecione uma UF'}
-              disabled={
-                isBotafogoInstance ||
-                !status ||
-                (!postPermission && !patchPermission)
-              }
-              style={{
-                color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
-              }}
-            >
-              {ufList?.map(uf => (
-                <Select.Option key={uf.id} value={uf.option}>
-                  {uf.option}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} lg={12}>
-          <Form.Item name="basin" label="Bacia">
-            <Select
-              showSearch
-              allowClear
-              optionFilterProp="children"
-              getPopupContainer={trigger => trigger.parentNode}
-              placeholder={isBotafogoInstance ? '' : 'Selecione uma Bacia'}
-              disabled={
-                isBotafogoInstance ||
-                !status ||
-                (!postPermission && !patchPermission)
-              }
-              style={{
-                color: isBotafogoInstance ? '#635d5d' : 'rgb(109, 102, 102)',
-              }}
-            >
-              {basinsList?.map(basin => (
-                <Select.Option key={basin.id} value={basin.option}>
-                  {basin.option}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Col>
-
-        <Col xs={24} lg={12}>
-          <Form.Item name="location" label="Localização">
-            <Input
-              maxLength={60}
-              placeholder={isBotafogoInstance ? '' : 'Digite a localização'}
-              disabled={
-                isBotafogoInstance ||
+                !!zoneId ||
                 !status ||
                 (!postPermission && !patchPermission)
               }
@@ -388,7 +349,7 @@ export const FormRegister = ({
           <Form.Item name="description" label="Descrição">
             <TextArea
               placeholder="Digite a descrição"
-              rows={3}
+              rows={4}
               maxLength={120}
               disabled={
                 isBotafogoInstance ||
@@ -432,7 +393,7 @@ export const FormRegister = ({
       <ModalConfirm
         open={openModal}
         handleCancel={() => setOpenModal(!openModal)}
-        onSubmit={fieldId ? handleUpdateField : handleCreateField}
+        onSubmit={zoneId ? handleUpdateZone : handleCreateZone}
         hasDeleteMessage={!status}
       />
     </Form>

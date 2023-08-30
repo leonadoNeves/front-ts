@@ -5,6 +5,7 @@ import { useInstallation } from '@/hooks/useInstallation';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
 import { bCrumbView } from './bCumbs';
+import { ContainerTable } from './styles';
 import { tableColumns } from './tableColumns';
 
 export const InstallationPage = () => {
@@ -20,11 +21,13 @@ export const InstallationPage = () => {
         title="Cadastrar Instalação"
       />
 
-      <TableModel
-        tableColumns={tableColumns}
-        data={installationsList}
-        isPagination
-      />
+      <ContainerTable>
+        <TableModel
+          tableColumns={tableColumns}
+          data={installationsList}
+          isPagination
+        />
+      </ContainerTable>
     </>
   );
 

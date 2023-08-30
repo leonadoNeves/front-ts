@@ -1,34 +1,28 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { useCluster } from '@/hooks/useCluster';
+import { useZone } from '@/hooks/useZone';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
-import bCrumb from './bCrumbs/listPageCrumb';
+import { bCrumbView } from './bCrumbs';
 import { ContainerTable } from './styles';
-import { tableColumnList } from './tableColumns';
+import { tableColumns } from './tableColumns';
 
-const instanceName = storageGetInstance();
+export const ZonePage = () => {
+  const [isLoading, setIsLoading] = useState(false);
 
-export function ClusterPage() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { getAllCluster, clusterList } = useCluster();
+  const instance = storageGetInstance();
+  const { getAllZones, zoneList } = useZone();
 
   const PageContent = (
     <>
       <HeaderBasicsRegister
-        href={`/dashboard/${instanceName}/cadastrosBasicos/cluster/cadCluster`}
-        title="Cadastrar Cluster"
+        href={`/dashboard/${instance}/cadastrosBasicos/cadZona`}
+        title="Cadastrar Zona"
       />
 
       <ContainerTable>
-        <TableModel
-          tableColumns={tableColumnList}
-          data={clusterList}
-          isPagination
-          
-        />
+        <TableModel tableColumns={tableColumns} data={zoneList} isPagination />
       </ContainerTable>
     </>
   );
@@ -36,7 +30,7 @@ export function ClusterPage() {
   useEffect(() => {
     try {
       setIsLoading(true);
-      getAllCluster();
+      getAllZones();
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,8 +41,8 @@ export function ClusterPage() {
   return (
     <ContainerPage
       children={PageContent}
-      bCrumbArr={bCrumb}
+      bCrumbArr={bCrumbView}
       isLoading={isLoading}
     />
   );
-}
+};

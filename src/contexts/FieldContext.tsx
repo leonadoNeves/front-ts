@@ -72,7 +72,6 @@ const FieldProvider = ({ children }: PropsFieldProvider) => {
     try {
       await api.patch(`/fields/${fieldId}`, FieldUpdatedData);
     } catch (error: any) {
-      toast.error(error?.response?.data?.message);
       return error;
     }
   };

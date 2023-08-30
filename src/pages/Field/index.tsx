@@ -5,6 +5,7 @@ import { useField } from '@/hooks/useField';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
 import { bCrumbView } from './bCrumbs';
+import { ContainerTable } from './styles';
 import { tableColumns } from './tableColumns';
 
 export const FieldPage = () => {
@@ -20,7 +21,13 @@ export const FieldPage = () => {
         title="Cadastrar Campo"
       />
 
-      <TableModel tableColumns={tableColumns} data={fieldsList} isPagination />
+      <ContainerTable>
+        <TableModel
+          tableColumns={tableColumns}
+          data={fieldsList}
+          isPagination
+        />
+      </ContainerTable>
     </>
   );
 

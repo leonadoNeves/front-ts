@@ -89,7 +89,6 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
         installationUpdatedData,
       );
     } catch (error: any) {
-      toast.error(error?.response?.data?.message);
       return error;
     }
   };

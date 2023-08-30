@@ -88,7 +88,6 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
     try {
       await api.patch(`/clusters/${clusterId}`, clusterUpdatedData);
     } catch (error: any) {
-      toast.error(error?.response?.data?.message);
       return error;
     }
   };

@@ -7,6 +7,8 @@ import { CadFieldsPage } from '@/pages/Field/formPage';
 import { HomePage } from '@/pages/Home';
 import { InstallationPage } from '@/pages/Instalation';
 import { CadInstalacaoPage } from '@/pages/Instalation/formPage';
+import { ZonePage } from '@/pages/Zones';
+import { ZoneRegisterPage } from '@/pages/Zones/formPage';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -50,15 +52,22 @@ export function AppRoutes() {
         element={<CadFieldsPage />}
       />
 
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/zonas"
+        element={<ZonePage />}
+      />
+
+      <Route
+        path="/dashboard/:instance/cadastrosBasicos/cadZona/:id?"
+        element={<ZoneRegisterPage />}
+      />
+
       <Route path="*" element={<Error404 />} />
     </Routes>
   );
 }
 
 /*
-    <Route path="/dashboard/:instance/cadastrosBasicos/zonas" element={<ZoneGrid />} />
-    <Route path="/dashboard/:instance/cadastrosBasicos/cadZona/:id?" element={<ZoneForm />} />
-
     <Route path="/dashboard/:instance/cadastrosBasicos/reservatorios" element={<ReservoirGrid />} />
     <Route path="/dashboard/:instance/cadastrosBasicos/cadReservatorio/:id?" element={<ReservoirForm />} />
 
