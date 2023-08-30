@@ -156,7 +156,7 @@ export const tableColumns: ITableColumnDTO[] = [
         <div style={{ width: '30px' }}>
           <Link
             to={`/dashboard/${instanceName}/cadastrosBasicos/cadCampo/${record?.id}`}
-            state={{ selectedInstallation: record }}
+            state={{ selectedField: record }}
           >
             {instanceName !== 'Botafogo' ? (
               <Button

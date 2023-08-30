@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const BrandCrumbContainer = styled.div`
   margin-left: 30px;
   display: flex;
-  padding: 26px 0px;
+  padding: 20px 0px;
 
   ol {
     li {

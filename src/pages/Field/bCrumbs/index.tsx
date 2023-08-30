@@ -31,3 +31,77 @@ export const bCrumbView: IBCrumb[] = [
     ),
   },
 ];
+
+export const bCrumbRegister: IBCrumb[] = [
+  {
+    href: `/dashboard/${instance}`,
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos`,
+    title: (
+      <>
+        <span>Cadastros Básicos</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/campos`,
+    title: (
+      <>
+        <span>Campos</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/cadCampo`,
+    title: (
+      <>
+        <span style={{ color: 'black' }}>Cadastrar</span>
+      </>
+    ),
+  },
+];
+
+export const bCrumbUpdate: IBCrumb[] = [
+  {
+    href: `/dashboard/${instance}`,
+    title: (
+      <>
+        <HomeOutlined />
+        <span>Home</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos`,
+    title: (
+      <>
+        <span>Cadastros Básicos</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/campos`,
+    title: (
+      <>
+        <span>Campos</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/cadCampo`,
+    title: (
+      <>
+        <span style={{ color: 'black' }}>
+          {instance === 'Botafogo' ? 'Visualizar' : 'Visualizar/Editar'}
+        </span>
+      </>
+    ),
+  },
+];

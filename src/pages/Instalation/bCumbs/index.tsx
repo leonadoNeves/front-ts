@@ -51,6 +51,14 @@ export const bCrumbRegister: IBCrumb[] = [
     ),
   },
   {
+    href: `/dashboard/${instance}/cadastrosBasicos/instalacoes`,
+    title: (
+      <>
+        <span>Instalações</span>
+      </>
+    ),
+  },
+  {
     href: `/dashboard/${instance}/cadastrosBasicos/cadInstalacao`,
     title: (
       <>
@@ -75,6 +83,14 @@ export const bCrumbUpdate: IBCrumb[] = [
     title: (
       <>
         <span>Cadastros Básicos</span>
+      </>
+    ),
+  },
+  {
+    href: `/dashboard/${instance}/cadastrosBasicos/instalacoes`,
+    title: (
+      <>
+        <span>Instalações</span>
       </>
     ),
   },

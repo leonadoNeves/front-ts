@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import App from './App.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import { AuxiliaryProvider } from './contexts/AuxiliaryContext.tsx';
 import { ClusterProvider } from './contexts/ClusterContext.tsx';
 import { FieldProvider } from './contexts/FieldContext.tsx';
 import { InstallationProvider } from './contexts/InstallationContext.tsx';
@@ -22,9 +23,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <ClusterProvider>
                 <InstallationProvider>
                   <FieldProvider>
-                    <TableTypeProvider>
-                      <App />
-                    </TableTypeProvider>
+                    <AuxiliaryProvider>
+                      <TableTypeProvider>
+                        <App />
+                      </TableTypeProvider>
+                    </AuxiliaryProvider>
                   </FieldProvider>
                 </InstallationProvider>
               </ClusterProvider>

@@ -1,5 +1,5 @@
 import { ContainerPage } from '@/Container/Dashboard';
-import { FieldsDTO } from '@/dtos/FieldsDTO';
+import { FieldsFormDTO } from '@/dtos/FieldsFormDTO';
 import { useInstallation } from '@/hooks/useInstallation';
 import { useInstance } from '@/hooks/useInstance';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -12,7 +12,7 @@ import { FormRegister } from './components/FormRegister';
 
 export const CadInstalacaoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [fields, setFields] = useState<FieldsDTO[]>([]);
+  const [fields, setFields] = useState<FieldsFormDTO[]>([]);
   const [status, setStatus] = useState(true);
 
   const location = useLocation();
