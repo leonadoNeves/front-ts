@@ -4,6 +4,9 @@ export interface IHistoryTableColumnDTO {
   key: string | number,
   title: string,
   dataIndex: string,
+  ellipsis?: {
+    showTitle: boolean
+  },
   search?: boolean,
   sorter?: { compare?: (a: any, b: any) => 1 | -1 | 0 };
   render?: (text: any, record: any) => ReactNode;

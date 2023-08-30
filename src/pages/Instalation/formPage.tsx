@@ -9,11 +9,17 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { bCrumbRegister, bCrumbUpdate } from './bCumbs';
 import { FormRegister } from './components/FormRegister';
+import { IHistoryData } from '@/contexts/HistoryContext';
+import { useHistory } from '@/hooks/useHistory';
+import { historyTableColumns } from '../Cluster/tableColumns';
+import TableModel from '@/components/Table';
+import { useCluster } from '@/hooks/useCluster';
 
 export const CadInstalacaoPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState<FieldsFormDTO[]>([]);
   const [status, setStatus] = useState(true);
+  const [historyData, setHistoryData] = useState<IHistoryData[] | undefined>([])
 
   const location = useLocation();
   const InstallationId = useParams().id;
@@ -21,6 +27,8 @@ export const CadInstalacaoPage = () => {
   const { checkPermissions } = usePermissions();
   const { selectedInstance } = useInstance();
   const { getInstallationById } = useInstallation();
+  const { getHistory } = useHistory();
+  const { clusterList } = useCluster()
 
   const tabs = [
     {
@@ -41,7 +49,11 @@ export const CadInstalacaoPage = () => {
       disabled: !InstallationId,
       key: '2',
       label: 'HISTÓRICO',
-      children: <Content></Content>,
+      children: (
+        <Content>
+          <TableModel data={historyData ? historyData : []} tableColumns={historyTableColumns} isPagination={true} />
+        </Content>
+      ),
     },
   ];
 
@@ -126,6 +138,18 @@ export const CadInstalacaoPage = () => {
       }
     }
   }, [selectedInstance, InstallationId]);
+
+  const fetchHistory = async ()=> {
+    const history = await getHistory({id: InstallationId, url: 'installations', clusters: clusterList})
+    
+    setHistoryData(history)
+  }
+
+  useEffect(() => {
+    if (InstallationId) {
+      fetchHistory();
+    }
+  }, [InstallationId])
 
   return (
     <ContainerPage

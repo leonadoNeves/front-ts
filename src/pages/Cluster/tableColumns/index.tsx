@@ -3,6 +3,7 @@ import { IHistoryTableColumnDTO } from '@/dtos/HistoryTableColumnDTO';
 import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import { storageGetInstance } from '@/storage/storageInstance';
 import formatUpper from '@/utils/formatUpperCase';
+import { Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
@@ -56,8 +57,8 @@ export const tableColumnList: ITableColumnDTO[] = [
         return formatUpper(a.name) > formatUpper(b.name)
           ? 1
           : formatUpper(b.name) > formatUpper(a.name)
-          ? -1
-          : 0;
+            ? -1
+            : 0;
       },
     },
   },
@@ -76,8 +77,8 @@ export const tableColumnList: ITableColumnDTO[] = [
           ? 1
           : formatUpper(b.description !== null ? b.description : 'zz') >
             formatUpper(a.description !== null ? a.description : 'zz')
-          ? -1
-          : 0;
+            ? -1
+            : 0;
       },
     },
   },
@@ -120,18 +121,37 @@ export const tableColumnList: ITableColumnDTO[] = [
 export const historyTableColumns: IHistoryTableColumnDTO[] = [
   {
     key: uuid(),
-    title: 'Campo Alterado',
-    dataIndex: 'changedField',
+    title: "Campo Alterado",
+    dataIndex: "changedField",
+    ellipsis: {
+      showTitle: false
+    }
   },
   {
     key: uuid(),
-    title: 'Valor Anterior',
-    dataIndex: 'previousData',
+    title: "Valor Anterior",
+    dataIndex: "previousData",
+    ellipsis: {
+      showTitle: false
+    },
+    render: (text) => (
+      <Tooltip placement="bottomLeft" title={text}>
+        {text}
+      </Tooltip>
+    )
   },
   {
     key: uuid(),
-    title: 'Valor Inserido',
-    dataIndex: 'changedValue',
+    title: "Valor Inserido",
+    dataIndex: "changedValue",
+    ellipsis: {
+      showTitle: false
+    },
+    render: (text) => (
+      <Tooltip placement="bottomLeft" title={text}>
+        {text}
+      </Tooltip>
+    )
   },
   {
     key: uuid(),
@@ -147,6 +167,11 @@ export const historyTableColumns: IHistoryTableColumnDTO[] = [
           : 0;
       },
     },
+    render: (text) => (
+      <Tooltip placement="bottomLeft" title={text}>
+        {text}
+      </Tooltip>
+    )
   },
   {
     key: uuid(),
@@ -162,5 +187,10 @@ export const historyTableColumns: IHistoryTableColumnDTO[] = [
           : 0;
       },
     },
+    render: (text) => (
+      <Tooltip placement="bottomLeft" title={text}>
+        {text}
+      </Tooltip>
+    )
   },
 ];

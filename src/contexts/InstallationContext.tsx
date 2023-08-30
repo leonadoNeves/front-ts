@@ -8,6 +8,7 @@ import { api } from '@/service/api';
 import { AxiosError } from 'axios';
 import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { v4 as uuid } from 'uuid'
 
 type PropsInstallationContext = {
   getAllInstallations: () => Promise<void>;
@@ -46,7 +47,15 @@ const InstallationProvider = ({ children }: PropsInstallationProvider) => {
 
     try {
       const { data } = await api.get(url);
-      setInstallationsList(data);
+
+      const dataWithKey = data.map((obj: InstallationDTO) => {
+        return {
+          ...obj,
+          key: uuid(),
+        };
+      })
+
+      setInstallationsList(dataWithKey);
     } catch (error: any) {
       console.log(error);
       toast.error('Erro ao buscar as instalações');

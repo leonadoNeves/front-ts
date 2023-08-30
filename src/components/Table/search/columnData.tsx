@@ -1,5 +1,6 @@
 import { ITableColumnDTO } from '@/dtos/TableColumnDTO';
 import React from 'react';
+import { Tooltip } from 'antd';
 
 const columnsSearch = (
   tableColumns: ITableColumnDTO[],
@@ -15,7 +16,9 @@ const columnsSearch = (
       return {
         ...c,
         render: (_text: any, record: { changedField: any }) => (
-          <span>{record.changedField}</span>
+          <Tooltip placement="bottomLeft" title={record.changedField}>
+            <span>{record.changedField}</span>
+          </Tooltip>
         ),
       };
     }
@@ -27,7 +30,9 @@ const columnsSearch = (
           const completions = record.completions.map(c => {
             return (
               <span key={c.id}>
-                {record.completions.length > 1 ? `${c.name} / ` : `${c.name}`}
+                <Tooltip placement="bottomLeft" title={record.completions.length > 1 ? `${c.name} / ` : `${c.name}`}>
+                  {record.completions.length > 1 ? `${c.name} / ` : `${c.name}`}
+                </Tooltip>
               </span>
             );
           });
@@ -44,7 +49,9 @@ const columnsSearch = (
           const completions = record.completions.map(c => {
             return (
               <span key={c.id}>
-                {c.reservoir !== null ? `${c.reservoir.name}` : ``}
+                <Tooltip placement="bottomLeft" title={c.reservoir !== null ? `${c.reservoir.name}` : ``}>
+                  {c.reservoir !== null ? `${c.reservoir.name}` : ``}
+                </Tooltip>
               </span>
             );
           });
@@ -61,9 +68,18 @@ const columnsSearch = (
           const completions = record.completions.map(c => {
             return (
               <span key={c.id}>
-                {c.reservoir !== null && c.reservoir.zone.codZone !== null
-                  ? `${c.reservoir.zone.codZone}`
-                  : ``}
+                <Tooltip
+                  placement="bottomLeft"
+                  title={
+                    c.reservoir !== null && c.reservoir.zone.codZone !== null
+                      ? `${c.reservoir.zone.codZone}`
+                      : ``
+                  }
+                >
+                  {c.reservoir !== null && c.reservoir.zone.codZone !== null
+                    ? `${c.reservoir.zone.codZone}`
+                    : ``}
+                </Tooltip>
               </span>
             );
           });
