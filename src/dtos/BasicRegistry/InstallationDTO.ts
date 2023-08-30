@@ -10,8 +10,8 @@ export interface InstallationDTO {
   gasSafetyBurnVolume: number,
   description: string,
   isActive: boolean,
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: string,
+  updatedAt: string,
   user: any,
   cluster: ClusterDTO,
 }

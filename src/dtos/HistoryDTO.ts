@@ -6,9 +6,9 @@ interface IHistoryData {
   description: string,
   type?: string,
   isActive: boolean,
-  createdAt: Date,
-  updatedAt: Date,
-  deletedAt: Date,
+  createdAt: string,
+  updatedAt: string,
+  deletedAt: string,
   installationId: string,
   fieldId?: string,
 
@@ -88,7 +88,7 @@ export interface HistoryDTO {
   table: string,
   tableItemId: string,
   typeOperation: string,
-  createdAt: Date,
+  createdAt: string,
   cratedBy: string,
   updatedBy: string
 }

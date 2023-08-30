@@ -7,7 +7,7 @@ export interface ReservoirDTO {
   description: string,
   user: any,
   zone: ZoneDTO,
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: string,
+  updatedAt: string,
   isActive: boolean
 }

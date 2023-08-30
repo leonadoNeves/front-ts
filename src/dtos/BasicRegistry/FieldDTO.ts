@@ -10,8 +10,8 @@ export interface FieldDTO {
   basin: string,
   state: string,
   location: string,
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: string,
+  updatedAt: string,
   user: any,
   installation: InstallationDTO,
   well: WellDTO[]

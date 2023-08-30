@@ -8,4 +8,7 @@ export interface UserDTO {
   username: string;
   group: GroupDTO;
   userPermissions: PermissionsDTO[];
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

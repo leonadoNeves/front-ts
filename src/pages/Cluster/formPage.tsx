@@ -9,11 +9,16 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { bCrumbCreate, bCrumbUpdate } from './bCrumbs/formPageCrumb';
 import { FormRegister } from './components/FormRegister';
+import TableModel from '@/components/Table';
+import { useHistory } from '@/hooks/useHistory';
+import { historyTableColumns } from './tableColumns';
+import { IHistoryData } from '@/contexts/HistoryContext';
 
 const FormCluster = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, setFields] = useState<FieldsDTO[]>([]);
   const [status, setStatus] = useState(true);
+  const [historyData, setHistoryData] = useState<IHistoryData[] | undefined>([])
 
   const clusterId = useParams().id;
   const location = useLocation();
@@ -21,6 +26,7 @@ const FormCluster = () => {
   const { selectedInstance } = useInstance();
   const { checkPermissions } = usePermissions();
   const { getClusterById } = useCluster();
+  const { getHistory } = useHistory();
 
   const tabs = [
     {
@@ -41,7 +47,11 @@ const FormCluster = () => {
       disabled: !clusterId,
       key: '2',
       label: 'HISTÓRICO',
-      children: <Content></Content>,
+      children: (
+        <Content>
+          <TableModel data={historyData ? historyData : []} tableColumns={historyTableColumns} isPagination={true} />
+        </Content>
+      ),
     },
   ];
 
@@ -96,6 +106,16 @@ const FormCluster = () => {
       }
     }
   }, [selectedInstance, clusterId]);
+
+  const fetchHistory = async ()=> {
+    const history = await getHistory({id: clusterId, url: 'clusters'})
+    
+    setHistoryData(history)
+  }
+
+  useEffect(() => {
+    fetchHistory();
+  }, [])
 
   return (
     <ContainerPage

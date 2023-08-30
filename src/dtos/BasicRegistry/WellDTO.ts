@@ -25,8 +25,8 @@ export interface WellDTO {
   coordX: string,
   coordY: string,
   description: string,
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: string,
+  updatedAt: string,
   field: FieldDTO,
   completions: CompletionDTO[]
   user: any

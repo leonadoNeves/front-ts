@@ -6,7 +6,7 @@ export interface CompletionDTO {
   codCompletion: string
   topOfPerforated: number
   baseOfPerforated: number
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
   reservoir: any
 }

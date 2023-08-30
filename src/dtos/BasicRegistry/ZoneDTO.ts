@@ -6,8 +6,8 @@ export interface ZoneDTO {
   codZone: string,
   description: string,
   isActive: boolean,
-  createdAt: Date,
-  updatedAt: Date,
+  createdAt: string,
+  updatedAt: string,
   field: FieldDTO,
   user: any,
 }
