@@ -13,6 +13,7 @@ import { storageGetInstance } from '@/storage/storageInstance';
 import { compareValues } from '@/utils/compareValues';
 import { Col, Form, Input, Radio, RadioChangeEvent, Row, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -59,7 +60,9 @@ export const FormRegister = ({
 
   const [form] = Form.useForm();
 
-  const clusterActive = clusterList?.filter(cluster => cluster.isActive);
+  const clusterActive = status
+    ? clusterList?.filter(cluster => cluster.isActive)
+    : clusterList;
 
   const onClusterChange = async (value: string) => {
     setClusterSelected(value);
@@ -135,6 +138,11 @@ export const FormRegister = ({
     }
   };
 
+  const handleSucess = () => {
+    toast.success('Reservatório atualizao');
+    navigate(`/dashboard/${instance}/cadastrosBasicos/reservatorios`);
+  };
+
   const handleUpdateReservoir = async () => {
     try {
       setLoadingSubmit(true);
@@ -144,33 +152,81 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValue.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableReservoir(reservoirId as string);
-        toast.success('Reservatório atualizado');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/reservatorios`);
+        const response = await disableReservoir(reservoirId as string);
+
+        if (response instanceof AxiosError) {
+          throw response;
+        }
+
+        handleSucess();
       } else {
-        if (isActiveChanged) {
+        if (isActiveChanged && hasChanges) {
           if (!status) {
-            await disableReservoir(reservoirId as string);
+            const response = await disableReservoir(reservoirId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
           } else {
-            await enableReservoir(reservoirId as string);
+            const response = await enableReservoir(reservoirId as string);
+            const responseUpdate = await updateReservoir(
+              reservoirId as string,
+              reservoirData,
+            );
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            if (responseUpdate instanceof AxiosError) {
+              throw responseUpdate;
+            }
+
+            handleSucess();
           }
         }
 
-        if (hasChanges) {
-          await updateReservoir(reservoirId as string, reservoirData);
+        if (isActiveChanged && !hasChanges) {
+          if (!status) {
+            const response = await disableReservoir(reservoirId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          } else {
+            const response = await enableReservoir(reservoirId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          }
+        }
+
+        if (!isActiveChanged && hasChanges) {
+          const response = await updateReservoir(
+            reservoirId as string,
+            reservoirData,
+          );
+
+          if (response instanceof AxiosError) {
+            throw response;
+          }
+
+          handleSucess();
         }
 
         if (!hasChanges && !isActiveChanged) {
           toast.error('Altere ao menos um campo para salvar');
         }
-
-        if (hasChanges || isActiveChanged) {
-          toast.success('Reservatório atualizado');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/reservatorios`);
-        }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoadingSubmit(false);
       setOpenModal(false);

@@ -51,7 +51,7 @@ export const ModalConfirm = ({
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
+          gap: '16px',
           padding: '1rem',
           fontSize: '1rem',
         }}
@@ -62,9 +62,24 @@ export const ModalConfirm = ({
             fontSize: '2rem',
           }}
         />
-        Você tem certeza que deseja realizar essa ação?
-        <br />
-        {hasDeleteMessage && 'Ao inativar, todas as aterações serão perdidas.'}
+        <p
+          style={{
+            display: 'flex',
+            alignItems: 'start',
+            flexDirection: 'column',
+          }}
+        >
+          <span
+            style={{ color: 'black', fontWeight: 'bold', marginBottom: '6px' }}
+          >
+            Você tem certeza que deseja realizar essa ação?
+          </span>
+
+          <span>
+            {hasDeleteMessage &&
+              'Ao inativar, todas as aterações serão perdidas e todas as hierarquias serão desativadas.'}
+          </span>
+        </p>
       </div>
     </Modal>
   );

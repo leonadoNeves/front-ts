@@ -9,6 +9,7 @@ import { storageGetInstance } from '@/storage/storageInstance';
 import { compareValues } from '@/utils/compareValues';
 import { Form, Input, Radio, RadioChangeEvent } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -67,6 +68,11 @@ export const FormRegister = ({
     }
   };
 
+  const handleSucess = () => {
+    toast.success('Cluster atualizado');
+    navigate(`/dashboard/${instance}/cadastrosBasicos/cluster`);
+  };
+
   const handleUpdateCluster = async () => {
     try {
       setLoadingSubmit(true);
@@ -76,36 +82,81 @@ export const FormRegister = ({
       const isActiveChanged = updatedValues.isActive !== initialValues.isActive;
 
       if (!updatedValues.isActive && hasChanges) {
-        await disableCluster(clusterId as string);
-        toast.success('Cluster atualizado');
-        navigate(`/dashboard/${instance}/cadastrosBasicos/cluster`);
+        const response = await disableCluster(clusterId as string);
+
+        if (response instanceof AxiosError) {
+          throw response;
+        }
+
+        handleSucess();
       } else {
-        if (isActiveChanged) {
+        if (isActiveChanged && hasChanges) {
           if (!status) {
-            await disableCluster(clusterId as string);
+            const response = await disableCluster(clusterId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
           } else {
-            await enableCluster(clusterId as string);
+            const response = await enableCluster(clusterId as string);
+            const responseUpdate = await updateCluster(
+              clusterId as string,
+              dataCluster,
+            );
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            if (responseUpdate instanceof AxiosError) {
+              throw responseUpdate;
+            }
+
+            handleSucess();
           }
         }
 
-        if (hasChanges) {
-          await updateCluster(clusterId as string, {
-            name: dataCluster.name,
-            description: dataCluster.description || '',
-          });
+        if (isActiveChanged && !hasChanges) {
+          if (!status) {
+            const response = await disableCluster(clusterId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          } else {
+            const response = await enableCluster(clusterId as string);
+
+            if (response instanceof AxiosError) {
+              throw response;
+            }
+
+            handleSucess();
+          }
+        }
+
+        if (!isActiveChanged && hasChanges) {
+          const response = await updateCluster(
+            clusterId as string,
+            dataCluster,
+          );
+
+          if (response instanceof AxiosError) {
+            throw response;
+          }
+
+          handleSucess();
         }
 
         if (!hasChanges && !isActiveChanged) {
           toast.error('Altere ao menos um campo para salvar');
         }
-
-        if (hasChanges || isActiveChanged) {
-          toast.success('Cluster atualizado');
-          navigate(`/dashboard/${instance}/cadastrosBasicos/cluster`);
-        }
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoadingSubmit(false);
       setOpenModal(false);

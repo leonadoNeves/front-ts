@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle, styled } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
     * {
@@ -6,4 +6,8 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
     }
-`
+`;
+
+export const ContainerTable = styled.div`
+  margin-bottom: 20px;
+`;

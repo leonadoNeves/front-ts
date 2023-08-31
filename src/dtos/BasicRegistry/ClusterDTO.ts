@@ -19,5 +19,5 @@ export interface UpdateClusterDTO {
 export interface CreateClusterDTO {
   name: string;
   isActive: boolean;
-  description: string | null;
+  description: string;
 }

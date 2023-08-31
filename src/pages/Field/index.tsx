@@ -1,12 +1,12 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { ContainerTable } from '@/globals/ContainerTable';
 import { useField } from '@/hooks/useField';
 import { storageGetInstance } from '@/storage/storageInstance';
 import { useEffect, useState } from 'react';
 import { bCrumbView } from './bCrumbs';
 import { tableColumns } from './tableColumns';
+import { ContainerTable } from '@/style/globalStyle';
 
 export const FieldPage = () => {
   const [isLoading, setIsLoading] = useState(false);

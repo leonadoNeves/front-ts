@@ -59,6 +59,8 @@ function AuthProvider({ children }: PropsAuthProvider) {
         password: encryptedPassword,
       });
 
+      console.log(data);
+
       await storageSetToken(data.token);
       api.defaults.headers.Authorization = `Bearer ${data.token}`;
 

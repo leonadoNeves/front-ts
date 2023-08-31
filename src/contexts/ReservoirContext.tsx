@@ -5,6 +5,7 @@ import {
 } from '@/dtos/BasicRegistry/ReservoirDTO';
 import { useInstance } from '@/hooks/useInstance';
 import { api } from '@/service/api';
+import { AxiosError } from 'axios';
 import { ReactNode, createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -16,9 +17,9 @@ type PropsReservoirContext = {
   updateReservoir: (
     reservoirId: string,
     reservoirUpdatedData: UpdateReservoirDTO,
-  ) => Promise<void>;
-  disableReservoir: (reservoirId: string) => Promise<void>;
-  enableReservoir: (reservoirId: string) => Promise<void>;
+  ) => Promise<void> | AxiosError;
+  disableReservoir: (reservoirId: string) => Promise<void> | AxiosError;
+  enableReservoir: (reservoirId: string) => Promise<void> | AxiosError;
 };
 
 type PropsReservoirProvider = {
@@ -86,7 +87,7 @@ const ReservoirProvider = ({ children }: PropsReservoirProvider) => {
     try {
       await api.delete(`/reservoirs/${reservoirId}`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -94,7 +95,7 @@ const ReservoirProvider = ({ children }: PropsReservoirProvider) => {
     try {
       await api.patch(`/reservoirs/${reservoirId}/restore`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 

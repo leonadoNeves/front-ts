@@ -1,9 +1,9 @@
 import { ContainerPage } from '@/Container/Dashboard';
 import { HeaderBasicsRegister } from '@/components/HeaderBasicsRegister';
 import TableModel from '@/components/Table';
-import { ContainerTable } from '@/globals/ContainerTable';
 import { useCluster } from '@/hooks/useCluster';
 import { storageGetInstance } from '@/storage/storageInstance';
+import { ContainerTable } from '@/style/globalStyle';
 import { useEffect, useState } from 'react';
 import bCrumb from './bCrumbs/listPageCrumb';
 import { tableColumnList } from './tableColumns';

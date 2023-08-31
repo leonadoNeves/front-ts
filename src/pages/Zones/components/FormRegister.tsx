@@ -35,7 +35,7 @@ export const FormRegister = ({
   const [openModal, setOpenModal] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [zoneData, setZoneData] = useState({} as CreateZoneDTO);
-  const [initialValue, setInitialValue] = useState({} as CreateZoneDTO);
+  const [initialValue, setInitialValue] = useState({} as any);
   const [clusterSelected, setClusterSelected] = useState('');
   const [installationSelected, setInstallationSelected] = useState('');
 
@@ -240,6 +240,8 @@ export const FormRegister = ({
   useEffect(() => {
     if (fields) {
       setInitialValue({
+        clusterId: fields[0]?.value,
+        installationId: fields[1]?.value,
         fieldId: fields[2]?.value,
         codZone: fields[3]?.value,
         isActive: fields[4]?.value,

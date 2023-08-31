@@ -19,8 +19,8 @@ interface PropsClusterContext {
     clusterId: string,
     clusterUpdatedData: UpdateClusterDTO,
   ) => Promise<void> | AxiosError;
-  disableCluster: (clusterId: string) => Promise<void>;
-  enableCluster: (clusterId: string) => Promise<void>;
+  disableCluster: (clusterId: string) => Promise<void> | AxiosError;
+  enableCluster: (clusterId: string) => Promise<void> | AxiosError;
 }
 
 type PropsInstanceProvider = {
@@ -96,7 +96,7 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
     try {
       await api.delete(`/clusters/${clusterId}`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -104,7 +104,7 @@ const ClusterProvider = ({ children }: PropsInstanceProvider) => {
     try {
       await api.patch(`/clusters/${clusterId}/restore`);
     } catch (error: any) {
-      console.log(error);
+      return error;
     }
   };
 

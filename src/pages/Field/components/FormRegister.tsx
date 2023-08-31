@@ -35,7 +35,7 @@ export const FormRegister = ({
   const [openModal, setOpenModal] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [fieldData, setFieldData] = useState({} as CreateFieldsDTO);
-  const [initialValue, setInitialValue] = useState({} as CreateFieldsDTO);
+  const [initialValue, setInitialValue] = useState({} as any);
   const [clusterSelected, setClusterSelected] = useState('');
 
   const { postPermission, patchPermission } = usePermissions();
@@ -200,6 +200,7 @@ export const FormRegister = ({
   useEffect(() => {
     if (fields) {
       setInitialValue({
+        clusterId: fields[0]?.value,
         installationId: fields[1]?.value,
         name: fields[2]?.value,
         codField: fields[3]?.value,
