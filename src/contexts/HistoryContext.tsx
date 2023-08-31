@@ -79,7 +79,12 @@ const HistoryProvider = ({ children }: PropsHistoryProvider) => {
   }
 
   const historyKeysDictionary: IHistoryKeysDictionary = {
+    clusterId: "Cluster Associado",
     name: "Nome",
+    uepName: "Nome da Unidade de Processamento",
+    codInstallationAnp: "Código da Instalação",
+    uepCod: "Código da Unidade de Processamento",
+    gasSafetyBurnVolume: "Volume de Queima de Segurança Mensal (10³ m³)",
     description: "Descrição",
     isActive: "Status",
   }
